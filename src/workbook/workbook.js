@@ -3,12 +3,15 @@
  * @author hancong03@baiud.com
  */
 define(function (require) {
+    var CONFIG = require('./config');
+
     var DMU = require('./dmu/dmu');
 
     /* --- workbook components start --- */
     var Heap = require('./components/heap');
     var ThemeManager = require('./components/theme/theme');
     var StylePool = require('./components/style-pool/style-pool');
+    var Sheet = require('./components/sheet/sheet');
     /* --- workbook components end --- */
 
     var $$ = require('utils');
@@ -28,7 +31,9 @@ define(function (require) {
         themeManager: null,
         stylePool: null,
 
-        constructor: function () {
+        constructor: function (config) {
+            this.__initConfig(config);
+
             this.dmu = new DMU(this);
 
             this.__initComponents();
@@ -40,11 +45,23 @@ define(function (require) {
             this.postMessage('workbook.reday');
         },
 
+        __initConfig: function (config) {
+            this.__$config = $.extend($$.clone(CONFIG), config);
+        },
+
         __initComponents: function () {
             this.heap = new Heap(this);
             this.themeManager = new ThemeManager(this);
             this.stylePool = new StylePool(this);
-            //this.sheet = new Sheet(this);
+            this.sheet = new Sheet(this);
+        },
+
+        getConfig: function (key) {
+            if (key) {
+                return this.__$config[key];
+            }
+
+            return this.__$config;
         },
 
         switchSheet: function (index) {

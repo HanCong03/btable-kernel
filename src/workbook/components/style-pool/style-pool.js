@@ -11,7 +11,7 @@ define(function (require, exports, module) {
     var STYLE_CLASSIFY_APPLYNAME_MAP = require('./definition/style-classify-applyname-map');
 
     module.exports = $$.createClass('StylePool', {
-        base: require('../../i-workbook-component'),
+        base: require('../../interface/i-workbook-component'),
 
         // 样式分类索引缓存
         __classifyMap: {},
@@ -31,8 +31,8 @@ define(function (require, exports, module) {
             this.registerService({
                 'generate.style': this.generateStyle,
                 'generate.border': this.generateBorder,
-                'get.classify.style.detail.by.sid': this.getClassifyStyleDetailBySid,
-                'get.classify.cellstyle.detail.by.sid': this.getClassifyCellStyleDetailBySid
+                'get.style.detail': this.getClassifyStyleDetailBySid,
+                'get.cellstyle.detail': this.getClassifyCellStyleDetailBySid
             });
         },
 

@@ -10,8 +10,8 @@ define(function (require) {
     return $$.createClass('WorkbookFacade', {
         __$workbook: null,
 
-        constructor: function () {
-            this.__$workbook = new Workbook(this);
+        constructor: function (config) {
+            this.__$workbook = new Workbook(this, config);
             this.__attachAPI();
         },
 

@@ -4,7 +4,7 @@
  */
 
 define(function (require, exports, module) {
-    var WORKBOOK_CONFIG = require('kernel/workbook/config');
+    var WORKBOOK_CONFIG = require('./config');
 
     var MAX_COLUMN = WORKBOOK_CONFIG.MAX_COLUMN;
     var MAX_ROW = WORKBOOK_CONFIG.MAX_ROW;

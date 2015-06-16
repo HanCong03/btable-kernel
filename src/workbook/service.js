@@ -7,13 +7,16 @@ define(function (require, exports, module) {
     module.exports = {
         __$services: {},
 
-        registerService: function (services) {
+        registerService: function (provider, services) {
             for (var key in services) {
                 if (!services.hasOwnProperty(key)) {
                     continue;
                 }
 
-                this.__$services[key] = services[key];
+                this.__$services[key] = {
+                    handler: services[key],
+                    provider: provider
+                };
             }
         },
 

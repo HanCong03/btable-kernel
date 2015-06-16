@@ -7,7 +7,7 @@ define(function (require, exports, module) {
     module.exports = {
         __$messagess: {},
 
-        onMessage: function (args) {
+        onMessage: function (provider, args) {
             var messages = this.__$messagess;
 
             for (var key in args) {
@@ -19,7 +19,10 @@ define(function (require, exports, module) {
                     messages[key] = [];
                 }
 
-                messages[key].push(args[key]);
+                messages[key].push({
+                    provider: provider,
+                    handler: args[key]
+                });
             }
         },
 

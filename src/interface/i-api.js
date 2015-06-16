@@ -7,23 +7,23 @@ define(function (require, exports, module) {
     module.exports = require('../base/clazz').create('IApi', {
         __$apis: [],
 
-        registerAPI: function (name, apiHandler) {
+        registerAPI: function (provider, name, handler) {
             if (typeof name === 'object') {
                 for (var key in name) {
                     if (!name.hasOwnProperty(key)) {
                         continue;
                     }
 
-                    this.__register(key, name[key]);
+                    this.__register(provider, key, name[key]);
                 }
             } else {
-                this.__register(name, apiHandler);
+                this.__register(provider, name, handler);
             }
         },
 
-        __register: function (name, apiHandler) {
+        __register: function (provider, name, handler) {
             this.__$apis[name] = function () {
-                return apiHandler.handler.apply(apiHandler.provider, arguments);
+                return handler.apply(provider, arguments);
             };
         },
 

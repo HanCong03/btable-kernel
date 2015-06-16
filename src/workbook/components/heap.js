@@ -14,7 +14,7 @@ define(function (require) {
             other: []
         },
 
-        base: require('../i-workbook-component'),
+        base: require('../interface/i-workbook-component'),
 
         getActiveKernelHeap: function (name) {
             var heap = this.heap.kernel;

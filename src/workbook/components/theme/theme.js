@@ -7,7 +7,7 @@ define(function (require, exports, module) {
     var $$ = require('utils');
 
     module.exports = $$.createClass('ThemeManager', {
-        base: require('../../i-workbook-component'),
+        base: require('../../interface/i-workbook-component'),
 
         /**
          * 根据给定的theme和tint计算颜色值
@@ -16,7 +16,7 @@ define(function (require, exports, module) {
          * @returns {*}
          */
         getColor: function (theme, tint) {
-            var themeData = this.getWorkbookData().theme;
+            var themeData = this.getWorkbook().theme;
             var themeValue = themeData.color.values[theme];
 
             return $$.calcThemeColor(themeValue, tint);

@@ -7,7 +7,6 @@ define(function (require, exports, module) {
     var $$ = require('utils');
     var NONE = require('NONE');
     var BUILTIN_THEMES = $$.clone(require('../builtin/theme/theme'));
-    var DEFAULT_BORDER_VALUE = require('./border-value');
 
     module.exports = {
         numfmts: {
@@ -36,10 +35,10 @@ define(function (require, exports, module) {
         },
         borders: {
             border: {
-                top: DEFAULT_BORDER_VALUE,
-                left: DEFAULT_BORDER_VALUE,
-                right: DEFAULT_BORDER_VALUE,
-                bottom: DEFAULT_BORDER_VALUE
+                top: NONE,
+                left: NONE,
+                right: NONE,
+                bottom: NONE
             }
         },
         alignments: {
