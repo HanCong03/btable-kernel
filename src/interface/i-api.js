@@ -5,6 +5,8 @@
 
 define(function (require, exports, module) {
     module.exports = require('../base/clazz').create('IApi', {
+        __$apis: [],
+
         registerAPI: function (name, apiHandler) {
             if (typeof name === 'object') {
                 for (var key in name) {
@@ -20,9 +22,13 @@ define(function (require, exports, module) {
         },
 
         __register: function (name, apiHandler) {
-            this[name] = function () {
+            this.__$apis[name] = function () {
                 return apiHandler.handler.apply(apiHandler.provider, arguments);
             };
+        },
+
+        getAPI: function () {
+            return this.__$apis;
         }
     });
 });

@@ -3,8 +3,8 @@
  * @author hancong03@baiud.com
  */
 
-define(function (require) {
-    return {
+define(function (require, exports, module) {
+    module.exports = {
         __$messagess: {},
 
         onMessage: function (args) {

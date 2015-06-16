@@ -24,8 +24,8 @@ define(function (require, exports, module) {
             return this.__$workbook.getActiveSheet();
         },
 
-        getWorkbookData: function () {
-            return this.__$workbook.getWorkbookData();
+        getWorkbook: function () {
+            return this.__$workbook.getWorkbook();
         },
 
         registerService: function () {

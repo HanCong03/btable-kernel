@@ -34,7 +34,7 @@ define(function (require) {
             this.__initComponents();
 
             // 各组件都加载完毕，触发 sheetready 事件
-            //this.__notifySheets();
+            this.__notifySheetReady();
 
             // 所有工作已就绪，触发 workbookready 事件
             this.postMessage('workbook.reday');
@@ -51,6 +51,10 @@ define(function (require) {
             return this.dmu.switchSheet(index);
         },
 
+        getSheetsCount: function () {
+            return this.dmu.getSheetsCount();
+        },
+
         getActiveIndex: function () {
             return this.dmu.getActiveIndex();
         },
@@ -63,22 +67,20 @@ define(function (require) {
             return this.dmu.getActiveSheet();
         },
 
-        getWorkbookData: function () {
-            return this.dmu.getWorkbookData();
+        getWorkbook: function () {
+            return this.dmu.getWorkbook();
+        },
+
+        __notifySheetReady: function () {
+            var indexCopy = this.getActiveIndex();
+
+            $$.forEach(this.dmu.checkSheet(), function (index) {
+                this.switchSheet(index);
+                this.postMessage('sheetready', index);
+            }, this);
+
+            this.switchSheet(indexCopy);
         }
-        //
-        //__notifySheets: function () {
-        //    var data = this.data;
-        //    var sheets = data.sheets;
-        //
-        //    sheets.forEach(function (current, index) {
-        //        // 临时更改当前活动工作表
-        //        data.active = index;
-        //        this.postMessage('sheetready', index);
-        //    }, this);
-        //
-        //    // 恢复活动工作表记录
-        //    data.active = 0;
-        //}
+
     });
 });

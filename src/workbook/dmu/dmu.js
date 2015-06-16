@@ -5,9 +5,7 @@
 
 define(function (require, exports, module) {
     var $$ = require('utils');
-
     var SHEET_NAME_PREFIX = 'Sheet';
-
     var WORKBOOK_SOURCE = require('./source/workbook');
     var SHEET_SOURCE = require('./source/sheet');
 
@@ -18,9 +16,26 @@ define(function (require, exports, module) {
             this.createNewWorkbook();
         },
 
+        checkSheet: function () {
+            var indexes = [];
+
+            this.data.sheets.forEach(function (sheet, index) {
+                if ($$.isDefined(sheet) && !sheet.inited) {
+                    sheet.inited = true;
+                    indexes.push(index);
+                }
+            });
+
+            return indexes;
+        },
+
         createNewWorkbook: function () {
             this.data = $$.clone(WORKBOOK_SOURCE);
             this.createNewSheet();
+
+            window.tt = this.data;
+            window.bs = this.data.sheets[0].style;
+            window.bc = this.data.sheets[0].cell;
         },
 
         createNewSheet: function () {
@@ -36,11 +51,15 @@ define(function (require, exports, module) {
             return this.data.active;
         },
 
+        getSheetsCount: function () {
+            return this.data.sheets.length;
+        },
+
         getActiveSheet: function () {
             return this.data.sheets[this.data.active];
         },
 
-        getWorkbookData: function () {
+        getWorkbook: function () {
             return this.data;
         },
 

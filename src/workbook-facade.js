@@ -12,6 +12,19 @@ define(function (require) {
 
         constructor: function () {
             this.__$workbook = new Workbook(this);
+            this.__attachAPI();
+        },
+
+        __attachAPI: function () {
+            var apis = this.__$workbook.getAPI();
+
+            for (var key in apis) {
+                if (!apis.hasOwnProperty(key)) {
+                    continue;
+                }
+
+                this[key] = apis[key];
+            }
         }
     });
 });

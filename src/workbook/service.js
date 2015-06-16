@@ -3,8 +3,8 @@
  * @author hancong03@baiud.com
  */
 
-define(function (require) {
-    return require('base/clazz').create('Service', {
+define(function (require, exports, module) {
+    module.exports = {
         __$services: {},
 
         registerService: function (services) {
@@ -28,5 +28,5 @@ define(function (require) {
 
             return service.handler.apply(service.provider, args);
         }
-    });
+    };
 });
