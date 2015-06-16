@@ -37,7 +37,10 @@ define(function (require, exports, module) {
         },
 
         registerService: function () {
-            return this.__$workbook.registerService(this, arguments);
+            var args = [].splice.call(arguments, 0);
+            args.unshift(this);
+
+            return this.__$workbook.registerService.apply(this.__$workbook, args);
         },
 
         rs: function () {
@@ -45,11 +48,17 @@ define(function (require, exports, module) {
         },
 
         registerAPI: function () {
-            return this.__$workbook.registerAPI(this, arguments);
+            var args = [].splice.call(arguments, 0);
+            args.unshift(this);
+
+            return this.__$workbook.registerAPI.apply(this.__$workbook, args);
         },
 
         onMessage: function () {
-            return this.__$workbook.onMessage(this, arguments);
+            var args = [].splice.call(arguments, 0);
+            args.unshift(this);
+
+            return this.__$workbook.onMessage.apply(this.__$workbook, arguments);
         },
 
         postMessage: function () {

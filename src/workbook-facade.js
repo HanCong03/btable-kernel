@@ -23,6 +23,8 @@ define(function (require) {
                     continue;
                 }
 
+                console.log(key)
+
                 this[key] = apis[key];
             }
         }
