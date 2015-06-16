@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <!--<link rel="stylesheet" href="dist/theme/btable.css">-->
+
+    <script src="bower_components/modef/dist/modef.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+
+    <script>
+        modef.config({
+            base: './src',
+            alias: {
+                'utils': 'base/utils',
+                'NONE': 'workbook/definition/none'
+//                'kernel-component': 'kernel/workbook/interface/i-component',
+//                'kernel-sheet-component': 'kernel/workbook/sheet/interface/i-sheet-component'
+            }
+        });
+
+        use('./src/main.js');
+    </script>
+
+    <script>
+        jQuery(function ($) {
+            var workbook = new Workbook();
+        });
+    </script>
+</head>
+<body>
+<div id="container" style="position: relative; top: 0; left: 0;width: 800px; height: 500px; border: 1px solid #ccc;">
+    <div class="btable">
+        <div class="btable-tl-box"></div>
+        <div class="btable-t-box"></div>
+        <div class="btable-l-box"></div>
+        <div class="btable-c-box"></div>
+    </div>
+</div>
+</body>
+</html>
