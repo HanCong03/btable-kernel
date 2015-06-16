@@ -103,7 +103,7 @@ define(function (require) {
                 details = $$.clone(details.border);
                 details[location] = NONE;
 
-                currentCell.si = this.generateBorder(details, currentCell.si);
+                currentCell.si = this.rs('generate.border', details, currentCell.si);
             }, this);
         },
 
@@ -143,7 +143,7 @@ define(function (require) {
                     details = $$.clone(details.border);
                     details[location] = NONE;
                     // 生成新边框
-                    sid = this.generateBorder(details, sid);
+                    sid = this.rs('generate.border', details, sid);
                 }
 
                 if ($$.isNdef(currentRow)) {
@@ -195,7 +195,7 @@ define(function (require) {
             }
 
             rowsData[row].customFormat = 1;
-            rowsData[row].si = this.generateBorder(details, this.getRowSid(row));
+            rowsData[row].si = this.rs('generate.border', details, this.getRowSid(row));
         }
     };
 });

@@ -72,10 +72,6 @@ define(function (require) {
             return this.dmu.getSheetsCount();
         },
 
-        getActiveIndex: function () {
-            return this.dmu.getActiveIndex();
-        },
-
         getActiveSheetIndex: function () {
             return this.dmu.getActiveSheetIndex();
         },
@@ -84,12 +80,20 @@ define(function (require) {
             return this.dmu.getActiveSheet();
         },
 
+        getActiveKernelHeap: function (name) {
+            return this.heap.getActiveKernelHeap(name);
+        },
+
+        getActiveHeap: function (name) {
+            return this.heap.getActiveHeap(name);
+        },
+
         getWorkbook: function () {
             return this.dmu.getWorkbook();
         },
 
         __notifySheetReady: function () {
-            var indexCopy = this.getActiveIndex();
+            var indexCopy = this.getActiveSheetIndex();
 
             $$.forEach(this.dmu.checkSheet(), function (index) {
                 this.switchSheet(index);

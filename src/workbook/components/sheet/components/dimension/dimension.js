@@ -6,7 +6,7 @@
 define(function (require) {
     var $$ = require('utils');
 
-    return require('base/clazz').create('Dimension', {
+    return $$.createClass('Dimension', {
         base: require('sheet-component'),
 
         __lock: 0,

@@ -28,6 +28,10 @@ define(function (require, exports, module) {
             return this.__$workbook.getWorkbook();
         },
 
+        getConfig: function (key) {
+            return this.__$workbook.getConfig(key);
+        },
+
         /**
          * 注：kernel组件所使用的heap是kernel heap
          * @returns {*}
@@ -37,7 +41,7 @@ define(function (require, exports, module) {
         },
 
         registerService: function () {
-            var args = [].splice.call(arguments, 0);
+            var args = [].slice.call(arguments, 0);
             args.unshift(this);
 
             return this.__$workbook.registerService.apply(this.__$workbook, args);
@@ -48,17 +52,17 @@ define(function (require, exports, module) {
         },
 
         registerAPI: function () {
-            var args = [].splice.call(arguments, 0);
+            var args = [].slice.call(arguments, 0);
             args.unshift(this);
 
             return this.__$workbook.registerAPI.apply(this.__$workbook, args);
         },
 
         onMessage: function () {
-            var args = [].splice.call(arguments, 0);
+            var args = [].slice.call(arguments, 0);
             args.unshift(this);
 
-            return this.__$workbook.onMessage.apply(this.__$workbook, arguments);
+            return this.__$workbook.onMessage.apply(this.__$workbook, args);
         },
 
         postMessage: function () {

@@ -98,7 +98,7 @@ define(function (require) {
 
                 details[location] = borderValue;
 
-                currentCell.si = this.generateBorder(details, currentCell.si);
+                currentCell.si = this.rs('generate.border', details, currentCell.si);
             }, this);
         },
 
@@ -140,7 +140,7 @@ define(function (require) {
                 }
 
                 details[location] = borderValue;
-                sid = this.generateBorder(details, sid);
+                sid = this.rs('generate.border', details, sid);
 
                 if ($$.isNdef(currentRow)) {
                     rowsData[row] = {};
@@ -189,7 +189,7 @@ define(function (require) {
             }
 
             rowsData[row].customFormat = 1;
-            rowsData[row].si = this.generateBorder(details, this.getRowSid(row));
+            rowsData[row].si = this.rs('generate.border', details, this.getRowSid(row));
         }
     };
 });

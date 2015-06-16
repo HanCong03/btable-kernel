@@ -271,7 +271,7 @@ define(function (require) {
                 details = $$.clone(details);
 
                 cells[i] = {
-                    si: this.generateBorder(details, this.getCellSid(row, i))
+                    si: this.rs('generate.border', details, this.getCellSid(row, i))
                 };
             }
         },
@@ -351,7 +351,7 @@ define(function (require) {
                 details = $$.clone(details);
 
                 currentRow.cells[col] = {
-                    si: this.generateBorder(details, this.getCellSid(i, col))
+                    si: this.rs('generate.border', details, this.getCellSid(i, col))
                 };
             }
 

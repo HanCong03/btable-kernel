@@ -6,27 +6,32 @@
 define(function (require) {
     var $$ = require('utils');
     var Workbook = require('./workbook/workbook');
+    var Commander = require('./commander/commander');
 
     return $$.createClass('WorkbookFacade', {
         __$workbook: null,
+        __$commander: null,
 
         constructor: function (config) {
             this.__$workbook = new Workbook(this, config);
-            this.__attachAPI();
+            //this.__attachAPI();
+            this.__$commander = new Commander(this.__$workbook.getAPI());
         },
 
-        __attachAPI: function () {
-            var apis = this.__$workbook.getAPI();
+        execCommand: function (command) {
+            return this.__$commander.exec.apply(this.__$commander, arguments);
+        },
 
-            for (var key in apis) {
-                if (!apis.hasOwnProperty(key)) {
-                    continue;
-                }
+        queryCommandValue: function (command) {
+            return this.__$commander.queryValue(command);
+        },
 
-                console.log(key)
+        queryCommandSupportExec: function (command) {
+            return this.__$commander.querySupportExec(command);
+        },
 
-                this[key] = apis[key];
-            }
+        queryCommandSupportQuery: function (command) {
+            return this.__$commander.querySupportQuery(command);
         }
     });
 });

@@ -44,7 +44,7 @@ define(function (require) {
                 return false;
             }
 
-            if (end.row > this.get('MAX_ROW') - 1 || end.col > this.getConfig('MAX_COLUMN') - 1) {
+            if (end.row > this.getConfig('MAX_ROW') - 1 || end.col > this.getConfig('MAX_COLUMN') - 1) {
                 return false;
             }
 

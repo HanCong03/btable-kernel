@@ -47,7 +47,7 @@ define(function (require, exports, module) {
             this.data.active = index;
         },
 
-        getActiveIndex: function () {
+        getActiveSheetIndex: function () {
             return this.data.active;
         },
 

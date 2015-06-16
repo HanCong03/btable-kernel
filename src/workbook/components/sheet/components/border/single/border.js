@@ -139,7 +139,7 @@ define(function (require) {
             borderValue = BorderUtils.standardizingBorderValue(borderValue);
 
             if ($$.isNdef(borderValue)) {
-                return this.removeBorder(location, borderValue, start, end);
+                return this.removeBorder(location, start, end);
             }
 
             var rangeType = WorkbookUtils.getRangeType(start, end);

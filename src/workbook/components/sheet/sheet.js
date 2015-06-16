@@ -42,12 +42,7 @@ define(function (require) {
         },
 
         createComponent: function (clazz) {
-            var args = [].slice.call(arguments, 1);
-            var instance = new clazz(this.__$workbook, this.__$cleaner);
-
-            instance.init.apply(instance, args);
-
-            return instance;
+            return new clazz(this.__$workbook, this.__$cleaner);
         }
     });
 });

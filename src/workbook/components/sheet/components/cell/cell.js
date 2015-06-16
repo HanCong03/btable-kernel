@@ -66,7 +66,7 @@ define(function (require) {
             var sid = this.rs('getcellsid', cell.row, cell.col);
 
             // 剔除样式中的border，生成新的sid
-            sid = this.generateBorder(null, sid);
+            sid = this.rs('generate.border', null, sid);
 
             // 统一单元格样式
             this.rs('setsid', sid, start, end);

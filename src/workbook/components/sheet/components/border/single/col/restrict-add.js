@@ -97,7 +97,7 @@ define(function (require) {
 
                 details[location] = borderValue;
 
-                currentCell.si = this.generateBorder(details, currentCell.si);
+                currentCell.si = this.rs('generate.border', details, currentCell.si);
             }, this);
         },
 
@@ -128,7 +128,7 @@ define(function (require) {
 
                 details[location] = borderValue;
                 // 生成新边框
-                sid = this.generateBorder(details, sid);
+                sid = this.rs('generate.border', details, sid);
 
                 if ($$.isNdef(currentRow.cells)) {
                     currentRow.cells = [];
@@ -169,7 +169,7 @@ define(function (require) {
 
             colsData[col] = {
                 customFormat: 1,
-                si: this.generateBorder(details, this.getColumnSid(col))
+                si: this.rs('generate.border', details, this.getColumnSid(col))
             };
         }
     };
