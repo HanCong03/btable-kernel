@@ -26,7 +26,10 @@ define(function (require) {
                 setDefaultColWidth: this.setDefaultColWidth,
 
                 getDefaultRowHeight: this.getDefaultRowHeight,
-                getDefaultColWidth: this.getDefaultColWidth
+                getDefaultColWidth: this.getDefaultColWidth,
+
+                isHideAllRow: this.isHideAllRow,
+                isHideAllCol: this.isHideAllCol
             });
 
             this.__initService();

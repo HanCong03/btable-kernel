@@ -28,12 +28,15 @@ define(function (require, exports, module) {
 
         postMessage: function (name) {
             var listeners = this.__$messagess[name];
+            var allListeners = this.__$messagess['*'];
 
-            if (!listeners) {
+            if (!listeners && !allListeners) {
                 return;
             }
 
-            var args = [].slice.call(arguments, 1);
+            listeners = (listeners || []).concat(allListeners || []);
+
+            var args = [].slice.call(arguments, 0);
 
             listeners.forEach(function (current) {
                 current.handler.apply(current.provider, args);

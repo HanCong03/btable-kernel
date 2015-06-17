@@ -29,7 +29,9 @@ define(function (require) {
 
         $query: [
             'defaultrowheight',
-            'defaultcolumnwidth'
+            'defaultcolumnwidth',
+            'hideallrow',
+            'hideallcolumn'
         ],
 
         /* ------ exec start ---- */
@@ -87,6 +89,14 @@ define(function (require) {
         // defualt column width
         query_defaultcolumnwidth: function () {
             return this.getAPI().getDefaultColWidth();
+        },
+
+        query_hideallrow: function () {
+            return this.getAPI().isHideAllRow();
+        },
+
+        query_hideallcolumn: function () {
+            return this.getAPI().isHideAllCol()
         }
     });
 });

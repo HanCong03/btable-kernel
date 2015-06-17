@@ -24,7 +24,10 @@ define(function (require) {
                 hideRow: this.hideRow,
                 hideCol: this.hideCol,
                 showRow: this.showRow,
-                showCol: this.showCol
+                showCol: this.showCol,
+
+                isHideRow: this.isHideRow,
+                isHideColumn: this.isHideColumn
             });
         },
 
@@ -253,6 +256,38 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+        },
+
+        /**
+         * 查询指定的行是否被隐藏
+         * 注：查询结果会参考全局行列隐藏
+         * @param row
+         */
+        isHideRow: function (row) {
+            var cellData = this.getActiveSheet().cell;
+            var rowsData = cellData.rows;
+
+            if ($$.isDefined(rowsData[row]) && $$.isDefined(rowsData[row].hidden)) {
+                return true;
+            }
+
+            return this.rs('is.hideallrow');
+        },
+
+        /**
+         * 查询指定的列是否被隐藏
+         * 注：查询结果会参考全局行列隐藏
+         * @param row
+         */
+        isHideColumn: function (col) {
+            var cellData = this.getActiveSheet().cell;
+            var colsData = cellData.cols;
+
+            if ($$.isDefined(colsData[col]) && $$.isDefined(colsData[col].hidden)) {
+                return true;
+            }
+
+            return this.rs('is.hideallcol');
         },
 
         __setAllRowHeight: function (height) {

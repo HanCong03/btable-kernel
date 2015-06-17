@@ -21,7 +21,12 @@ define(function (require) {
             'showcolumn'
         ],
 
-        $query: ['rowheight', 'columnwidth'],
+        $query: [
+            'rowheight',
+            'columnwidth',
+            'hiderow',
+            'hidecolumn'
+        ],
 
         /* ----- exec ------ */
 
@@ -64,6 +69,14 @@ define(function (require) {
 
         query_columnwidth: function (col) {
             return this.getAPI().getColWidth(col);
+        },
+
+        query_hiderow: function (row) {
+            return this.getAPI().isHideRow(row);
+        },
+
+        query_hidecolumn: function (col) {
+            return this.getAPI().isHideColumn(col);
         }
     });
 });

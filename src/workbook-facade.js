@@ -35,6 +35,10 @@ define(function (require) {
 
         getActiveHeap: function (name) {
             return this.__$workbook.getActiveHeap(name);
+        },
+
+        on: function (provider, args) {
+            return this.__$workbook.onMessage(provider, args);
         }
     });
 });
