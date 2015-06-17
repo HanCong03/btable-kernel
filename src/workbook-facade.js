@@ -14,7 +14,6 @@ define(function (require) {
 
         constructor: function (config) {
             this.__$workbook = new Workbook(this, config);
-            //this.__attachAPI();
             this.__$commander = new Commander(this.__$workbook.getAPI());
         },
 
@@ -32,6 +31,10 @@ define(function (require) {
 
         queryCommandSupportQuery: function (command) {
             return this.__$commander.querySupportQuery(command);
+        },
+
+        getActiveHeap: function (name) {
+            return this.__$workbook.getActiveHeap(name);
         }
     });
 });
