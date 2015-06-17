@@ -18,7 +18,7 @@ define(function (require, exports, module) {
             this.registerAPI({
                 getMajorFont: this.getMajorFont,
                 getMinorFont: this.getMinorFont,
-                getColor: this.getColor
+                getThemeColor: this.getThemeColor
             });
         },
 
@@ -26,7 +26,7 @@ define(function (require, exports, module) {
             this.registerService({
                 'get.major.font': this.getMajorFont,
                 'get.minor.font': this.getMinorFont,
-                'get.theme.color': this.getColor
+                'get.theme.color': this.getThemeColor
             });
         },
 
@@ -36,7 +36,7 @@ define(function (require, exports, module) {
          * @param tint
          * @returns {*}
          */
-        getColor: function (theme, tint) {
+        getThemeColor: function (theme, tint) {
             var themeData = this.getWorkbook().theme;
             var themeValue = themeData.color.values[theme];
 

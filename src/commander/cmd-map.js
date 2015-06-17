@@ -12,6 +12,7 @@ define(function (require, exports, module) {
         mergeCell: require('./commands/merge-cell'),
         clear: require('./commands/clear'),
         rowColumn: require('./commands/row-column'),
-        border: require('./commands/border')
+        border: require('./commands/border'),
+        theme: require('./commands/theme')
     };
 });
