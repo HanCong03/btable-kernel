@@ -5,7 +5,5 @@
 
 define({
     showGridLine: true,
-    showRowColHeader: true,
-    rowHeight: 18,
-    colWidth: 72
+    showRowColHeader: true
 });

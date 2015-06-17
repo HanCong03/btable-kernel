@@ -20,7 +20,11 @@ define(function (require) {
             'hideheader',
 
             'pane',
-            'clearpane'
+            'clearpane',
+
+            // 设置默认列宽，行高
+            'defaultrowheight',
+            'defaultcolumnwidth'
         ],
 
         $query: [
@@ -64,6 +68,14 @@ define(function (require) {
 
         exec_clearpane: function () {
             this.getAPI().clearPane();
+        },
+
+        exec_defaultrowheight: function (height) {
+            this.getAPI().setDefaultRowHeight(height);
+        },
+
+        exec_defaultcolumnwidth: function (width) {
+            this.getAPI().setDefaultColWidth(width);
         },
 
         /* -------- query start -------- */

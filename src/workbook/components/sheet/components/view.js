@@ -22,8 +22,11 @@ define(function (require) {
                 getPane: this.getPane,
                 clearPane: this.clearPane,
 
-                getDefaultRowHeight: this.getRowHeight,
-                getDefaultColWidth: this.getColWidth
+                setDefaultRowHeight: this.setDefaultRowHeight,
+                setDefaultColWidth: this.setDefaultColWidth,
+
+                getDefaultRowHeight: this.getDefaultRowHeight,
+                getDefaultColWidth: this.getDefaultColWidth
             });
 
             this.__initService();
@@ -31,10 +34,10 @@ define(function (require) {
 
         __initService: function () {
             this.registerService({
-                'set.default.rowheight': this.setRowHeight,
-                'set.default.colwidth': this.setColWidth,
-                'get.default.rowheight': this.getRowHeight,
-                'get.default.colwidth': this.getColWidth,
+                'set.default.rowheight': this.setDefaultRowHeight,
+                'set.default.colwidth': this.setDefaultColWidth,
+                'get.default.rowheight': this.getDefaultRowHeight,
+                'get.default.colwidth': this.getDefaultColWidth,
 
                 'hide.all.row': this.hideAllRow,
                 'hide.all.col': this.hideAllCol,
@@ -105,48 +108,38 @@ define(function (require) {
 
         /**
          * 获取默认行高
+         * 单位为px
+         * 注：如果用户未设置默认行高，则返回null。
          * @returns {rowHeight|*}
          */
-        getRowHeight: function () {
-            var sheetData = this.getActiveSheet();
-
-            if ($$.isDefined(sheetData.view.rowHeight)) {
-                return sheetData.view.rowHeight;
-            }
-
-            return VIEW_DEFAULT.rowHeight;
+        getDefaultRowHeight: function () {
+            return this.getActiveSheet().view.rowHeight;
         },
 
         /**
          * 获取默认列宽
+         * 单位为：px
          * @returns {colWidth|*}
          */
-        getColWidth: function () {
-            var sheetData = this.getActiveSheet();
-
-            if ($$.isDefined(sheetData.view.colWidth)) {
-                return sheetData.view.colWidth;
-            }
-
-            return VIEW_DEFAULT.colWidth;
+        getDefaultColWidth: function () {
+            return this.getActiveSheet().view.colWidth;
         },
 
         /**
          * 设置默认行高
+         * 单位为：px
          * @param height
          */
-        setRowHeight: function (height) {
-            var sheetData = this.getActiveSheet();
-            sheetData.view.rowHeight = height;
+        setDefaultRowHeight: function (height) {
+            this.getActiveSheet().view.rowHeight = height;
         },
 
         /**
          * 设置默认列宽
          * @param width
          */
-        setColWidth: function (width) {
-            var sheetData = this.getActiveSheet();
-            sheetData.view.colWidth = width;
+        setDefaultColWidth: function (width) {
+            this.getActiveSheet().view.colWidth = width;
         },
 
         hideAllRow: function () {
