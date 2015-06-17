@@ -16,18 +16,13 @@ define(function (require) {
     var RowColumn = require('./components/row-column');
     var Border = require('./components/border/border');
 
-    var Cleaner = require('./clean/cleaner');
-
     return $$.createClass('Sheet', {
         base: require('../../interface/i-workbook-component'),
-
-        __$cleaner: null,
+        mixin: require('./clean/cleaner'),
 
         components: null,
 
         init: function () {
-            this.__$cleaner = this.createComponent(Cleaner);
-
             this.components = {
                 cell: this.createComponent(Cell),
                 dimension: this.createComponent(Dimension),
@@ -42,7 +37,7 @@ define(function (require) {
         },
 
         createComponent: function (clazz) {
-            return new clazz(this.__$workbook, this.__$cleaner);
+            return new clazz(this.__$workbook, this);
         }
     });
 });

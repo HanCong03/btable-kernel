@@ -6,14 +6,10 @@
 define(function (require) {
     var $$ = require('utils');
 
-    return require('base/clazz').create('AllStyle', {
+    return require('utils').createClass('AllStyle', {
         base: require('sheet-component'),
 
-        mainStyle: null,
-
-        init: function (mainStyle) {
-            this.mainStyle = mainStyle;
-        },
+        mixin: require('../common/style'),
 
         setStyle: function (styleName, styleValue) {
             var sheetData = this.getActiveSheet();
@@ -21,10 +17,9 @@ define(function (require) {
             var rowsData = styleData.rows;
             var colsData = styleData.cols;
 
-            var mainStyle = this.mainStyle;
 
             // 更新全局sid
-            var globalSid = this.mainStyle.generateStyle(styleName, styleValue, styleData.globalStyle);
+            var globalSid = this.rs('generate.style', styleName, styleValue, styleData.globalStyle);
             styleData.globalStyle = globalSid;
 
             // 更新行sid
@@ -33,12 +28,12 @@ define(function (require) {
                     return;
                 }
 
-                currentRow.si = mainStyle.generateStyle(styleName, styleValue, currentRow.si);
-            });
+                currentRow.si = this.rs('generate.style', styleName, styleValue, currentRow.si);
+            }, this);
 
             // 更新列sid
             $$.forEach(colsData, function (currentCol, col) {
-                var sid = mainStyle.generateStyle(styleName, styleValue, mainStyle.getColumnSid(col));
+                var sid = this.rs('generate.style', styleName, styleValue, this.getColumnSid(col));
 
                 // 列id和全局id一致，则删除该列的id
                 if (sid === globalSid) {
@@ -47,7 +42,7 @@ define(function (require) {
                     colsData.si = sid;
                     colsData.customFormat = 1;
                 }
-            });
+            }, this);
 
             // 更新独立单元格sid
             $$.forEach(rowsData, function (currentRow) {
@@ -57,9 +52,9 @@ define(function (require) {
                 }
 
                 $$.forEach(currentRow.cells, function (currentCell) {
-                    currentCell.si = mainStyle.generateStyle(styleName, styleValue, currentCell.si);
-                });
-            });
+                    currentCell.si = this.rs('generate.style', styleName, styleValue, currentCell.si);
+                }, this);
+            }, this);
         },
 
         setSid: function (sid) {

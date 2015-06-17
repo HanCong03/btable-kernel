@@ -4,7 +4,7 @@
  */
 
 define(function (require) {
-    return require('base/clazz').create('Border', {
+    return require('utils').createClass('Border', {
         base: require('sheet-component'),
 
         setBorder: function (borderOptions) {

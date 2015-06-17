@@ -6,22 +6,14 @@
 define(function (require) {
     var $$ = require('utils');
 
-    return require('base/clazz').create('RowStyle', {
+    return require('utils').createClass('RowStyle', {
         base: require('sheet-component'),
-
-        mainStyle: null,
-
-        init: function (mainStyle) {
-            this.mainStyle = mainStyle;
-        },
 
         setStyle: function (styleName, styleValue, startIndex, endIndex) {
             var styleData = this.getActiveSheet().style;
             var rowsData = styleData.rows;
             var colsData = styleData.cols;
             var currentRow;
-
-            var mainStyle = this.mainStyle;
 
             // 行上独立单元格样式处理
             for (var i = startIndex; i <= endIndex; i++) {
@@ -32,8 +24,8 @@ define(function (require) {
                 }
 
                 $$.forEach(currentRow.cells, function (currentCell) {
-                    currentCell.si = mainStyle.generateStyle(styleName, styleValue, currentCell.si);
-                });
+                    currentCell.si = this.rs('generate.style', styleName, styleValue, currentCell.si);
+                }, this);
             }
 
             // 列样式叠加处理
@@ -70,7 +62,7 @@ define(function (require) {
 
                     // 在当前列的基础上生成该单元格的样式
                     cells[col] = {
-                        si: mainStyle.generateStyle(styleName, styleValue, currentCol.si)
+                        si: this.rs('generate.style', styleName, styleValue, currentCol.si)
                     };
                 }
             }, this);
@@ -80,11 +72,11 @@ define(function (require) {
                 if ($$.isNdef(rowsData[i])) {
                     rowsData[i] = {
                         customFormat: 1,
-                        si: this.generateStyle(styleName, styleValue, mainStyle.getRowSid(i))
+                        si: this.rs('generate.style', styleName, styleValue, this.getRowSid(i))
                     };
                 } else {
                     rowsData[i].customFormat = 1;
-                    rowsData[i].si = this.generateStyle(styleName, styleValue, rowsData.si);
+                    rowsData[i].si = this.rs('generate.style', styleName, styleValue, rowsData.si);
                 }
             }
         },

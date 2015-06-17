@@ -4,42 +4,98 @@
  */
 
 define(function (require) {
-    return require('base/clazz').create('ISheetComponent', {
+    // createClass 的继承有bug
+    return require('utils').createClass('ISheetComponent', {
+        __$workbook: null,
+        __$sheet: null,
 
-        __$cleaner: null,
+        constructor: function (workbook, sheet) {
+            this.__$workbook = workbook;
+            this.__$sheet = sheet;
+            this.init();
+        },
 
-        base: require('../../../interface/i-workbook-component'),
+        init: function () {},
 
-        constructor: function (workbook, cleaner) {
-            this.__$cleaner = cleaner;
+        getActiveSheetIndex: function () {
+            return this.__$workbook.getActiveSheetIndex();
+        },
+
+        getActiveSheet: function () {
+            return this.__$workbook.getActiveSheet();
+        },
+
+        getWorkbook: function () {
+            return this.__$workbook.getWorkbook();
+        },
+
+        getConfig: function (key) {
+            return this.__$workbook.getConfig(key);
+        },
+
+        /**
+         * 注：kernel组件所使用的heap是kernel heap
+         * @returns {*}
+         */
+        getActiveHeap: function (name) {
+            return this.__$workbook.getActiveKernelHeap(name);
+        },
+
+        registerService: function () {
+            var args = [].slice.call(arguments, 0);
+            args.unshift(this);
+
+            return this.__$workbook.registerService.apply(this.__$workbook, args);
+        },
+
+        rs: function () {
+            return this.__$workbook.rs.apply(this.__$workbook, arguments);
+        },
+
+        registerAPI: function () {
+            var args = [].slice.call(arguments, 0);
+            args.unshift(this);
+
+            return this.__$workbook.registerAPI.apply(this.__$workbook, args);
+        },
+
+        onMessage: function () {
+            var args = [].slice.call(arguments, 0);
+            args.unshift(this);
+
+            return this.__$workbook.onMessage.apply(this.__$workbook, args);
+        },
+
+        postMessage: function () {
+            return this.__$workbook.postMessage.apply(this.__$workbook, arguments);
         },
 
         cleanCell: function (row, col) {
-            this.__$cleaner.cleanCell(row, col);
+            this.__$sheet.cleanCell(row, col);
         },
 
         cleanRow: function (row) {
-            this.__$cleaner.cleanRow(row);
+            this.__$sheet.cleanRow(row);
         },
 
         cleanColumn: function (col) {
-            this.__$cleaner.cleanColumn(col);
+            this.__$sheet.cleanColumn(col);
         },
 
         cleanCellStyle: function (row, col) {
-            this.__$cleaner.cleanCellStyle(row, col);
+            this.__$sheet.cleanCellStyle(row, col);
         },
 
         cleanRowStyle: function (row) {
-            this.__$cleaner.cleanRowStyle(row);
+            this.__$sheet.cleanRowStyle(row);
         },
 
         cleanColumnStyle: function (col) {
-            this.__$cleaner.cleanColumnStyle(col);
+            this.__$sheet.cleanColumnStyle(col);
         },
 
         createComponent: function (clazz) {
-            return new clazz(this.__$workbook, this.__$cleaner);
+            return new clazz(this.__$workbook, this.__$sheet);
         }
     });
 });

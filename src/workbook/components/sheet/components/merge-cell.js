@@ -6,7 +6,7 @@
 define(function (require) {
     var WorkbookUtils = require('workbook-utils');
 
-    return require('base/clazz').create('MergeCell', {
+    return require('utils').createClass('MergeCell', {
         base: require('sheet-component'),
 
         init: function () {

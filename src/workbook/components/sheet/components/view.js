@@ -7,7 +7,7 @@ define(function (require) {
     var $$ = require('utils');
     var VIEW_DEFAULT = require('../../../defaults/view');
 
-    return require('base/clazz').create('View', {
+    return require('utils').createClass('View', {
         base: require('sheet-component'),
 
         init: function () {

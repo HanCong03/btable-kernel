@@ -8,7 +8,7 @@ define(function (require) {
     var SingleBorder = require('./single/border');
     var BorderReader = require('./reader/border');
 
-    return require('base/clazz').create('Border', {
+    return require('utils').createClass('Border', {
         base: require('sheet-component'),
 
         allBorder: null,

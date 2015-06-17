@@ -8,7 +8,7 @@ define(function (require) {
     var BORDER_LOCATION = require('../definition/location');
     var BorderUtils = require('../utils');
 
-    return require('base/clazz').create('Border', {
+    return require('utils').createClass('Border', {
         base: require('sheet-component'),
 
         mixin: [

@@ -14,7 +14,7 @@ define(function (require) {
     var RangeBorder = require('./range');
     var AllBorder = require('./all');
 
-    return require('base/clazz').create('Border', {
+    return require('utils').createClass('Border', {
         base: require('sheet-component'),
 
         allBorder: null,

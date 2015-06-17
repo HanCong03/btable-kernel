@@ -6,7 +6,7 @@
 define(function (require) {
     var $$ = require('utils');
 
-    return require('base/clazz').create('RangeStyle', {
+    return require('utils').createClass('RangeStyle', {
         base: require('sheet-component'),
 
         mixin: require('../common/style'),
@@ -33,10 +33,10 @@ define(function (require) {
                 for (var j = start.col, jlimit = end.col; j <= jlimit; j++) {
                     if ($$.isNdef(cells[j])) {
                         cells[j] = {
-                            si: this.generateStyle(styleName, styleValue, this.getCellSid(i, j))
+                            si: this.rs('generate.style', styleName, styleValue, this.getCellSid(i, j))
                         };
                     } else {
-                        cells[j].si = this.generateStyle(styleName, styleValue, cells[j].si);
+                        cells[j].si = this.rs('generate.style', styleName, styleValue, cells[j].si);
                     }
                 }
             }

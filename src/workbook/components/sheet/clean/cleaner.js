@@ -6,9 +6,7 @@
 define(function (require, exports, module) {
     var $$ = require('utils');
 
-    module.exports = require('base/clazz').create('Cleaner', {
-        base: require('sheet-component'),
-
+    module.exports = {
         cleanRowStyle: function (row) {
             var styleData = this.getActiveSheet().style;
             var rowsData = styleData.rows;
@@ -163,6 +161,5 @@ define(function (require, exports, module) {
 
             this.cleanRow(row);
         }
-
-    });
+    };
 });

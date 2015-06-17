@@ -8,7 +8,7 @@
 define(function (require) {
     var $$ = require('utils');
 
-    return require('base/clazz').create('Heap', {
+    return require('utils').createClass('Heap', {
         heap: {
             kernel: [],
             other: []

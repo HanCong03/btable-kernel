@@ -4,7 +4,7 @@
  */
 
 define(function (require) {
-    return require('base/clazz').create({
+    return require('utils').createClass({
         base: require('../i-command'),
 
         $exec: [

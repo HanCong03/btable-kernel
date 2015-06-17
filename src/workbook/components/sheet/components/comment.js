@@ -7,7 +7,7 @@ define(function (require) {
     var $$ = require('utils');
     var WorkbookUtils = require('workbook-utils');
 
-    return require('base/clazz').create('Comment', {
+    return require('utils').createClass('Comment', {
         base: require('sheet-component'),
 
         init: function () {

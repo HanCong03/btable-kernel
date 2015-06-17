@@ -10,7 +10,7 @@ define(function (require) {
     var RangeStyle = require('./range');
     var AllStyle = require('./all');
 
-    return require('base/clazz').create('Style', {
+    return require('utils').createClass('Style', {
         base: require('sheet-component'),
         mixin: [
             require('../common/style'),
@@ -23,10 +23,10 @@ define(function (require) {
         rangeStyle: null,
 
         init: function () {
-            this.rowStyle = this.createComponent(RowStyle, this);
-            this.colStyle = this.createComponent(ColStyle, this);
-            this.rangeStyle = this.createComponent(RangeStyle, this);
-            this.allStyle = this.createComponent(AllStyle, this);
+            this.rowStyle = this.createComponent(RowStyle);
+            this.colStyle = this.createComponent(ColStyle);
+            this.rangeStyle = this.createComponent(RangeStyle);
+            this.allStyle = this.createComponent(AllStyle);
 
             this.__initService();
             this.__initAPI();

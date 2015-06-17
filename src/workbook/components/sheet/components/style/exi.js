@@ -13,14 +13,14 @@ define(function (require, exports, module) {
         setFontToMajor: function (start, end) {
             this.setStyle('name', {
                 type: 'major',
-                value: this.getMajorFont()
+                value: this.rs('get.major.font')
             }, start, end);
         },
 
         setFontToMinor: function (start, end) {
             this.setStyle('name', {
                 type: 'minor',
-                value: this.getMinorFont()
+                value: this.rs('get.minor.font')
             }, start, end);
         },
 
@@ -41,7 +41,7 @@ define(function (require, exports, module) {
             this.setStyle('color', {
                 theme: theme,
                 tint: tint,
-                value: this.getThemeColor(theme, tint)
+                value: this.rs('get.theme.color', theme, tint)
             }, start, end);
         },
 

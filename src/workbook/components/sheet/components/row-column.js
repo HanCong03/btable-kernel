@@ -10,7 +10,7 @@ define(function (require) {
     var MAX_COLUMN_INDEX = WORKBOOK_CONFIG.MAX_COLUMN - 1;
     var MAX_ROW_INDEX = WORKBOOK_CONFIG.MAX_ROW - 1;
 
-    return require('base/clazz').create('RowColumn', {
+    return require('utils').createClass('RowColumn', {
         base: require('sheet-component'),
 
         init: function () {

@@ -9,6 +9,27 @@ define(function (require, exports, module) {
     module.exports = $$.createClass('ThemeManager', {
         base: require('../../interface/i-workbook-component'),
 
+        init: function () {
+            this.__initAPI();
+            this.__initService();
+        },
+
+        __initAPI: function () {
+            this.registerAPI({
+                getMajorFont: this.getMajorFont,
+                getMinorFont: this.getMinorFont,
+                getColor: this.getColor
+            });
+        },
+
+        __initService: function () {
+            this.registerService({
+                'get.major.font': this.getMajorFont,
+                'get.minor.font': this.getMinorFont,
+                'get.theme.color': this.getColor
+            });
+        },
+
         /**
          * 根据给定的theme和tint计算颜色值
          * @param theme
