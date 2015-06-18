@@ -12,11 +12,8 @@ define(function (require) {
         mixin: require('./clear'),
 
         init: function () {
-            this.registerAPI({
-                clearAll: this.clearAll
-            });
-
             this.__initService();
+            this.__initAPI();
         },
 
         __initService: function () {
@@ -24,7 +21,13 @@ define(function (require) {
                 'clearall': this.clearAll,
                 'synccell': this.syncCell,
                 'createcolumn': this.createColumn
-            })
+            });
+        },
+
+        __initAPI: function () {
+            this.registerAPI({
+                clearAll: this.clearAll
+            });
         },
 
         createColumn: function (col) {

@@ -13,7 +13,8 @@ define(function (require) {
         init: function () {
             this.registerAPI({
                 setComment: this.setComment,
-                removeComment: this.removeComment
+                clearComment: this.clearComment,
+                getComment: this.getComment
             });
         },
 
@@ -57,7 +58,7 @@ define(function (require) {
             this.postMessage('inc.range', row, col);
         },
 
-        removeComment: function (start, end) {
+        clearComment: function (start, end) {
             var rangeType = WorkbookUtils.getRangeType(start, end);
 
             switch (rangeType) {
@@ -77,6 +78,25 @@ define(function (require) {
                     this.__clearRange(start, end);
                     break;
             }
+        },
+
+        getComment: function (row, col) {
+            var sheetData = this.getActiveSheet();
+            var cellRows = sheetData.cell.rows;
+
+            if ($$.isNdef(cellRows[row])
+                || $$.isNdef(cellRows[row].cells)
+                || $$.isNdef(cellRows[row].cells[col])) {
+                return null;
+            }
+
+            var currentCell = cellRows[row].cells[col];
+
+            if ($$.isNdef(currentCell.comment)) {
+                return null;
+            }
+
+            return sheetData.comment[currentCell.comment];
         },
 
         __clearAll: function () {
