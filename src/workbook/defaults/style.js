@@ -26,7 +26,8 @@ define(function (require, exports, module) {
             },
             bold: false,
             italic: false,
-            underline: false,
+            // underline: "single" or "double" or "none"
+            underline: NONE,
             throughline: false,
             size: 13
         },
