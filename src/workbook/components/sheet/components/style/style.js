@@ -13,8 +13,7 @@ define(function (require) {
     return require('utils').createClass('Style', {
         base: require('sheet-component'),
         mixin: [
-            require('../common/style'),
-            require('./exi')
+            require('../common/style')
         ],
 
         allStyle: null,
@@ -43,17 +42,8 @@ define(function (require) {
 
         __initAPI: function () {
             this.registerAPI({
-                setFont: this.setFont,
-                setFontToMajor: this.setFontToMajor,
-                setFontToMinor: this.setFontToMinor,
-                unsetFont: this.unsetFont,
-
-                setColor: this.setColor,
-                setThemeColor: this.setThemeColor,
-                unsetColor: this.unsetColor,
-
-                getFullStyle: this.getFullStyle,
-                getNumberFormat: this.getNumberFormat
+                setStyle: this.setStyle,
+                getStyle: this.getStyle
             });
         },
 
@@ -93,11 +83,6 @@ define(function (require) {
 
         getStyle: function (styleName, row, col) {
             var sid = this.getCellSid(row, col);
-
-            if (!sid) {
-                return null;
-            }
-
             return this.rs('get.style.detail', styleName, sid);
         },
 
