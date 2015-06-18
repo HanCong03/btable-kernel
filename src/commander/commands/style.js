@@ -21,6 +21,10 @@ define(function (require) {
             'unsetfont'
         ],
 
+        $query: [
+            'fullstyle'
+        ],
+
         exec_color: function (color, start, end) {
             this.getAPI().setColor(color, start, end);
         },
@@ -43,6 +47,10 @@ define(function (require) {
 
         exec_minorfont: function (start, end) {
             this.getAPI().setFontToMinor(start, end);
+        },
+
+        query_fullstyle: function (row, col) {
+            return this.getAPI().getFullStyle(row, col);
         }
     });
 });

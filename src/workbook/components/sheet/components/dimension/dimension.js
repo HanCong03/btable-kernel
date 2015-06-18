@@ -12,6 +12,17 @@ define(function (require) {
         __lock: 0,
 
         init: function () {
+            this.__initMessage();
+            this.__initAPI();
+        },
+
+        __initAPI: function () {
+            this.registerAPI({
+                getDimension: this.getDimension
+            });
+        },
+
+        __initMessage: function () {
             this.onMessage({
                 'sheetready': this.__initRecord,
 
@@ -30,6 +41,10 @@ define(function (require) {
 
         unlock: function () {
             this.__lock--;
+        },
+
+        getDimension: function () {
+            return this.getActiveSheet().dimension;
         },
 
         onStyleChange: function () {
@@ -83,8 +98,6 @@ define(function (require) {
                     col: colMinMax.max
                 }
             };
-
-            console.log(JSON.stringify(sheetData.dimension));
         },
 
         __getColMinMax: function () {
@@ -218,7 +231,7 @@ define(function (require) {
 
         return {
             min: min,
-            max:  max
+            max: max
         };
     }
 

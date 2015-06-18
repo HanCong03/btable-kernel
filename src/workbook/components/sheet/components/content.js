@@ -11,11 +11,17 @@ define(function (require) {
         base: require('sheet-component'),
 
         init: function () {
-            this.registerAPI({
-                write: this.write
-            });
-
+            this.__initAPI();
             this.__initService();
+        },
+
+        __initAPI: function () {
+            this.registerAPI({
+                write: this.write,
+                getContent: this.getContent,
+                getContentType: this.getContentType,
+                getContentInfo: this.getContentInfo
+            });
         },
 
         __initService: function () {
@@ -60,6 +66,49 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+        },
+
+        getContent: function (row, col) {
+            var rowsData = this.getActiveSheet().cell.rows;
+
+            if ($$.isNdef(rowsData[row])
+                || $$.isNdef(rowsData[row].cells)
+                || $$.isNdef(rowsData[row].cells[col])) {
+                return null;
+            }
+
+            return rowsData[row].cells[col].value || null;
+        },
+
+        getContentType: function (row, col) {
+            var rowsData = this.getActiveSheet().cell.rows;
+
+            if ($$.isNdef(rowsData[row])
+                || $$.isNdef(rowsData[row].cells)
+                || $$.isNdef(rowsData[row].cells[col])) {
+                return null;
+            }
+
+            return rowsData[row].cells[col].type || null;
+        },
+
+        getContentInfo: function (row, col) {
+            var rowsData = this.getActiveSheet().cell.rows;
+
+            if ($$.isNdef(rowsData[row])
+                || $$.isNdef(rowsData[row].cells)
+                || $$.isNdef(rowsData[row].cells[col])) {
+                return null;
+            }
+
+            if ($$.isNdef(rowsData[row].cells[col].value)) {
+                return null;
+            }
+
+            return {
+                type: rowsData[row].cells[col].type,
+                value: rowsData[row].cells[col].value
+            };
         },
 
         /**

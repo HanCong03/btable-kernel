@@ -10,10 +10,30 @@ define(function (require) {
 
         $deps: 'value',
 
-        $exec: ['write'],
+        $exec: [
+            'write'
+        ],
+
+        $query: [
+            'content',
+            'contenttype',
+            'contentinfo'
+        ],
 
         exec_write: function (value, contentType, row, col) {
             this.getAPI().write(value, contentType, row, col);
+        },
+
+        query_content: function (row, col) {
+            return this.getAPI().getContent(row, col);
+        },
+
+        query_contenttype: function (row, col) {
+            return this.getAPI().getContentType(row, col);
+        },
+
+        query_contentinfo: function (row, col) {
+            return this.getAPI().getContentInfo(row, col);
         }
     });
 });

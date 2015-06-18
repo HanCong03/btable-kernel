@@ -13,6 +13,7 @@ define(function (require, exports, module) {
         clear: require('./commands/clear'),
         rowColumn: require('./commands/row-column'),
         border: require('./commands/border'),
-        theme: require('./commands/theme')
+        theme: require('./commands/theme'),
+        dimension: require('./commands/dimension')
     };
 });

@@ -32,7 +32,8 @@ define(function (require, exports, module) {
                 'generate.style': this.generateStyle,
                 'generate.border': this.generateBorder,
                 'get.style.detail': this.getClassifyStyleDetailBySid,
-                'get.cellstyle.detail': this.getClassifyCellStyleDetailBySid
+                'get.cellstyle.detail': this.getClassifyCellStyleDetailBySid,
+                'get.full.style.detail': this.getStyleDetailBySid
             });
         },
 
@@ -70,6 +71,16 @@ define(function (require, exports, module) {
 
         generateBorder: function (borderOption, sid) {
             return this.generateStyle('border', borderOption, sid);
+        },
+
+        getStyleDetailBySid: function (sid) {
+            return {
+                numfmts: this.getClassifyStyleDetailBySid('numfmts', sid),
+                fonts: this.getClassifyStyleDetailBySid('fonts', sid),
+                fills: this.getClassifyStyleDetailBySid('fills', sid),
+                borders: this.getClassifyStyleDetailBySid('borders', sid),
+                alignments: this.getClassifyStyleDetailBySid('alignments', sid)
+            };
         },
 
         getClassifyStyleDetailBySid: function (classify, sid) {

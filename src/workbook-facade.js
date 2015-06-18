@@ -22,7 +22,7 @@ define(function (require) {
         },
 
         queryCommandValue: function (command) {
-            return this.__$commander.queryValue(command);
+            return this.__$commander.queryValue.apply(this.__$commander, arguments);
         },
 
         queryCommandSupportExec: function (command) {

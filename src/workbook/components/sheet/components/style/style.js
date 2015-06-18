@@ -50,7 +50,9 @@ define(function (require) {
 
                 setColor: this.setColor,
                 setThemeColor: this.setThemeColor,
-                unsetColor: this.unsetColor
+                unsetColor: this.unsetColor,
+
+                getFullStyle: this.getFullStyle
             });
         },
 
@@ -86,6 +88,16 @@ define(function (require) {
             if (rangeType !== 'all') {
                 this.postMessage('style.dimension.change');
             }
+        },
+
+        getFullStyle: function (row, col) {
+            var sid = this.getCellSid(row, col);
+
+            if (!sid) {
+                return null;
+            }
+
+            return this.rs('get.full.style.detail', sid);
         },
 
         setSid: function (sid, start, end) {

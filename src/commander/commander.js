@@ -9,8 +9,8 @@ define(function (require) {
 
     return $$.createClass('WorkbookFacade', {
         __$apis: null,
-        __query: [],
-        __exec: [],
+        __query: {},
+        __exec: {},
 
         constructor: function (apis) {
             this.__$apis = apis;
@@ -27,11 +27,11 @@ define(function (require) {
             }
         },
 
-        exec: function (command) {
-            command = this.__getExecCommand(command);
+        exec: function (commandName) {
+            var command = this.__getExecCommand(commandName);
 
             if (!command) {
-                throw new Error('query command is not found: ' + command);
+                throw new Error('query command is not found: ' + commandName);
             }
 
             var args = [].slice.call(arguments, 1);
@@ -39,14 +39,16 @@ define(function (require) {
             return command.handler.apply(command.provider, args);
         },
 
-        queryValue: function (command) {
-            command = this.__getQueryCommand(command);
+        queryValue: function (commandName) {
+            var command = this.__getQueryCommand(commandName);
 
             if (!command) {
-                throw new Error('query command is not found: ' + command);
+                throw new Error('query command is not found: ' + commandName);
             }
 
-            return command.handler.apply(command.provider, null);
+            var args = [].slice.call(arguments, 1);
+
+            return command.handler.apply(command.provider, args);
         },
 
         querySupportExec: function (command) {
