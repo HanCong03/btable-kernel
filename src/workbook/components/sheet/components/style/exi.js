@@ -47,7 +47,17 @@ define(function (require, exports, module) {
 
         unsetColor: function (start, end) {
             this.unsetStyle('color', start, end);
-        }
+        },
         /* ---- 颜色设置 ---- end */
+
+        /* --- 格式化 start --- */
+        setNumberFormat: function (code, start, end) {
+            this.setStyle('numfmt', code, start, end);
+        },
+
+        getNumberFormat: function (row, col) {
+            return this.getStyle('numfmt', row, col);
+        }
+        /* --- 格式化 end --- */
     };
 });

@@ -31,7 +31,8 @@ define(function (require, exports, module) {
             this.registerService({
                 'generate.style': this.generateStyle,
                 'generate.border': this.generateBorder,
-                'get.style.detail': this.getClassifyStyleDetailBySid,
+                'get.classify.style.detail': this.getClassifyStyleDetailBySid,
+                'get.style.detail': this.getStyleBySid,
                 'get.cellstyle.detail': this.getClassifyCellStyleDetailBySid,
                 'get.full.style.detail': this.getStyleDetailBySid
             });
@@ -81,6 +82,17 @@ define(function (require, exports, module) {
                 borders: this.getClassifyStyleDetailBySid('borders', sid),
                 alignments: this.getClassifyStyleDetailBySid('alignments', sid)
             };
+        },
+
+        getStyleBySid: function (styleName, sid) {
+            var classify = STYLE_NAME_CLASSIFY_MAP[styleName];
+            var classifyDetails = $$.clone(this.getClassifyStyleDetailBySid(classify, sid));
+
+            if ($$.isNdef(classifyDetails)) {
+                return null;
+            }
+
+            return classifyDetails[styleName];
         },
 
         getClassifyStyleDetailBySid: function (classify, sid) {

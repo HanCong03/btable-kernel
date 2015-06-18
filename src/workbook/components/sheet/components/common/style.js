@@ -138,7 +138,7 @@ define(function (require) {
                 return undefined;
             }
 
-            return this.rs('get.style.detail', classify, sid);
+            return this.rs('get.classify.style.detail', classify, sid);
         },
 
         getColumnClassifyStyleDetails: function (classify, col) {
@@ -148,7 +148,7 @@ define(function (require) {
                 return undefined;
             }
 
-            return this.rs('get.style.detail', classify, sid);
+            return this.rs('get.classify.style.detail', classify, sid);
         },
 
         getCellClassifyStyleDetails: function (classify, row, col) {
@@ -158,7 +158,7 @@ define(function (require) {
                 return undefined;
             }
 
-            return this.rs('get.style.detail', classify, sid);
+            return this.rs('get.classify.style.detail', classify, sid);
         }
     };
 });
