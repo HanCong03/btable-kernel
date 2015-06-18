@@ -46,7 +46,7 @@ define(function (require) {
                 return true;
             }
 
-            return borderValue1.style === borderValue2.style && borderValue1.color === borderValue2.color;
+            return JSON.stringify(borderValue1) === JSON.stringify(borderValue2);
         }
     };
 
