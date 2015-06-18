@@ -39,15 +39,19 @@ define(function (require) {
 
         __initService: function () {
             this.registerService({
-                'getcellborder': this.getCellBorder,
+                'getcellborder': this.getBorder,
                 'getouterborder': this.getOuterBorder
             });
         },
 
         __initAPI: function () {
             this.registerAPI({
-                getCellBorder: this.getCellBorder,
-                getRangeBorder: this.getRangeBorder
+                getBorder: this.getBorder,
+                getLeftBorder: this.getLeftBorder,
+                getRightBorder: this.getRightBorder,
+                getTopBorder: this.getTopBorder,
+                getBottomBorder: this.getBottomBorder,
+                getOuterBorder: this.getOuterBorder
             });
         },
 
@@ -58,12 +62,25 @@ define(function (require) {
          * @param col
          * @returns {*}
          */
-        getCellBorder: function (row, col) {
-            //var styleData = this.getActiveSheet().style;
-            //var sid = this.getCellSid(row, col);
-            //console.log(sid)
-            //var borderDetails = this.getClassifyStyleDetailsById('borders', sid);
+        getBorder: function (row, col) {
+            var sid = this.getCellSid(row, col);
+            return this.rs('get.style.detail', 'border', sid);
+        },
 
+        getLeftBorder: function (start, end) {
+            return this.getRangeBorder(BORDER_LOCATION.LEFT, start, end);
+        },
+
+        getRightBorder: function (start, end) {
+            return this.getRangeBorder(BORDER_LOCATION.RIGHT, start, end);
+        },
+
+        getTopBorder: function (start, end) {
+            return this.getRangeBorder(BORDER_LOCATION.TOP, start, end);
+        },
+
+        getBottomBorder: function (start, end) {
+            return this.getRangeBorder(BORDER_LOCATION.BOTTOM, start, end);
         },
 
         getOuterBorder: function (start, end) {

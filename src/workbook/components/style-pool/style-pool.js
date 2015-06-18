@@ -104,6 +104,10 @@ define(function (require, exports, module) {
         },
 
         getStyleBySid: function (styleName, sid) {
+            if ($$.isNdef(sid)) {
+                sid = 0;
+            }
+
             var classify = STYLE_NAME_CLASSIFY_MAP[styleName];
             var classifyDetails = $$.clone(this.getClassifyStyleDetailBySid(classify, sid));
 

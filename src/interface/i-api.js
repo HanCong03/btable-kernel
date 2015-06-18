@@ -5,7 +5,7 @@
 
 define(function (require, exports, module) {
     module.exports = require('../base/clazz').create('IApi', {
-        __$apis: [],
+        __$apis: {},
 
         registerAPI: function (provider, name, handler) {
             if (typeof name === 'object') {

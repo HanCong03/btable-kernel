@@ -6,6 +6,7 @@
 define(function (require) {
     var $$ = require('utils');
     var BORDER_ORDER = require('./definition/border-order');
+    var NONE = require('NONE');
 
     return {
         /**
@@ -21,11 +22,27 @@ define(function (require) {
                 return null;
             }
 
+            if (borderValue.style === NONE || borderValue.color === NONE) {
+                return null;
+            }
+
             return $.extend({}, $$.clone(BORDER_ORDER), borderValue);
         },
 
         isSameBorderValue: function (borderValue1, borderValue2) {
+            if (borderValue1 === NONE) {
+                borderValue1 = null;
+            }
+
+            if (borderValue2 === NONE) {
+                borderValue2 = null;
+            }
+
             if (borderValue1 === borderValue2) {
+                return true;
+            }
+
+            if ($$.isNdef(borderValue1) && $$.isNdef(borderValue2)) {
                 return true;
             }
 
