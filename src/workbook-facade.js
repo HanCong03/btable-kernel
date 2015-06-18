@@ -22,6 +22,10 @@ define(function (require) {
             return this.__$workbook.getActiveHeap(name);
         },
 
+        getWorkbookHeap: function (name) {
+            return this.__$workbook.getWorkbookHeap(name);
+        },
+
         on: function (provider, args) {
             return this.__$workbook.onMessage(provider, args);
         }

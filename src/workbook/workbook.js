@@ -88,6 +88,10 @@ define(function (require) {
             return this.heap.getActiveHeap(name);
         },
 
+        getWorkbookHeap: function (name) {
+            return this.heap.getWorkbookHeap(name);
+        },
+
         getWorkbook: function () {
             return this.dmu.getWorkbook();
         },

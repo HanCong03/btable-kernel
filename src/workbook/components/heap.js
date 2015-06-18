@@ -26,6 +26,10 @@ define(function (require) {
             return this.__getHeap(heap, name);
         },
 
+        getWorkbookHeap: function (name) {
+            return this.__getHeap(this.heap.workbook, name);
+        },
+
         __getHeap: function (heap, name) {
             var index = this.getActiveSheetIndex();
 
