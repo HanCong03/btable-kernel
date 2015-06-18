@@ -19,15 +19,13 @@ define(function (require) {
                 setColWidth: this.setColWidth,
                 getRowHeight: this.getRowHeight,
                 getColWidth: this.getColWidth,
-                hasRowHeight: this.hasRowHeight,
-                hasColWidth: this.hasColWidth,
                 hideRow: this.hideRow,
                 hideCol: this.hideCol,
                 showRow: this.showRow,
                 showCol: this.showCol,
 
-                isHideRow: this.isHideRow,
-                isHideColumn: this.isHideColumn
+                isHiddenRow: this.isHiddenRow,
+                isHiddenColumn: this.isHiddenColumn
             });
         },
 
@@ -125,24 +123,6 @@ define(function (require) {
             }
 
             return this.rs('get.default.colwidth');
-        },
-
-        /**
-         * 判断指定行是否设置了行高
-         * @param row
-         */
-        hasRowHeight: function (row) {
-            var currentRow = this.getActiveSheet().cell.rows[row];
-            return $$.isDefined(currentRow) && $$.isDefined(currentRow.height);
-        },
-
-        /**
-         * 判断指定列是否设置了列宽
-         * @param row
-         */
-        hasColWidth: function (col) {
-            var currentCol = this.getActiveSheet().cell.cols[col];
-            return $$.isDefined(currentCol) && $$.isDefined(currentCol.width);
         },
 
         hideRow: function (startIndex, endIndex) {
@@ -263,7 +243,7 @@ define(function (require) {
          * 注：查询结果会参考全局行列隐藏
          * @param row
          */
-        isHideRow: function (row) {
+        isHiddenRow: function (row) {
             var cellData = this.getActiveSheet().cell;
             var rowsData = cellData.rows;
 
@@ -279,7 +259,7 @@ define(function (require) {
          * 注：查询结果会参考全局行列隐藏
          * @param row
          */
-        isHideColumn: function (col) {
+        isHiddenColumn: function (col) {
             var cellData = this.getActiveSheet().cell;
             var colsData = cellData.cols;
 
