@@ -34,7 +34,8 @@ define(function (require, exports, module) {
                 'get.classify.style.detail': this.getClassifyStyleDetailBySid,
                 'get.style.detail': this.getStyleBySid,
                 'get.cellstyle.detail': this.getClassifyCellStyleDetailBySid,
-                'get.full.style.detail': this.getStyleDetailBySid
+                'get.full.style.detail': this.getStyleDetailBySid,
+                'get.effective.style.detail': this.getEffectiveStyleBySid
             });
         },
 
@@ -84,6 +85,24 @@ define(function (require, exports, module) {
             };
         },
 
+        getEffectiveStyleBySid: function (styleName, sid) {
+            var classify = STYLE_NAME_CLASSIFY_MAP[styleName];
+            var classifyDetails = $$.clone(this.getEffectiveClassifyStyleDetailBySid(classify, sid));
+
+            if ($$.isNdef(classifyDetails)) {
+                return null;
+            }
+
+            var styleValue = classifyDetails[styleName];
+
+            // 检查是否和默认样式一致，如果一致
+            if (this.__isSameStyleValue(styleValue, DEFAULT_STYLE[classify][styleName])) {
+                return null;
+            }
+
+            return styleValue;
+        },
+
         getStyleBySid: function (styleName, sid) {
             var classify = STYLE_NAME_CLASSIFY_MAP[styleName];
             var classifyDetails = $$.clone(this.getClassifyStyleDetailBySid(classify, sid));
@@ -114,6 +133,34 @@ define(function (require, exports, module) {
         },
 
         /**
+         * 根据给定的sid获取有效的分类样式详情
+         * @param classify
+         * @param sid
+         */
+        getEffectiveClassifyStyleDetailBySid: function (classify, sid) {
+            if ($$.isNdef(sid) || sid) {
+                return null;
+            }
+
+            var data = this.getWorkbook();
+            var styleGroup = data.styleGroup[sid];
+            var applyName = STYLE_CLASSIFY_APPLYNAME_MAP[classify];
+
+            var pool = data.stylePool[classify];
+
+            if (styleGroup[applyName]) {
+                // 默认样式
+                if (styleGroup[classify] === 0) {
+                    return null;
+                }
+
+                return pool[styleGroup[classify]];
+            } else if (styleGroup.xf !== 0) {
+                return this.getEffectiveClassifyCellStyleDetailBySid(classify, styleGroup.xf);
+            }
+        },
+
+        /**
          * 根据样式xfid，获取指定类别的cellstyle detail
          * @param classify
          * @param xfid
@@ -129,7 +176,30 @@ define(function (require, exports, module) {
                 return pool[cellStyleGroup[classify]];
             }
 
-            return undefined;
+            return null;
+        },
+
+        /**
+         * 根据给定的xfid，获取有效的分类样式
+         * @param classify
+         * @param xfid
+         */
+        getEffectiveClassifyCellStyleDetailBySid: function (classify, xfid) {
+            var data = this.getWorkbook();
+            var cellStyleGroup = data.cellStyleGroup[xfid];
+            var pool = data.stylePool[classify];
+            var applyName = STYLE_CLASSIFY_APPLYNAME_MAP[classify];
+
+            if (cellStyleGroup[applyName]) {
+                // 默认样式
+                if (cellStyleGroup[classify] === 0) {
+                    return null;
+                }
+
+                return pool[cellStyleGroup[classify]];
+            }
+
+            return null;
         },
 
         __generateSidByClassify: function (classify, classifyDetails, sid) {
@@ -186,6 +256,18 @@ define(function (require, exports, module) {
             classifyPool.push(details);
 
             return classifyId;
+        },
+
+        __isSameStyleValue: function (val1, val2) {
+            if ($$.isNdef(val1) && $$.isNdef(val2)) {
+                return true;
+            }
+
+            if (val1 === val2) {
+                return true;
+            }
+
+            return JSON.stringify(val1) === JSON.stringify(val2);
         }
     });
 });

@@ -4,13 +4,15 @@
  */
 
 define(function (require) {
+    var $$ = require('utils');
     var WorkbookUtils = require('workbook-utils');
+
     var RowStyle = require('./row');
     var ColStyle = require('./col');
     var RangeStyle = require('./range');
     var AllStyle = require('./all');
 
-    return require('utils').createClass('Style', {
+    return $$.createClass('Style', {
         base: require('sheet-component'),
         mixin: [
             require('../common/style')
@@ -43,7 +45,8 @@ define(function (require) {
         __initAPI: function () {
             this.registerAPI({
                 setStyle: this.setStyle,
-                getStyle: this.getStyle
+                getStyle: this.getStyle,
+                getEffectiveStyle: this.getEffectiveStyle
             });
         },
 
@@ -84,6 +87,11 @@ define(function (require) {
         getStyle: function (styleName, row, col) {
             var sid = this.getCellSid(row, col);
             return this.rs('get.style.detail', styleName, sid);
+        },
+
+        getEffectiveStyle: function (styleName, row, col) {
+            var sid = this.getCellSid(row, col);
+            return this.rs('get.effective.style.detail', styleName, sid);
         },
 
         getFullStyle: function (row, col) {
