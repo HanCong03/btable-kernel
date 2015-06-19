@@ -45,9 +45,18 @@ define(function (require, exports, module) {
             //         s => 'string',
             //         n => 'number',
             //         ns => 'number_string',
-            //         u => 'undefined',
-            //         f => 'formula'
-            //         */
+            //         f => 'formula',
+            //         t => 'time',
+            //         dt = > 'datetime',
+            //         c => 'currency',
+            //         u => 'custom === > user',
+            //         a => 'accountant',
+            //         p => 'percent',
+            //         f => 'fraction',
+            //         sc => 'scientific',
+            //         l => 'logical',
+            //         e => 'error'
+            //        */
             //        type: 's',
             //        value: '0'
             //    }]
