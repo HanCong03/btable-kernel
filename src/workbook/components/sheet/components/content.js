@@ -17,7 +17,7 @@ define(function (require) {
 
         __initAPI: function () {
             this.registerAPI({
-                write: this.write,
+                setContent: this.setContent,
                 getContent: this.getContent,
                 getContentType: this.getContentType,
                 getContentInfo: this.getContentInfo
@@ -37,7 +37,7 @@ define(function (require) {
          * @param row
          * @param col
          */
-        write: function (content, contentType, row, col) {
+        setContent: function (content, contentType, row, col) {
             var rowsData = this.getActiveSheet().cell.rows;
 
             if (!content) {

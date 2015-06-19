@@ -22,14 +22,8 @@ define(function (require) {
                 getPane: this.getPane,
                 clearPane: this.clearPane,
 
-                setDefaultRowHeight: this.setDefaultRowHeight,
-                setDefaultColWidth: this.setDefaultColWidth,
-
-                getDefaultRowHeight: this.getDefaultRowHeight,
-                getDefaultColWidth: this.getDefaultColWidth,
-
                 isHideAllRow: this.isHideAllRow,
-                isHideAllCol: this.isHideAllCol
+                isHideAllColumn: this.isHideAllColumn
             });
 
             this.__initService();
@@ -48,7 +42,7 @@ define(function (require) {
                 'cancel.hide.all.col': this.cancelHideAllCol,
 
                 'is.hideallrow': this.isHideAllRow,
-                'is.hideallcol': this.isHideAllCol
+                'is.hideallcol': this.isHideAllColumn
             });
         },
 
@@ -122,6 +116,7 @@ define(function (require) {
         /**
          * 获取默认列宽
          * 单位为：px
+         * 注：该接口为内部接口
          * @returns {colWidth|*}
          */
         getDefaultColWidth: function () {
@@ -131,6 +126,7 @@ define(function (require) {
         /**
          * 设置默认行高
          * 单位为：px
+         * 注：该接口为内部接口
          * @param height
          */
         setDefaultRowHeight: function (height) {
@@ -170,7 +166,7 @@ define(function (require) {
             return !!sheetData.view.zeroHeight;
         },
 
-        isHideAllCol: function () {
+        isHideAllColumn: function () {
             var sheetData = this.getActiveSheet();
             return !!sheetData.view.zeroWidth;
         }

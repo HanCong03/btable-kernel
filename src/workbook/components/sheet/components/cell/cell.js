@@ -19,8 +19,7 @@ define(function (require) {
         __initService: function () {
             this.registerService({
                 'clearall': this.clearAll,
-                'synccell': this.syncCell,
-                'createcolumn': this.createColumn
+                'synccell': this.syncCell
             });
         },
 
@@ -28,11 +27,6 @@ define(function (require) {
             this.registerAPI({
                 clearAll: this.clearAll
             });
-        },
-
-        createColumn: function (col) {
-            var cellData = this.getActiveSheet().cell;
-            cellData.cols[col] = {};
         },
 
         /**
