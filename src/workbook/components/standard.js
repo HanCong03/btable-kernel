@@ -29,11 +29,11 @@ define(function (require) {
         },
 
         getStandardFont: function () {
-            return this.getActiveSheet().stylePool.fonts[0].name.value;
+            return this.getWorkbook().stylePool.fonts[0].name.value;
         },
 
         getStandardColor: function () {
-            return this.getActiveSheet().stylePool.fonts[0].color.value;
+            return this.getWorkbook().stylePool.fonts[0].color.value;
         },
 
         getStandardWidth: function () {

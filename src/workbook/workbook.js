@@ -9,6 +9,7 @@ define(function (require) {
 
     /* --- workbook components start --- */
     var Heap = require('./components/heap');
+    var Standard = require('./components/standard');
     var ThemeManager = require('./components/theme/theme');
     var StylePool = require('./components/style-pool/style-pool');
     var Sheet = require('./components/sheet/sheet');
@@ -28,6 +29,7 @@ define(function (require) {
 
         // components
         heap: null,
+        standard: null,
         themeManager: null,
         stylePool: null,
 
@@ -51,6 +53,7 @@ define(function (require) {
 
         __initComponents: function () {
             this.heap = new Heap(this);
+            this.standard = new Standard(this);
             this.themeManager = new ThemeManager(this);
             this.stylePool = new StylePool(this);
             this.sheet = new Sheet(this);
