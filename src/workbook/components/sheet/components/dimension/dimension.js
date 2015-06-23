@@ -239,7 +239,7 @@ define(function (require) {
         var min = -1;
 
         if (arr.length !== 0) {
-            min = Number.MAX_VALUE;
+            min = Number.POSITIVE_INFINITY;
 
             $$.forEach(arr, function (val) {
                 min = val < min ? val : min;
@@ -253,7 +253,7 @@ define(function (require) {
         var max = -1;
 
         if (arr.length !== 0) {
-            max = Number.MIN_VALUE;
+            max = Number.NEGATIVE_INFINITY;
 
             $$.forEach(arr, function (val) {
                 max = val > max ? val : max;
@@ -265,7 +265,7 @@ define(function (require) {
 
     // 类似getMin，但是不计算小于0的值
     function _getMin(arr) {
-        var min = Number.MAX_VALUE;
+        var min = Number.POSITIVE_INFINITY;
 
         $$.forEach(arr, function (val) {
             if (val < 0) {
@@ -275,12 +275,12 @@ define(function (require) {
             min = val < min ? val : min;
         });
 
-        return min === Number.MAX_VALUE ? -1 : min;
+        return min === Number.POSITIVE_INFINITY ? -1 : min;
     }
 
     // 类似getMax，但是不计算小于0的值
     function _getMax(arr) {
-        var max = Number.MIN_VALUE;
+        var max = Number.NEGATIVE_INFINITY;
 
         $$.forEach(arr, function (val) {
             if (val < 0) {
@@ -290,6 +290,6 @@ define(function (require) {
             max = val > max ? val : max;
         });
 
-        return max === Number.MIN_VALUE ? -1 : max;
+        return max === Number.NEGATIVE_INFINITY ? -1 : max;
     }
 });
