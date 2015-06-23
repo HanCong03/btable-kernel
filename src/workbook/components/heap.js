@@ -11,7 +11,8 @@ define(function (require) {
     return require('utils').createClass('Heap', {
         heap: {
             kernel: [],
-            other: []
+            other: [],
+            workbook: {}
         },
 
         base: require('../interface/i-workbook-component'),
@@ -27,7 +28,13 @@ define(function (require) {
         },
 
         getWorkbookHeap: function (name) {
-            return this.__getHeap(this.heap.workbook, name);
+            var heap = this.heap.workbook;
+
+            if (!heap[name]) {
+                heap[name] = {};
+            }
+
+            return heap[name];
         },
 
         __getHeap: function (heap, name) {

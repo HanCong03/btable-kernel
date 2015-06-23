@@ -18,7 +18,7 @@ define(function (require) {
                 setRowHeight: this.setRowHeight,
                 setColWidth: this.setColWidth,
                 getRowHeight: this.getRowHeight,
-                getColWidth: this.getColWidth,
+                getColumnWidth: this.getColumnWidth,
                 hideRow: this.hideRow,
                 hideCol: this.hideCol,
                 showRow: this.showRow,
@@ -115,7 +115,7 @@ define(function (require) {
          * 获取指定列的列宽
          * @param col
          */
-        getColWidth: function (col) {
+        getColumnWidth: function (col) {
             var currentCol = this.getActiveSheet().cell.cols[col];
 
             if ($$.isDefined(currentCol) && $$.isDefined(currentCol.width)) {

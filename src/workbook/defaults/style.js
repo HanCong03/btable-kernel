@@ -29,7 +29,7 @@ define(function (require, exports, module) {
             // underline: "single" or "double" or "none"
             underline: NONE,
             throughline: false,
-            size: 13
+            size: 11
         },
         fills: {
             fill: NONE

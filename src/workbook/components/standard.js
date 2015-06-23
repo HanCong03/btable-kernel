@@ -19,7 +19,7 @@ define(function (require) {
                 getStandardFontSize: this.getStandardFontSize,
                 getStandardFont: this.getStandardFont,
                 getStandardColor: this.getStandardColor,
-                getStandardWidth: this.getStandardHeight,
+                getStandardWidth: this.getStandardWidth,
                 getStandardHeight: this.getStandardHeight
             });
         },
@@ -29,11 +29,11 @@ define(function (require) {
         },
 
         getStandardFont: function () {
-            return this.getWorkbook().stylePool.fonts[0].name.value;
+            return this.getWorkbook('standard').stylePool.fonts[0].name.value;
         },
 
         getStandardColor: function () {
-            return this.getWorkbook().stylePool.fonts[0].color.value;
+            return this.getWorkbook('standard').stylePool.fonts[0].color.value;
         },
 
         getStandardWidth: function () {
