@@ -46,7 +46,10 @@ define(function (require) {
             this.registerAPI({
                 setStyle: this.setStyle,
                 getStyle: this.getStyle,
-                getEffectiveStyle: this.getEffectiveStyle
+                getEffectiveStyle: this.getEffectiveStyle,
+                getRowStyle: this.getRowStyle,
+                getColumnStyle: this.getColumnStyle,
+                getGlobalStyle: this.getGlobalStyle
             });
         },
 
@@ -82,6 +85,14 @@ define(function (require) {
             if (rangeType !== 'all') {
                 this.postMessage('style.dimension.change');
             }
+        },
+
+        getRowStyle: function (styleName, row) {
+            return this.rs('get.style.detail', styleName, this.getRealRowSid(row));
+        },
+
+        getColumnStyle: function (styleName, col) {
+            return this.rs('get.style.detail', styleName, this.getRealColumnSid(col));
         },
 
         getStyle: function (styleName, row, col) {

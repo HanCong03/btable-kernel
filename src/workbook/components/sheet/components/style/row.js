@@ -9,6 +9,8 @@ define(function (require) {
     return require('utils').createClass('RowStyle', {
         base: require('sheet-component'),
 
+        mixin: require('../common/style'),
+
         setStyle: function (styleName, styleValue, startIndex, endIndex) {
             var styleData = this.getActiveSheet().style;
             var rowsData = styleData.rows;
