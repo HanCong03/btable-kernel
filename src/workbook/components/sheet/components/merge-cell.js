@@ -17,7 +17,8 @@ define(function (require) {
             this.registerAPI({
                 mergeCell: this.mergeCell,
                 unmergeCell: this.unmergeCell,
-                toggleMergeCell: this.toggleMergeCell
+                toggleMergeCell: this.toggleMergeCell,
+                getMergeCells: this.getMergeCells
             });
         },
 
@@ -29,7 +30,7 @@ define(function (require) {
          * @return
          */
         mergeCell: function (start, end) {
-            var mergedKeys = this.__getMergeCells(start, end);
+            var mergedKeys = this.getMergeCells(start, end);
 
             // 区域内存在合并单元格，则删除这些单元格的合并记录。
             if (mergedKeys) {
@@ -58,7 +59,7 @@ define(function (require) {
         },
 
         unmergeCell: function (start, end) {
-            var mergedKeys = this.__getMergeCells(start, end);
+            var mergedKeys = this.getMergeCells(start, end);
 
             if (!mergedKeys) {
                 return;
@@ -70,7 +71,7 @@ define(function (require) {
         },
 
         toggleMergeCell: function (start, end) {
-            var mergedKeys = this.__getMergeCells(start, end);
+            var mergedKeys = this.getMergeCells(start, end);
 
             if (mergedKeys) {
                 this.__deleteMergeRecord(mergedKeys);
@@ -119,7 +120,7 @@ define(function (require) {
          * @returns {{}}
          * @private
          */
-        __getMergeCells: function (start, end) {
+        getMergeCells: function (start, end) {
             var merged = {};
             var hasMerged = false;
             var mergeCells = this.getActiveSheet().mergeCells;

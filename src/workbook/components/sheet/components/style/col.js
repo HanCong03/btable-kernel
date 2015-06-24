@@ -63,7 +63,7 @@ define(function (require) {
                         si: this.rs('generate.style', styleName, styleValue, currentRow.si)
                     };
                 }
-            });
+            }, this);
 
             // 生成列样式
             var sid;

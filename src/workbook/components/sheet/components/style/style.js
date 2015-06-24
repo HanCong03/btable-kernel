@@ -47,9 +47,11 @@ define(function (require) {
                 setStyle: this.setStyle,
                 getStyle: this.getStyle,
                 getEffectiveStyle: this.getEffectiveStyle,
-                getRowStyle: this.getRowStyle,
-                getColumnStyle: this.getColumnStyle,
-                getGlobalStyle: this.getGlobalStyle
+
+                getSettedCellStyle: this.getSettedCellStyle,
+                getSettedRowStyle: this.getSettedRowStyle,
+                getSettedColumnStyle: this.getSettedColumnStyle,
+                getSettedGlobalStyle: this.getSettedGlobalStyle
             });
         },
 
@@ -87,13 +89,75 @@ define(function (require) {
             }
         },
 
-        getRowStyle: function (styleName, row) {
-            return this.rs('get.style.detail', styleName, this.getRealRowSid(row));
+        /* --- setted 接口，非常底层的接口。不建议外层大量使用 start  --- */
+        /**
+         * 获取设置的单元格样式。
+         * 注：如果无有效行样式，则返回null。不进行层叠规则处理。
+         * @param styleName
+         * @param row
+         * @returns {*}
+         */
+        getSettedCellStyle: function (styleName, row, col) {
+            var sid = this.getSettedCellSid(row, col);
+
+            if ($$.isNdef(sid)) {
+                return null;
+            }
+
+            return this.rs('get.style.detail', styleName, sid);
         },
 
-        getColumnStyle: function (styleName, col) {
-            return this.rs('get.style.detail', styleName, this.getRealColumnSid(col));
+        /**
+         * 获取设置的行样式。
+         * 注：如果无有效行样式，则返回null。不进行层叠规则处理。
+         * @param styleName
+         * @param row
+         * @returns {*}
+         */
+        getSettedRowStyle: function (styleName, row) {
+            var sid = this.getSettedRowSid(row);
+
+            if ($$.isNdef(sid)) {
+                return null;
+            }
+
+            return this.rs('get.style.detail', styleName, sid);
         },
+
+        /**
+         * 获取设置的列样式。
+         * 注：如果无有效行样式，则返回null。不进行层叠规则处理。
+         * @param styleName
+         * @param row
+         * @returns {*}
+         */
+        getSettedColumnStyle: function (styleName, col) {
+            var sid = this.getSettedColumnSid(col);
+
+            if ($$.isNdef(sid)) {
+                return null;
+            }
+
+            return this.rs('get.style.detail', styleName, sid);
+        },
+
+        /**
+         * 获取设置的全局样式。
+         * 注：如果无有效行样式，则返回null。不进行层叠规则处理。
+         * @param styleName
+         * @param row
+         * @returns {*}
+         */
+        getSettedGlobalStyle: function (styleName) {
+            var sid = this.getSettedGlobalSid();
+
+            if ($$.isNdef(sid)) {
+                return null;
+            }
+
+            return this.rs('get.style.detail', styleName, sid);
+        },
+        /* --- setted 接口，非常底层的接口。不建议外层大量使用 end  --- */
 
         getStyle: function (styleName, row, col) {
             var sid = this.getCellSid(row, col);
@@ -103,16 +167,6 @@ define(function (require) {
         getEffectiveStyle: function (styleName, row, col) {
             var sid = this.getCellSid(row, col);
             return this.rs('get.effective.style.detail', styleName, sid);
-        },
-
-        getFullStyle: function (row, col) {
-            var sid = this.getCellSid(row, col);
-
-            if (!sid) {
-                return null;
-            }
-
-            return this.rs('get.full.style.detail', sid);
         },
 
         setSid: function (sid, start, end) {

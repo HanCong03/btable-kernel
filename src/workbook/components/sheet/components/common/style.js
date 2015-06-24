@@ -129,6 +129,64 @@ define(function (require) {
         },
 
         /**
+         * 获取显示设置的sid
+         * 注：该接口不进行叠加处理
+         * @param row
+         */
+        getSettedCellSid: function (row, col) {
+            var styleData = this.getActiveSheet().style;
+            var currentRow = styleData.rows[row];
+
+            // 行存在
+            if ($$.isDefined(currentRow)) {
+                // 单元格已存在
+                if ($$.isDefined(currentRow.cells) && $$.isDefined(currentRow.cells[col])) {
+                    return currentRow.cells[col].si || 0;
+                }
+            }
+
+            return null;
+        },
+
+        /**
+         * 获取显示设置的sid
+         * 注：该接口不进行叠加处理
+         * @param row
+         */
+        getSettedRowSid: function (row) {
+            var styleData = this.getActiveSheet().style;
+            var currentRow = styleData.rows[row];
+
+            // 行数据存在且该行是一个自定义样式行
+            if ($$.isDefined(currentRow) && $$.isDefined(currentRow.customFormat)) {
+                return currentRow.si || 0;
+            }
+
+            return null;
+        },
+
+        /**
+         * 获取显示设置的sid
+         * 注：该接口不进行叠加处理
+         * @param row
+         */
+        getSettedColumnSid: function (col) {
+            var styleData = this.getActiveSheet().style;
+            var currentCol = styleData.cols[col];
+
+            // 查找列自身样式
+            if ($$.isDefined(currentCol) && $$.isDefined(currentCol.customFormat)) {
+                return currentCol.si || 0;
+            }
+
+            return null;
+        },
+
+        getSettedGlobalSid: function () {
+            return this.getActiveSheet().style.globalStyle;
+        },
+
+        /**
          * 获取指定行的指定样式类别的详情
          */
         getRowClassifyStyleDetails: function (classify, row) {
