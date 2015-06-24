@@ -29,6 +29,7 @@ define(function (require, exports, module) {
 
         __initService: function () {
             this.registerService({
+                'get.default.classify': this.getDefaultClassifyStyle,
                 'generate.style': this.generateStyle,
                 'generate.border': this.generateBorder,
                 'get.classify.style.detail': this.getClassifyStyleDetailBySid,
@@ -73,6 +74,10 @@ define(function (require, exports, module) {
 
         generateBorder: function (borderOption, sid) {
             return this.generateStyle('border', borderOption, sid);
+        },
+
+        getDefaultClassifyStyle: function (classify) {
+            return this.getClassifyStyleDetailBySid(classify, 0);
         },
 
         getStyleDetailBySid: function (sid) {
@@ -142,7 +147,7 @@ define(function (require, exports, module) {
          * @param sid
          */
         getEffectiveClassifyStyleDetailBySid: function (classify, sid) {
-            if ($$.isNdef(sid) || sid) {
+            if ($$.isNdef(sid) || sid === 0) {
                 return null;
             }
 

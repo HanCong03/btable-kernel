@@ -10,7 +10,14 @@ define(function (require) {
         base: require('sheet-component'),
 
         init: function () {
+            this.__initService();
             this.__initAPI();
+        },
+
+        __initService: function () {
+            this.registerService({
+                'get.mergecells': this.getMergeCells
+            });
         },
 
         __initAPI: function () {

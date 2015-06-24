@@ -45,9 +45,11 @@ define(function (require) {
         __initAPI: function () {
             this.registerAPI({
                 setStyle: this.setStyle,
+                unsetStyle: this.unsetStyle,
                 getStyle: this.getStyle,
-                getEffectiveStyle: this.getEffectiveStyle,
 
+                getDefaultClassifyStyle: this.getDefaultClassifyStyle,
+                getEffectiveStyle: this.getEffectiveStyle,
                 getSettedCellStyle: this.getSettedCellStyle,
                 getSettedRowStyle: this.getSettedRowStyle,
                 getSettedColumnStyle: this.getSettedColumnStyle,
@@ -105,6 +107,10 @@ define(function (require) {
             }
 
             return this.rs('get.style.detail', styleName, sid);
+        },
+
+        getDefaultClassifyStyle: function (classify) {
+            return this.rs('get.default.classify', classify);
         },
 
         /**

@@ -57,7 +57,7 @@ define(function (require) {
 
             // 备份cell存在，则设置该单元格数据
             if (copyCellData) {
-                this.__setCellData(copyCellData, start.row, 0);
+                this.__setCellData(copyCellData, start.row, start.col);
             }
 
             var sid = this.rs('getcellsid', cell.row, cell.col);
