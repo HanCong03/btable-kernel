@@ -49,6 +49,8 @@ define(function (require) {
 
             // 备份cell内容
             var copyCellData = $$.clone(this.__getCellData(cell.row, cell.col));
+            // 备份cell sid
+            var sid = this.rs('getcellsid', cell.row, cell.col);
 
             this.postMessage('lock');
 
@@ -59,8 +61,6 @@ define(function (require) {
             if (copyCellData) {
                 this.__setCellData(copyCellData, start.row, start.col);
             }
-
-            var sid = this.rs('getcellsid', cell.row, cell.col);
 
             // 剔除样式中的border，生成新的sid
             sid = this.rs('generate.border', null, sid);
