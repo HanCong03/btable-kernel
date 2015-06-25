@@ -47,6 +47,7 @@ define(function (require) {
                 setStyle: this.setStyle,
                 unsetStyle: this.unsetStyle,
                 getStyle: this.getStyle,
+                getClassifyStyle: this.getClassifyStyle,
 
                 getDefaultClassifyStyle: this.getDefaultClassifyStyle,
                 getEffectiveStyle: this.getEffectiveStyle,
@@ -107,6 +108,11 @@ define(function (require) {
             }
 
             return this.rs('get.style.detail', styleName, sid);
+        },
+
+        getClassifyStyle: function (classify, row, col) {
+            var sid = this.getSettedCellSid(row, col);
+            return this.rs('get.classify.style.detail',classify,  sid);
         },
 
         getDefaultClassifyStyle: function (classify) {
