@@ -19,6 +19,7 @@ define(function (require) {
             this.registerAPI({
                 setContent: this.setContent,
                 getContent: this.getContent,
+                clearContent: this.clearContent,
                 getContentType: this.getContentType,
                 getContentInfo: this.getContentInfo
             });
