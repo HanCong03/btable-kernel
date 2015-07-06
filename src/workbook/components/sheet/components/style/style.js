@@ -49,6 +49,8 @@ define(function (require) {
                 getStyle: this.getStyle,
                 getClassifyStyle: this.getClassifyStyle,
 
+                getBatchClassifyStyle: this.getBatchClassifyStyle,
+
                 getDefaultClassifyStyle: this.getDefaultClassifyStyle,
                 getEffectiveClassifyStyle: this.getEffectiveClassifyStyle,
                 getEffectiveStyle: this.getEffectiveStyle,
@@ -114,6 +116,19 @@ define(function (require) {
         getClassifyStyle: function (classify, row, col) {
             var sid = this.getSettedCellSid(row, col);
             return this.rs('get.classify.style.detail',classify,  sid);
+        },
+
+        getBatchClassifyStyle: function (classify, cells) {
+            var result = {};
+
+            $$.forEach(cells, function (cell) {
+                var sid = this.getCellSid(cell.row, cell.col);;
+                var key = cell.row + ',' + cell.col;
+
+                result[key] = this.rs('get.classify.style.detail',classify, sid);
+            }, this);
+
+            return result;
         },
 
         getDefaultClassifyStyle: function (classify) {

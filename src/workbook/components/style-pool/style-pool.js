@@ -156,13 +156,13 @@ define(function (require, exports, module) {
             }
 
             var classify = STYLE_NAME_CLASSIFY_MAP[styleName];
-            var classifyDetails = $$.clone(this.getClassifyStyleDetailBySid(classify, sid));
+            var classifyDetails = this.getClassifyStyleDetailBySid(classify, sid);
 
             if ($$.isNdef(classifyDetails)) {
                 return null;
             }
 
-            return $$.clone(classifyDetails[styleName]);
+            return classifyDetails[styleName];
         },
 
         getClassifyStyleDetailBySid: function (classify, sid) {
@@ -177,7 +177,7 @@ define(function (require, exports, module) {
             var pool = data.stylePool[classify];
 
             if (styleGroup[applyName]) {
-                return $$.clone(pool[styleGroup[classify]]);
+                return pool[styleGroup[classify]];
             } else {
                 return this.getClassifyCellStyleDetailBySid(classify, styleGroup.xf);
             }
@@ -224,7 +224,7 @@ define(function (require, exports, module) {
             var applyName = STYLE_CLASSIFY_APPLYNAME_MAP[classify];
 
             if (cellStyleGroup[applyName]) {
-                return $$.clone(pool[cellStyleGroup[classify]]);
+                return pool[cellStyleGroup[classify]];
             }
 
             return null;

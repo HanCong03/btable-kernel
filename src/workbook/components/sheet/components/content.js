@@ -13,7 +13,6 @@ define(function (require) {
         init: function () {
             this.__initAPI();
             this.__initService();
-            this.__initService();
         },
 
         __initAPI: function () {
@@ -28,13 +27,8 @@ define(function (require) {
 
         __initService: function () {
             this.registerService({
+                'get.content.type': this.getContentType,
                 'clearcontent': this.clearContent
-            });
-        },
-
-        __initService: function () {
-            this.registerService({
-                'get.content.type': this.getContentType
             });
         },
 

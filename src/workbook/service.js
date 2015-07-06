@@ -22,7 +22,6 @@ define(function (require, exports, module) {
 
         rs: function (name) {
             var args = [].slice.call(arguments, 1);
-
             var service = this.__$services[name];
 
             if (!service) {

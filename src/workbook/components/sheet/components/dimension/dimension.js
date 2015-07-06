@@ -31,7 +31,9 @@ define(function (require) {
                 'all.dimension.change': this.onAllChange,
 
                 'lock': this.lock,
-                'unlock': this.unlock
+                'unlock': this.unlock,
+
+                'get.dimension': this.getDimension
             });
         },
 
