@@ -38,7 +38,17 @@ define(function (require) {
                 }
             }
 
-            userStyles = $.extend(userStyles, defaultStyles);
+            userStyles = $.extend(defaultStyles, userStyles);
+
+            if (classify === 'fonts') {
+                if (typeof userStyles.name === 'object') {
+                    userStyles.name = userStyles.name.value;
+                }
+
+                if (typeof userStyles.color === 'object') {
+                    userStyles.color = userStyles.color.value;
+                }
+            }
 
             for (var key in userStyles) {
                 if (!userStyles.hasOwnProperty(key)) {
@@ -71,6 +81,10 @@ define(function (require) {
                 if (!userStyle) {
                     userStyle = this.rs('get.default.style', styleName);
                 }
+            }
+
+            if ((styleName === 'color' || styleName === 'name') && typeof userStyle === 'object') {
+                userStyle = userStyle.value;
             }
 
             if (userStyle === NONE) {

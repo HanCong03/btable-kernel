@@ -162,7 +162,7 @@ define(function (require, exports, module) {
                 return null;
             }
 
-            return classifyDetails[styleName];
+            return $$.clone(classifyDetails[styleName]);
         },
 
         getClassifyStyleDetailBySid: function (classify, sid) {
@@ -177,7 +177,7 @@ define(function (require, exports, module) {
             var pool = data.stylePool[classify];
 
             if (styleGroup[applyName]) {
-                return pool[styleGroup[classify]];
+                return $$.clone(pool[styleGroup[classify]]);
             } else {
                 return this.getClassifyCellStyleDetailBySid(classify, styleGroup.xf);
             }
@@ -224,7 +224,7 @@ define(function (require, exports, module) {
             var applyName = STYLE_CLASSIFY_APPLYNAME_MAP[classify];
 
             if (cellStyleGroup[applyName]) {
-                return pool[cellStyleGroup[classify]];
+                return $$.clone(pool[cellStyleGroup[classify]]);
             }
 
             return null;
