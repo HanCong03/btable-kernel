@@ -16,7 +16,7 @@ define(function (require) {
         init: function () {
             this.registerAPI({
                 setRowHeight: this.setRowHeight,
-                setColWidth: this.setColWidth,
+                setColumnWidth: this.setColumnWidth,
                 getRowHeight: this.getRowHeight,
                 getColumnWidth: this.getColumnWidth,
                 hideRow: this.hideRow,
@@ -70,7 +70,7 @@ define(function (require) {
          * @param endIndex 列结束索引
          * @returns {*}
          */
-        setColWidth: function (width, startIndex, endIndex) {
+        setColumnWidth: function (width, startIndex, endIndex) {
             // 如果即将设置的宽度为0，则设置该列隐藏，不改变其宽度，以便取消隐藏时可以恢复到之前的宽度。
             if (width === 0) {
                 return this.hideColumn(startIndex, endIndex);
