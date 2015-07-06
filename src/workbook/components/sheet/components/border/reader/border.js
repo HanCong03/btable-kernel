@@ -47,6 +47,7 @@ define(function (require) {
         __initAPI: function () {
             this.registerAPI({
                 getBorder: this.getBorder,
+                getBorders: this.getBorders,
                 getLeftBorder: this.getLeftBorder,
                 getRightBorder: this.getRightBorder,
                 getTopBorder: this.getTopBorder,
@@ -65,6 +66,19 @@ define(function (require) {
         getBorder: function (row, col) {
             var sid = this.getCellSid(row, col);
             return this.rs('get.style.detail', 'border', sid);
+        },
+
+        getBorders: function (cells) {
+            var result = {};
+
+            $$.forEach(cells, function (cell) {
+                var key = cell.row + ',' + cell.col;
+                var sid = this.getCellSid(cell.row, cell.col);
+                result[key] = this.rs('get.style.detail', 'border', sid);
+
+            }, this);
+
+            return result;
         },
 
         getLeftBorder: function (start, end) {
