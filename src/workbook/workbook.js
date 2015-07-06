@@ -12,6 +12,7 @@ define(function (require) {
     var Standard = require('./components/standard');
     var ThemeManager = require('./components/theme/theme');
     var StylePool = require('./components/style-pool/style-pool');
+    var Direction = require('./components/direction');
     var Sheet = require('./components/sheet/sheet');
     /* --- workbook components end --- */
 
@@ -31,7 +32,9 @@ define(function (require) {
         heap: null,
         standard: null,
         themeManager: null,
+        direction: null,
         stylePool: null,
+        sheet: null,
 
         constructor: function (config) {
             this.__initConfig(config);
@@ -56,6 +59,7 @@ define(function (require) {
             this.standard = new Standard(this);
             this.themeManager = new ThemeManager(this);
             this.stylePool = new StylePool(this);
+            this.direction = new Direction(this);
             this.sheet = new Sheet(this);
         },
 

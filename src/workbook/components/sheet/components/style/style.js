@@ -50,6 +50,7 @@ define(function (require) {
                 getClassifyStyle: this.getClassifyStyle,
 
                 getDefaultClassifyStyle: this.getDefaultClassifyStyle,
+                getEffectiveClassifyStyle: this.getEffectiveClassifyStyle,
                 getEffectiveStyle: this.getEffectiveStyle,
                 getSettedCellStyle: this.getSettedCellStyle,
                 getSettedRowStyle: this.getSettedRowStyle,
@@ -176,9 +177,21 @@ define(function (require) {
             return this.rs('get.style.detail', styleName, sid);
         },
 
+        /**
+         * 获取用户设置的指定的样式，如果用户未设置该样式，则返回null
+         * @param styleName
+         * @param row
+         * @param col
+         * @returns {*}
+         */
         getEffectiveStyle: function (styleName, row, col) {
             var sid = this.getCellSid(row, col);
             return this.rs('get.effective.style.detail', styleName, sid);
+        },
+
+        getEffectiveClassifyStyle: function (classify, row, col) {
+            var sid = this.getCellSid(row, col);
+            return this.rs('get.effective.classify.style.detail', classify, sid);
         },
 
         setSid: function (sid, start, end) {

@@ -13,6 +13,7 @@ define(function (require, exports, module) {
         readonly: false,
         sheetNames: [],
         sheets: [],
+        dir: 'ltr',
         theme: $$.clone(BUILTIN_THEMES['office']),
         stylePool: {
             numfmts: [DEFAULTS_STYLE.numfmts],

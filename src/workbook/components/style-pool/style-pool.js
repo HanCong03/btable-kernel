@@ -18,26 +18,47 @@ define(function (require, exports, module) {
         // 样式组索引映射
         __groupMap: {},
 
+        // 默认样式映射图
+        __defaultStyleMap: {},
+
         mixin: [
-            require('./map')
+            require('./map'),
+            require('./filter')
         ],
 
         init: function () {
             this.__initMap();
             this.__initService();
+            this.__initDefaultStyleMap();
         },
 
         __initService: function () {
             this.registerService({
                 'get.default.classify': this.getDefaultClassifyStyle,
+                'get.default.style': this.getDefaultStyle,
                 'generate.style': this.generateStyle,
                 'generate.border': this.generateBorder,
                 'get.classify.style.detail': this.getClassifyStyleDetailBySid,
                 'get.style.detail': this.getStyleBySid,
                 'get.cellstyle.detail': this.getClassifyCellStyleDetailBySid,
                 'get.full.style.detail': this.getStyleDetailBySid,
-                'get.effective.style.detail': this.getEffectiveStyleBySid
+                'get.effective.style.detail': this.getEffectiveStyleBySid,
+                'get.effective.classify.style.detail': this.getEffectiveClassifyStyleBySid
             });
+        },
+
+        __initDefaultStyleMap: function () {
+            var map = this.__defaultStyleMap;
+
+            for (var key in DEFAULT_STYLE) {
+                if (!DEFAULT_STYLE.hasOwnProperty(key)) {
+                    continue;
+                }
+
+                for (var name in DEFAULT_STYLE[key]) {
+                    map[name] = JSON.stringify(DEFAULT_STYLE[key][name]);
+                }
+            }
         },
 
         /**
@@ -80,6 +101,10 @@ define(function (require, exports, module) {
             return this.getClassifyStyleDetailBySid(classify, 0);
         },
 
+        getDefaultStyle: function (styleName) {
+            return this.getStyleBySid(styleName, 0);
+        },
+
         getStyleDetailBySid: function (sid) {
             return {
                 numfmts: this.getClassifyStyleDetailBySid('numfmts', sid),
@@ -90,6 +115,12 @@ define(function (require, exports, module) {
             };
         },
 
+        /**
+         * 获取用户设置的有效样式
+         * @param styleName
+         * @param sid
+         * @returns {*}
+         */
         getEffectiveStyleBySid: function (styleName, sid) {
             var classify = STYLE_NAME_CLASSIFY_MAP[styleName];
             var classifyDetails = $$.clone(this.getEffectiveClassifyStyleDetailBySid(classify, sid));
@@ -100,12 +131,23 @@ define(function (require, exports, module) {
 
             var styleValue = classifyDetails[styleName];
 
-            // 检查是否和默认样式一致，如果一致
-            if (this.__isSameStyleValue(styleValue, DEFAULT_STYLE[classify][styleName])) {
+            return this.__filterStyle(styleName, styleValue);
+        },
+
+        /**
+         * 根据指定的sid获取用户设置的样式分类，如果该分类不包含用户设置的样式，则返回null，
+         * 否则，返回的数据里只包含显示设置的内容，未设置的样式，不包含在返回值中。
+         * @param classify
+         * @param sid
+         */
+        getEffectiveClassifyStyleBySid: function (classify, sid) {
+            if ($$.isNdef(sid) || sid === 0) {
                 return null;
             }
 
-            return styleValue;
+            var classifyDetails = $$.clone(this.getEffectiveClassifyStyleDetailBySid(classify, sid));
+
+            return this.__filterClassifyStyle(classifyDetails);
         },
 
         getStyleBySid: function (styleName, sid) {
