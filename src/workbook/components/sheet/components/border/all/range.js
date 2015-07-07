@@ -13,7 +13,8 @@ define(function (require) {
             /* ---- 处理上一行的独立单元格 ---- */
             var prevRowIndex = start.row - 1;
 
-            this.rs('restrict.remove.border', BORDER_LOCATION.BOTTOM, {
+            this.getModule('Border').restrictRemoveBorder(BORDER_LOCATION.BOTTOM, {
+            //this.rs('restrict.remove.border', BORDER_LOCATION.BOTTOM, {
                 row: prevRowIndex,
                 col: start.col
             }, {
@@ -25,7 +26,8 @@ define(function (require) {
             /* ---- 处理下一行的独立单元格 ---- */
             var nextRowIndex = end.row + 1;
 
-            this.rs('restrict.remove.border', BORDER_LOCATION.TOP, {
+            this.getModule('Border').restrictRemoveBorder(BORDER_LOCATION.TOP, {
+            //this.rs('restrict.remove.border', BORDER_LOCATION.TOP, {
                 row: nextRowIndex,
                 col: start.col
             }, {
@@ -36,7 +38,8 @@ define(function (require) {
             /* ---- 处理前一列上的独立单元格 ---- */
             var prevColIndex = start.col - 1;
 
-            this.rs('restrict.remove.border', BORDER_LOCATION.RIGHT, {
+            this.getModule('Border').restrictRemoveBorder(BORDER_LOCATION.RIGHT, {
+            //this.rs('restrict.remove.border', BORDER_LOCATION.RIGHT, {
                 row: start.row,
                 col: prevColIndex
             }, {
@@ -47,7 +50,8 @@ define(function (require) {
             /* ---- 处理后一列上的独立单元格 ---- */
             var nextColIndex = end.col + 1;
 
-            this.rs('restrict.remove.border', BORDER_LOCATION.LEFT, {
+            this.getModule('Border').restrictRemoveBorder(BORDER_LOCATION.LEFT, {
+            //this.rs('restrict.remove.border', BORDER_LOCATION.LEFT, {
                 row: start.row,
                 col: nextColIndex
             }, {

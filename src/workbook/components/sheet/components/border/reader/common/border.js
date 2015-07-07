@@ -218,7 +218,7 @@ define(function (require, exports, module) {
         /* ----- 列级边框 end ----- */
 
         __getBorderValue: function (location, sid) {
-            var details = this.rs('get.classify.style.detail', 'borders', sid);
+            var details = this.getModule('StylePool').getClassifyStyleDetailBySid('borders', sid);
 
             if (details) {
                 details = details.border[location];

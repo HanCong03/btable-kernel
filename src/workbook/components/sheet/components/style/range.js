@@ -33,10 +33,12 @@ define(function (require) {
                 for (var j = start.col, jlimit = end.col; j <= jlimit; j++) {
                     if ($$.isNdef(cells[j])) {
                         cells[j] = {
-                            si: this.rs('generate.style', styleName, styleValue, this.getCellSid(i, j))
+                            //si: this.rs('generate.style', styleName, styleValue, this.getCellSid(i, j))
+                            si: this.getModule('StylePool').generateStyle(styleName, styleValue, this.getCellSid(i, j))
                         };
                     } else {
-                        cells[j].si = this.rs('generate.style', styleName, styleValue, cells[j].si);
+                        cells[j].si = this.getModule('StylePool').generateStyle(styleName, styleValue, cells[j].si);
+                        //cells[j].si = this.rs('generate.style', styleName, styleValue, cells[j].si);
                     }
                 }
             }

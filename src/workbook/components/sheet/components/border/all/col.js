@@ -14,24 +14,38 @@ define(function (require) {
             var prevColIndex = startIndex - 1;
             var maxRowIndex = this.getConfig('MAX_ROW') - 1;
 
-            this.rs('restrict.remove.border', BORDER_LOCATION.RIGHT, {
+            this.getModule('Border').restrictRemoveBorder(BORDER_LOCATION.RIGHT, {
                 row: 0,
                 col: prevColIndex
             }, {
                 row: maxRowIndex,
                 col: prevColIndex
             });
+            //this.rs('restrict.remove.border', BORDER_LOCATION.RIGHT, {
+            //    row: 0,
+            //    col: prevColIndex
+            //}, {
+            //    row: maxRowIndex,
+            //    col: prevColIndex
+            //});
 
             /* ---- 处理后一列上的独立单元格 ---- */
             var nextColIndex = endIndex + 1;
 
-            this.rs('restrict.remove.border', BORDER_LOCATION.LEFT, {
+            this.getModule('Border').restrictRemoveBorder(BORDER_LOCATION.LEFT, {
                 row: 0,
                 col: nextColIndex
             }, {
                 row: maxRowIndex,
                 col: nextColIndex
             });
+            //this.rs('restrict.remove.border', BORDER_LOCATION.LEFT, {
+            //    row: 0,
+            //    col: nextColIndex
+            //}, {
+            //    row: maxRowIndex,
+            //    col: nextColIndex
+            //});
         }
     });
 });

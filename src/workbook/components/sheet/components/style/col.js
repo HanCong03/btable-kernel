@@ -34,7 +34,8 @@ define(function (require) {
                         continue;
                     }
 
-                    currentCell.si = this.rs('generate.style', styleName, styleValue, currentCell.si);
+                    currentCell.si = this.getModule('StylePool').generateStyle(styleName, styleValue, currentCell.si);
+                    //currentCell.si = this.rs('generate.style', styleName, styleValue, currentCell.si);
                 }
             }, this);
 
@@ -60,7 +61,8 @@ define(function (require) {
 
                     // 基于行样式生成新单元格以覆盖重叠部分
                     currentRow.cells[i] = {
-                        si: this.rs('generate.style', styleName, styleValue, currentRow.si)
+                        si: this.getModule('StylePool').generateStyle(styleName, styleValue, currentRow.si)
+                        //si: this.rs('generate.style', styleName, styleValue, currentRow.si)
                     };
                 }
             }, this);
@@ -70,7 +72,8 @@ define(function (require) {
             var globalStyle = styleData.globalStyle;
 
             for (var i = startIndex; i <= endIndex; i++) {
-                sid = this.rs('generate.style', styleName, styleValue, this.getColumnSid(i));
+                //sid = this.rs('generate.style', styleName, styleValue, this.getColumnSid(i));
+                sid = this.getModule('StylePool').generateStyle(styleName, styleValue, this.getColumnSid(i));
 
                 if (sid === globalStyle) {
                     // 新样式和全局样式一致，则删除列样式

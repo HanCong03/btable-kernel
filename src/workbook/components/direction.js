@@ -21,9 +21,9 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
-                'get.direction': this.getDirection
-            });
+            this.registerService([
+                'getDirection'
+            ]);
         },
 
         getDirection: function () {

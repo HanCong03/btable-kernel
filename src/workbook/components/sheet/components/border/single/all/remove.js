@@ -24,7 +24,8 @@ define(function (require) {
         },
 
         __removeInnerBorder: function () {
-            this.rs('unset.border', {
+            this.getModule('Border').unsetBorder({
+            //this.rs('unset.border', {
                 row: 0,
                 col: 0
             }, {

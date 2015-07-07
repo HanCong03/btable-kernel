@@ -15,9 +15,11 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
-                'get.mergecells': this.getMergeCells
-            });
+            this.registerService([
+                'getMergeCells'
+            ]);
+
+            //'get.mergecells': this.getMergeCells
         },
 
         __initAPI: function () {
@@ -47,18 +49,22 @@ define(function (require) {
             this.postMessage('lock');
 
             // 获取合并区域的边框值
-            var borderOptions = this.rs('getouterborder', start, end);
+            var borderOptions = this.getModule('BorderReader').getOuterBorder(start, end);
 
             // 添加新的合并记录
             this.__addMergeRecord(start, end);
             // 同步样式
-            this.rs('synccell', start, end);
+            this.getModule('Cell').syncCell(start, end);
+            //this.rs('synccell', start, end);
+
+            var borderModule = this.getModule('Border');
 
             // 设置边框
-            this.rs('add.border.top', borderOptions.top, start, end);
-            this.rs('add.border.right', borderOptions.right, start, end);
-            this.rs('add.border.bottom', borderOptions.bottom, start, end);
-            this.rs('add.border.left', borderOptions.left, start, end);
+            borderModule.addTopBorder(borderOptions.top, start, end);
+
+            borderModule.addRightBorder(borderOptions.right, start, end);
+            borderModule.addBottomBorder(borderOptions.bottom, start, end);
+            borderModule.addLeftBorder(borderOptions.left, start, end);
 
             this.postMessage('unlock');
 
@@ -88,7 +94,8 @@ define(function (require) {
                 // 添加新的合并记录
                 this.__addMergeRecord(start, end);
                 // 同步样式
-                this.rs('synccell', start, end);
+                //this.rs('synccell', start, end);
+                this.getModule('Cell').syncCell(start, end);
 
                 this.postMessage('unlock');
             }

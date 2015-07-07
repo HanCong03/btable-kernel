@@ -22,9 +22,13 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
-                'get.hoizontal.for.type': this.getHorizontalForType
-            });
+            //this.registerService({
+            //    'get.hoizontal.for.type': this.getHorizontalForType
+            //});
+
+            this.registerService([
+                'getHorizontalForType'
+            ]);
         },
 
         /**
@@ -34,13 +38,13 @@ define(function (require) {
          * @param col
          */
         getHorizontalForType: function (row, col) {
-            var type = this.rs('get.content.type', row, col);
+            var type = this.getModule('Content').getContentType(row, col);
 
             if ($$.isNdef(type)) {
                 return type;
             }
 
-            var dir = this.rs('get.direction');
+            var dir = this.getModule('Direction').getDirection();
 
             return TEXT_ALIGN[dir][type];
         }

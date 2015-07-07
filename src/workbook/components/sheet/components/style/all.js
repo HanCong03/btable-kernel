@@ -19,7 +19,9 @@ define(function (require) {
 
 
             // 更新全局sid
-            var globalSid = this.rs('generate.style', styleName, styleValue, styleData.globalStyle);
+            this.getModule('StylePool').generateStyle(styleName, styleValue, styleData.globalStyle);
+            //var globalSid = this.rs('generate.style', styleName, styleValue, styleData.globalStyle);
+            var globalSid = this.getModule('StylePool').generateStyle(styleName, styleValue, styleData.globalStyle);
             styleData.globalStyle = globalSid;
 
             // 更新行sid
@@ -28,12 +30,14 @@ define(function (require) {
                     return;
                 }
 
-                currentRow.si = this.rs('generate.style', styleName, styleValue, currentRow.si);
+                currentRow.si = this.getModule('StylePool').generateStyle(styleName, styleValue, currentRow.si);
+                //currentRow.si = this.rs('generate.style', styleName, styleValue, currentRow.si);
             }, this);
 
             // 更新列sid
             $$.forEach(colsData, function (currentCol, col) {
-                var sid = this.rs('generate.style', styleName, styleValue, this.getColumnSid(col));
+                //var sid = this.rs('generate.style', styleName, styleValue, this.getColumnSid(col));
+                var sid = this.getModule('StylePool').generateStyle(styleName, styleValue, this.getColumnSid(col));
 
                 // 列id和全局id一致，则删除该列的id
                 if (sid === globalSid) {
@@ -52,7 +56,8 @@ define(function (require) {
                 }
 
                 $$.forEach(currentRow.cells, function (currentCell) {
-                    currentCell.si = this.rs('generate.style', styleName, styleValue, currentCell.si);
+                    currentCell.si = this.getModule('StylePool').generateStyle(styleName, styleValue, currentCell.si);
+                    //currentCell.si = this.rs('generate.style', styleName, styleValue, currentCell.si);
                 }, this);
             }, this);
         },

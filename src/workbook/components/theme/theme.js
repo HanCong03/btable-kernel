@@ -24,11 +24,17 @@ define(function (require, exports, module) {
         },
 
         __initService: function () {
-            this.registerService({
-                'get.major.font': this.getMajorFont,
-                'get.minor.font': this.getMinorFont,
-                'get.theme.color': this.getThemeColor
-            });
+            //this.registerService({
+            //    'get.major.font': this.getMajorFont,
+            //    'get.minor.font': this.getMinorFont,
+            //    'get.theme.color': this.getThemeColor
+            //});
+
+            this.registerService([
+                'getMajorFont',
+                'getMinorFont',
+                'getThemeColor'
+            ]);
         },
 
         /**

@@ -19,11 +19,12 @@ define(function (require, exports, module) {
         },
 
         __clearStyle: function (start, end) {
-            this.rs('clearstyle', start, end);
+            this.getModule('Style').clearStyle(start, end);
+            //this.rs('clearstyle', start, end);
         },
 
         __clearContent: function (start, end) {
-            this.rs('clearcontent', start, end);
+            this.getModule('Content').clearContent(start, end);
         },
 
         __clearComment: function (start, end) {},

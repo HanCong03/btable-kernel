@@ -103,7 +103,8 @@ define(function (require) {
                 details = $$.clone(details.border);
                 details[location] = NONE;
 
-                currentCell.si = this.rs('generate.border', details, currentCell.si);
+                //currentCell.si = this.rs('generate.border', details, currentCell.si);
+                currentCell.si = this.getModule('StylePool').generateBorder(details, currentCell.si);
             }, this);
         },
 
@@ -143,7 +144,8 @@ define(function (require) {
                     details = $$.clone(details.border);
                     details[location] = NONE;
                     // 生成新边框
-                    sid = this.rs('generate.border', details, sid);
+                    //sid = this.rs('generate.border', details, sid);
+                    sid = this.getModule('StylePool').generateBorder(details, sid);
                 }
 
                 if ($$.isNdef(currentRow)) {
@@ -195,7 +197,8 @@ define(function (require) {
             }
 
             rowsData[row].customFormat = 1;
-            rowsData[row].si = this.rs('generate.border', details, this.getRowSid(row));
+            //rowsData[row].si = this.rs('generate.border', details, this.getRowSid(row));
+            rowsData[row].si = this.getModule('StylePool').generateBorder(details, this.getRowSid(row));
         }
     };
 });

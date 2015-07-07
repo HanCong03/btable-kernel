@@ -36,10 +36,14 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
-                'set.border': this.setBorder,
-                'unset.border': this.unsetBorder
-            });
+            //this.registerService({
+            //    'set.border': this.setBorder,
+            //    'unset.border': this.unsetBorder
+            //});
+            this.registerService([
+                'setBorder',
+                'unsetBorder'
+            ]);
         },
 
         __initAPI: function () {
@@ -76,7 +80,8 @@ define(function (require) {
             this.postMessage('lock');
 
             /* ---- 进行通用样式处理 ---- */
-            this.rs('setstyle', 'border', borderOptions, start, end);
+            this.getModule('Style').setStyle('border', borderOptions, start, end);
+            //this.rs('setstyle', 'border', borderOptions, start, end);
 
             /* ---- border 特殊处理 ----- */
             var rangeType = WorkbookUtils.getRangeType(start, end);
@@ -116,7 +121,8 @@ define(function (require) {
             this.postMessage('lock');
 
             /* ---- 进行通用样式处理 ---- */
-            this.rs('setstyle', 'border', null, start, end);
+            this.getModule('Style').setStyle('border', null, start, end);
+            //this.rs('setstyle', 'border', null, start, end);
 
             /* ---- border 特殊处理 ----- */
             var rangeType = WorkbookUtils.getRangeType(start, end);

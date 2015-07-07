@@ -99,7 +99,8 @@ define(function (require) {
 
             /* ---- 清除中间区域的所有边框 start ---- */
             if (hasCenterArea) {
-                this.rs('unset.border', {
+                this.getModule('Border').unsetBorder({
+                //this.rs('unset.border', {
                     row: startIndex + 1,
                     col: 0
                 }, {

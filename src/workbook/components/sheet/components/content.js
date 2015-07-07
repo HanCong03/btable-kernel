@@ -26,10 +26,10 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
-                'get.content.type': this.getContentType,
-                'clearcontent': this.clearContent
-            });
+            this.registerService([
+                'getContentType',
+                'clearContent'
+            ]);
         },
 
         /**

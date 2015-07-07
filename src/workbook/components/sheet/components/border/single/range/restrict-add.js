@@ -97,7 +97,8 @@ define(function (require) {
                 details[location] = borderValue;
 
                 cells[j] = {
-                    si: this.rs('generate.border', details, this.getCellSid(row, j))
+                    si: this.getModule('StylePool').generateBorder(details, this.getCellSid(row, i))
+                    //si: this.rs('generate.border', details, this.getCellSid(row, j))
                 };
             }
         },
@@ -134,7 +135,8 @@ define(function (require) {
                 details[location] = borderValue;
 
                 cells[col] = {
-                    si: this.rs('generate.border', details, this.getCellSid(i, col))
+                    si: this.getModule('StylePool').generateBorder(details, this.getCellSid(i, col))
+                    //si: this.rs('generate.border', details, this.getCellSid(i, col))
                 };
             }
         }

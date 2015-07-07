@@ -106,7 +106,8 @@ define(function (require) {
 
             /* ---- 重设中间区域的所有边框 start ---- */
             if (hasCenterArea) {
-                this.rs('set.border', borderValue, {
+                this.getModule('Border').setBorder(borderValue, {
+                //this.rs('set.border', borderValue, {
                     row: startIndex + 1,
                     col: 0
                 }, {

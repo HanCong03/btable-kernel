@@ -187,7 +187,8 @@ define(function (require) {
 
             /* ---- 清除中心区域的所有边框 ---- */
             if (hasCenterArea) {
-                this.rs('unset.border', {
+                this.getModule('Border').unsetBorder({
+                //this.rs('unset.border', {
                     row: startRow + 1,
                     col: startCol + 1
                 }, {
@@ -280,7 +281,8 @@ define(function (require) {
                 }
 
                 cells[i] = {
-                    si: this.rs('generate.border', details, this.getCellSid(row, i))
+                    si: this.getModule('StylePool').generateBorder(details, this.getCellSid(row, i))
+                    //si: this.rs('generate.border', details, this.getCellSid(row, i))
                 };
             }
         },
@@ -368,7 +370,8 @@ define(function (require) {
                 }
 
                 currentRow.cells[col] = {
-                    si: this.rs('generate.border', details, this.getCellSid(i, col))
+                    si: this.getModule('StylePool').generateBorder(details, this.getCellSid(i, col))
+                    //si: this.rs('generate.border', details, this.getCellSid(i, col))
                 };
             }
 

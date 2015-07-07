@@ -17,10 +17,14 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
-                'clearall': this.clearAll,
-                'synccell': this.syncCell
-            });
+            //this.registerService({
+            //    'clearall': this.clearAll,
+            //    'synccell': this.syncCell
+            //});
+            this.registerService([
+                'clearAll',
+                'syncCell'
+            ]);
         },
 
         __initAPI: function () {
@@ -50,7 +54,8 @@ define(function (require) {
             // 备份cell内容
             var copyCellData = $$.clone(this.__getCellData(cell.row, cell.col));
             // 备份cell sid
-            var sid = this.rs('getcellsid', cell.row, cell.col);
+            var sid = this.getModule('Style').getCellSid(cell.row, cell.col);
+            //var sid = this.rs('getcellsid', cell.row, cell.col);
 
             this.postMessage('lock');
 
@@ -63,10 +68,12 @@ define(function (require) {
             }
 
             // 剔除样式中的border，生成新的sid
-            sid = this.rs('generate.border', null, sid);
+            //sid = this.rs('generate.border', null, sid);
+            sid = this.getModule('StylePool').generateBorder(null, sid);
 
             // 统一单元格样式
-            this.rs('setsid', sid, start, end);
+            this.getModule('Style').setSid(sid, start, end);
+            //this.rs('setsid', sid, start, end);
 
             this.postMessage('unlock');
 

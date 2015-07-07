@@ -24,7 +24,8 @@ define(function (require) {
         },
 
         __addInnerBorder: function (borderValue) {
-            this.rs('set.border', borderValue, {
+            this.getModule('Border').setBorder(borderValue, {
+            //this.rs('set.border', borderValue, {
                 row: 0,
                 col: 0
             }, {

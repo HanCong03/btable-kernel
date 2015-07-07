@@ -48,8 +48,8 @@ define(function (require) {
             return this.__$workbook.registerService.apply(this.__$workbook, args);
         },
 
-        rs: function () {
-            return this.__$workbook.rs.apply(this.__$workbook, arguments);
+        getModule: function (name) {
+            return this.__$workbook.getModule(name);
         },
 
         registerAPI: function () {

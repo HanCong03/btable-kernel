@@ -187,7 +187,8 @@ define(function (require) {
 
             /* ---- 重设中心区域的所有边框 ---- */
             if (hasCenterArea) {
-                this.rs('set.border', borderValue, {
+                this.getModule('Border').setBorder(borderValue, {
+                //this.rs('set.border', borderValue, {
                     row: startRow + 1,
                     col: startCol + 1
                 }, {
@@ -271,7 +272,8 @@ define(function (require) {
                 details = $$.clone(details);
 
                 cells[i] = {
-                    si: this.rs('generate.border', details, this.getCellSid(row, i))
+                    //si: this.rs('generate.border', details, this.getCellSid(row, i))
+                    si: this.getModule('StylePool').generateBorder(details, this.getCellSid(row, i))
                 };
             }
         },
@@ -351,7 +353,8 @@ define(function (require) {
                 details = $$.clone(details);
 
                 currentRow.cells[col] = {
-                    si: this.rs('generate.border', details, this.getCellSid(i, col))
+                    si: this.getModule('StylePool').generateBorder(details, this.getCellSid(i, col))
+                    //si: this.rs('generate.border', details, this.getCellSid(i, col))
                 };
             }
 

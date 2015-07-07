@@ -30,20 +30,33 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
-                'set.default.rowheight': this.setDefaultRowHeight,
-                'set.default.colwidth': this.setDefaultColWidth,
-                'get.default.rowheight': this.getDefaultRowHeight,
-                'get.default.colwidth': this.getDefaultColWidth,
+            this.registerService([
+                'setDefaultRowHeight',
+                'setDefaultColumnWidth',
+                'getDefaultRowHeight',
+                'getDefaultColumnWidth',
 
-                'hide.all.row': this.hideAllRow,
-                'hide.all.col': this.hideAllCol,
-                'cancel.hide.all.row': this.cancelHideAllRow,
-                'cancel.hide.all.col': this.cancelHideAllCol,
-
-                'is.hideallrow': this.isHideAllRow,
-                'is.hideallcol': this.isHideAllColumn
-            });
+                'hideAllRow',
+                'hideAllColumn',
+                'cancelHideAllRow',
+                'cancelHideAllColumn',
+                'isHideAllRow',
+                'isHideAllColumn'
+            ]);
+            //this.registerService({
+                //'set.default.rowheight': this.setDefaultRowHeight,
+                //'set.default.colwidth': this.setDefaultColWidth,
+                //'get.default.rowheight': this.getDefaultRowHeight,
+                //'get.default.colwidth': this.getDefaultColWidth,
+                //
+                //'hide.all.row': this.hideAllRow,
+                //'hide.all.col': this.hideAllColumn,
+                //'cancel.hide.all.row': this.cancelHideAllRow,
+                //'cancel.hide.all.col': this.cancelHideAllColumn,
+                //
+                //'is.hideallrow': this.isHideAllRow,
+                //'is.hideallcol': this.isHideAllColumn
+            //});
         },
 
         setGridLine: function (status) {
@@ -61,12 +74,12 @@ define(function (require) {
             return VIEW_DEFAULT.showGridLine;
         },
 
-        setRowColHeader: function (status) {
+        setRowColumnHeader: function (status) {
             var sheetData = this.getActiveSheet();
             sheetData.view.showRowColHeader = !!status;
         },
 
-        getRowColHeader: function () {
+        getRowColumnHeader: function () {
             var sheetData = this.getActiveSheet();
 
             if ($$.isDefined(sheetData.view.showRowColHeader)) {
@@ -119,7 +132,7 @@ define(function (require) {
          * 注：该接口为内部接口
          * @returns {colWidth|*}
          */
-        getDefaultColWidth: function () {
+        getDefaultColumnWidth: function () {
             return this.getActiveSheet().view.colWidth;
         },
 
@@ -137,7 +150,7 @@ define(function (require) {
          * 设置默认列宽
          * @param width
          */
-        setDefaultColWidth: function (width) {
+        setDefaultColumnWidth: function (width) {
             this.getActiveSheet().view.colWidth = width;
         },
 
@@ -146,7 +159,7 @@ define(function (require) {
             sheetData.view.zeroHeight = true;
         },
 
-        hideAllCol: function () {
+        hideAllColumn: function () {
             var sheetData = this.getActiveSheet();
             sheetData.view.zeroWidth = true;
         },
@@ -156,7 +169,7 @@ define(function (require) {
             delete sheetData.view.zeroHeight;
         },
 
-        cancelHideAllCol: function () {
+        cancelHideAllColumn: function () {
             var sheetData = this.getActiveSheet();
             delete sheetData.view.zeroWidth;
         },

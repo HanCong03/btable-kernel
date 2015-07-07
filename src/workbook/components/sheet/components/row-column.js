@@ -108,7 +108,7 @@ define(function (require) {
                 return currentRow.height;
             }
 
-            return this.rs('get.default.rowheight');
+            return this.getModule('View').getDefaultRowHeight();
         },
 
         /**
@@ -122,7 +122,7 @@ define(function (require) {
                 return currentCol.width;
             }
 
-            return this.rs('get.default.colwidth');
+            return this.getModule('View').getDefaultColumnWidth();
         },
 
         hideRow: function (startIndex, endIndex) {
@@ -134,7 +134,7 @@ define(function (require) {
             /* ---- 隐藏指定的行 ---- */
 
             // 如果全局行隐藏已被设置，则直接退出
-            if (this.rs('is.hideallrow')) {
+            if (this.getModule('View').isHideAllRow()) {
                 return;
             }
 
@@ -162,7 +162,7 @@ define(function (require) {
             /* ---- 隐藏指定的行 ---- */
 
             // 如果全局列隐藏已被设置，则直接退出
-            if (this.rs('is.hideallcol')) {
+            if (this.getModule('View').isHideAllColumn()) {
                 return;
             }
 
@@ -189,8 +189,9 @@ define(function (require) {
          * @param endIndex
          */
         showRow: function (startIndex, endIndex) {
-            if (this.rs('is.hideallrow')) {
-                this.rs('cancel.hide.all.row');
+            if (this.getModule('View').isHideAllRow()){
+                this.getModule('View').cancelHideAllRow();
+                //this.rs('cancel.hide.all.row');
                 return;
             }
 
@@ -217,8 +218,9 @@ define(function (require) {
          * @param endIndex
          */
         showCol: function (startIndex, endIndex) {
-            if (this.rs('is.hideallcol')) {
-                this.rs('cancel.hide.all.col');
+            if (this.getModule('View').isHideAllColumn()) {
+                //this.rs('cancel.hide.all.col');
+                this.getModule('View').cancelHideAllColumn();
                 return;
             }
 
@@ -251,7 +253,7 @@ define(function (require) {
                 return true;
             }
 
-            return this.rs('is.hideallrow');
+            return this.getModule('View').isHideAllRow();
         },
 
         /**
@@ -267,7 +269,7 @@ define(function (require) {
                 return true;
             }
 
-            return this.rs('is.hideallcol');
+            return this.getModule('View').isHideAllColumn();
         },
 
         __setAllRowHeight: function (height) {
@@ -283,7 +285,8 @@ define(function (require) {
             }, this);
 
             // 设置默认行高
-            this.rs('set.default.rowheight', height);
+            this.getModule('View').setDefaultRowHeight(height);
+            //this.rs('set.default.rowheight', height);
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
@@ -301,8 +304,9 @@ define(function (require) {
                 this.cleanColumn(col);
             }, this);
 
-            // 设置默认行高
-            this.rs('set.default.colwidth', width);
+            // 设置默认列宽
+            //this.rs('set.default.colwidth', width);
+            this.getModule('View').setDefaultColumnWidth(width);
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
@@ -320,7 +324,8 @@ define(function (require) {
                 this.cleanRow(row);
             }, this);
 
-            this.rs('hide.all.row');
+            this.getModule('View').hideAllRow();
+            //this.rs('hide.all.row');
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
@@ -338,7 +343,8 @@ define(function (require) {
                 this.cleanColumn(col);
             }, this);
 
-            this.rs('hide.all.col');
+            this.getModule('View').hideAllColumn();
+            //this.rs('hide.all.col');
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');

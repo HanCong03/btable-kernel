@@ -26,7 +26,8 @@ define(function (require) {
                 }
 
                 $$.forEach(currentRow.cells, function (currentCell) {
-                    currentCell.si = this.rs('generate.style', styleName, styleValue, currentCell.si);
+                    //currentCell.si = this.rs('generate.style', styleName, styleValue, currentCell.si);
+                    currentCell.si = this.getModule('StylePool').generateStyle(styleName, styleValue, currentCell.si);
                 }, this);
             }
 
@@ -64,7 +65,8 @@ define(function (require) {
 
                     // 在当前列的基础上生成该单元格的样式
                     cells[col] = {
-                        si: this.rs('generate.style', styleName, styleValue, currentCol.si)
+                        si: this.getModule('StylePool').generateStyle(styleName, styleValue, currentCol.si)
+                        //si: this.rs('generate.style', styleName, styleValue, currentCol.si)
                     };
                 }
             }, this);
@@ -74,11 +76,13 @@ define(function (require) {
                 if ($$.isNdef(rowsData[i])) {
                     rowsData[i] = {
                         customFormat: 1,
-                        si: this.rs('generate.style', styleName, styleValue, this.getRowSid(i))
+                        //si: this.rs('generate.style', styleName, styleValue, this.getRowSid(i))
+                        si: this.getModule('StylePool').generateStyle(styleName, styleValue, this.getRowSid(i))
                     };
                 } else {
                     rowsData[i].customFormat = 1;
-                    rowsData[i].si = this.rs('generate.style', styleName, styleValue, rowsData.si);
+                    //rowsData[i].si = this.rs('generate.style', styleName, styleValue, rowsData.si);
+                    rowsData[i].si = this.getModule('StylePool').generateStyle(styleName, styleValue, rowsData.si);
                 }
             }
         },

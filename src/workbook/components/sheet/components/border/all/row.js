@@ -14,7 +14,8 @@ define(function (require) {
             var prevRowIndex = startIndex - 1;
             var maxColumnIndex = this.getConfig('MAX_COLUMN') - 1;
 
-            this.rs('restrict.remove.border', BORDER_LOCATION.BOTTOM, {
+            this.getModule('Border').restrictRemoveBorder(BORDER_LOCATION.BOTTOM, {
+            //this.rs('restrict.remove.border', BORDER_LOCATION.BOTTOM, {
                 row: prevRowIndex,
                 col: 0
             }, {
@@ -26,7 +27,8 @@ define(function (require) {
             /* ---- 处理下一行的独立单元格 ---- */
             var nextRowIndex = endIndex + 1;
 
-            this.rs('restrict.remove.border', BORDER_LOCATION.TOP, {
+            this.getModule('Border').restrictRemoveBorder(BORDER_LOCATION.TOP, {
+            //this.rs('restrict.remove.border', BORDER_LOCATION.TOP, {
                 row: nextRowIndex,
                 col: 0
             }, {

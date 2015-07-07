@@ -93,7 +93,8 @@ define(function (require) {
 
             /* ---- 为中间区域的所有单元格设置边框 start ---- */
             if (hasCenterArea) {
-                this.rs('set.border', borderValue, {
+                this.getModule('Border').setBorder(borderValue, {
+                //this.rs('set.border', borderValue, {
                     row: 0,
                     col: startIndex + 1
                 }, {

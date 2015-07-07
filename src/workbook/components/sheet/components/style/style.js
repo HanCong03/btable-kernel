@@ -34,12 +34,19 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
-                'setsid': this.setSid,
-                'setstyle': this.setStyle,
-                'clearstyle': this.clearStyle,
-                'getcellsid': this.getCellSid
-            });
+            //this.registerService({
+            //    'setsid': this.setSid,
+            //    'setstyle': this.setStyle,
+            //    'clearstyle': this.clearStyle,
+            //    'getcellsid': this.getCellSid
+            //});
+
+            this.registerService([
+                'setSid',
+                'setStyle',
+                'clearStyle',
+                'getCellSid'
+            ]);
         },
 
         __initAPI: function () {
@@ -110,12 +117,14 @@ define(function (require) {
                 return null;
             }
 
-            return this.rs('get.style.detail', styleName, sid);
+            return this.getModule('StylePool').getStyleBySid(styleName, sid);
+            //return this.rs('get.style.detail', styleName, sid);
         },
 
         getClassifyStyle: function (classify, row, col) {
             var sid = this.getSettedCellSid(row, col);
-            return this.rs('get.classify.style.detail',classify,  sid);
+            return this.getModule('StylePool').getClassifyStyleDetailBySid(classify, sid);
+            //return this.rs('get.classify.style.detail',classify,  sid);
         },
 
         getBatchClassifyStyle: function (classify, cells) {
@@ -125,14 +134,16 @@ define(function (require) {
                 var sid = this.getCellSid(cell.row, cell.col);;
                 var key = cell.row + ',' + cell.col;
 
-                result[key] = this.rs('get.classify.style.detail',classify, sid);
+                result[key] = this.getModule('StylePool').getClassifyStyleDetailBySid(classify, sid);
+                //result[key] = this.rs('get.classify.style.detail',classify, sid);
             }, this);
 
             return result;
         },
 
         getDefaultClassifyStyle: function (classify) {
-            return this.rs('get.default.classify', classify);
+            return this.getModule('StylePool').getDefaultClassifyStyle(classify);
+            //return this.rs('get.default.classify', classify);
         },
 
         /**
@@ -149,7 +160,8 @@ define(function (require) {
                 return null;
             }
 
-            return this.rs('get.style.detail', styleName, sid);
+            return this.getModule('StylePool').getStyleBySid(styleName, sid);
+            //return this.rs('get.style.detail', styleName, sid);
         },
 
         /**
@@ -166,7 +178,8 @@ define(function (require) {
                 return null;
             }
 
-            return this.rs('get.style.detail', styleName, sid);
+            return this.getModule('StylePool').getStyleBySid(styleName, sid);
+            //return this.rs('get.style.detail', styleName, sid);
         },
 
         /**
@@ -183,13 +196,15 @@ define(function (require) {
                 return null;
             }
 
-            return this.rs('get.style.detail', styleName, sid);
+            return this.getModule('StylePool').getStyleBySid(styleName, sid);
+            //return this.rs('get.style.detail', styleName, sid);
         },
         /* --- setted 接口，非常底层的接口。不建议外层大量使用 end  --- */
 
         getStyle: function (styleName, row, col) {
             var sid = this.getCellSid(row, col);
-            return this.rs('get.style.detail', styleName, sid);
+            return this.getModule('StylePool').getStyleBySid(styleName, sid);
+            //return this.rs('get.style.detail', styleName, sid);
         },
 
         /**
@@ -201,12 +216,14 @@ define(function (require) {
          */
         getEffectiveStyle: function (styleName, row, col) {
             var sid = this.getCellSid(row, col);
-            return this.rs('get.effective.style.detail', styleName, sid);
+            return this.getModule('StylePool').getEffectiveStyleBySid(styleName, sid);
+            //return this.rs('get.effective.style.detail', styleName, sid);
         },
 
         getEffectiveClassifyStyle: function (classify, row, col) {
             var sid = this.getCellSid(row, col);
-            return this.rs('get.effective.classify.style.detail', classify, sid);
+            return this.getModule('StylePool').getEffectiveClassifyStyleBySid(classify, sid);
+            //return this.rs('get.effective.classify.style.detail', classify, sid);
         },
 
         setSid: function (sid, start, end) {

@@ -57,27 +57,48 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
+            //this.registerService({
+            //    // 非受限增加边框
+            //    'add.border.left': this.addLeftBorder,
+            //    'add.border.right': this.addRightBorder,
+            //    'add.border.top': this.addTopBorder,
+            //    'add.border.bottom': this.addBottomBorder,
+            //    'add.border.outer': this.addOuterBorder,
+            //    'add.border.inner': this.addInnerBorder,
+            //
+            //    // 非受限擦除
+            //    'remove.border.left': this.removeLeftBorder,
+            //    'remove.border.right': this.removeRightBorder,
+            //    'remove.border.top': this.removeTopBorder,
+            //    'remove.border.bottom': this.removeBottomBorder,
+            //    'remove.border.outer': this.removeOuterBorder,
+            //    'remove.border.inner': this.removeInnerBorder,
+            //    'remove.border': this.removeBorder,
+            //
+            //    // 受限擦除
+            //    'restrict.remove.border': this.restrictRemoveBorder
+            //});
+            this.registerService([
                 // 非受限增加边框
-                'add.border.left': this.addLeftBorder,
-                'add.border.right': this.addRightBorder,
-                'add.border.top': this.addTopBorder,
-                'add.border.bottom': this.addBottomBorder,
-                'add.border.outer': this.addOuterBorder,
-                'add.border.inner': this.addInnerBorder,
+                'addLeftBorder',
+                'addRightBorder',
+                'addTopBorder',
+                'addBottomBorder',
+                'addOuterBorder',
+                'addInnerBorder',
 
                 // 非受限擦除
-                'remove.border.left': this.removeLeftBorder,
-                'remove.border.right': this.removeRightBorder,
-                'remove.border.top': this.removeTopBorder,
-                'remove.border.bottom': this.removeBottomBorder,
-                'remove.border.outer': this.removeOuterBorder,
-                'remove.border.inner': this.removeInnerBorder,
-                'remove.border': this.removeBorder,
+                'removeLeftBorder',
+                'removeRightBorder',
+                'removeTopBorder',
+                'removeBottomBorder',
+                'removeOuterBorder',
+                'removeInnerBorder',
+                'removeBorder',
 
                 // 受限擦除
-                'restrict.remove.border': this.restrictRemoveBorder
-            });
+                'restrictRemoveBorder'
+            ]);
         },
 
         addLeftBorder: function (borderValue, start, end) {

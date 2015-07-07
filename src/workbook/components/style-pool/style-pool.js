@@ -33,18 +33,31 @@ define(function (require, exports, module) {
         },
 
         __initService: function () {
-            this.registerService({
-                'get.default.classify': this.getDefaultClassifyStyle,
-                'get.default.style': this.getDefaultStyle,
-                'generate.style': this.generateStyle,
-                'generate.border': this.generateBorder,
-                'get.classify.style.detail': this.getClassifyStyleDetailBySid,
-                'get.style.detail': this.getStyleBySid,
-                'get.cellstyle.detail': this.getClassifyCellStyleDetailBySid,
-                'get.full.style.detail': this.getStyleDetailBySid,
-                'get.effective.style.detail': this.getEffectiveStyleBySid,
-                'get.effective.classify.style.detail': this.getEffectiveClassifyStyleBySid
-            });
+            //this.registerService({
+            //    'get.default.classify': this.getDefaultClassifyStyle,
+            //    'get.default.style': this.getDefaultStyle,
+            //    'generate.style': this.generateStyle,
+            //    'generate.border': this.generateBorder,
+            //    'get.classify.style.detail': this.getClassifyStyleDetailBySid,
+            //    'get.style.detail': this.getStyleBySid,
+            //    'get.cellstyle.detail': this.getClassifyCellStyleDetailBySid,
+            //    'get.full.style.detail': this.getStyleDetailBySid,
+            //    'get.effective.style.detail': this.getEffectiveStyleBySid,
+            //    'get.effective.classify.style.detail': this.getEffectiveClassifyStyleBySid
+            //});
+
+            this.registerService([
+                    'getDefaultClassifyStyle',
+                    'getDefaultStyle',
+                    'generateStyle',
+                    'generateBorder',
+                    'getClassifyStyleDetailBySid',
+                    'getStyleBySid',
+                    'getClassifyCellStyleDetailBySid',
+                    'getStyleDetailBySid',
+                    'getEffectiveStyleBySid',
+                    'getEffectiveClassifyStyleBySid'
+                ]);
         },
 
         __initDefaultStyleMap: function () {

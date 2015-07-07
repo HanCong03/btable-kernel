@@ -38,10 +38,14 @@ define(function (require) {
         },
 
         __initService: function () {
-            this.registerService({
-                'getcellborder': this.getBorder,
-                'getouterborder': this.getOuterBorder
-            });
+            //this.registerService({
+            //    'getcellborder': this.getBorder,
+            //    'getouterborder': this.getOuterBorder
+            //});
+            this.registerService([
+                'getBorder',
+                'getOuterBorder'
+            ]);
         },
 
         __initAPI: function () {
@@ -65,7 +69,7 @@ define(function (require) {
          */
         getBorder: function (row, col) {
             var sid = this.getCellSid(row, col);
-            return this.rs('get.style.detail', 'border', sid);
+            return this.getModule('StylePool').getStyleBySid('border', sid);
         },
 
         getBorders: function (cells) {
@@ -74,8 +78,8 @@ define(function (require) {
             $$.forEach(cells, function (cell) {
                 var key = cell.row + ',' + cell.col;
                 var sid = this.getCellSid(cell.row, cell.col);
-                result[key] = this.rs('get.style.detail', 'border', sid);
 
+                result[key] = this.getModule('StylePool').getStyleBySid('border', sid);
             }, this);
 
             return result;
