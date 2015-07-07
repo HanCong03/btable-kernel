@@ -87,6 +87,81 @@ define(function (require) {
             }
         },
 
+        applyCellStyle: function (csid, startIndex, endIndex) {
+            var recordMap = {};
+            var StylePool = this.getModule('StylePool');
+
+            var styleData = this.getActiveSheet().style;
+            var rowsData = styleData.rows;
+            var colsData = styleData.cols;
+            var currentRow;
+
+            // 行上独立单元格样式处理
+            for (var i = startIndex; i <= endIndex; i++) {
+                currentRow = rowsData[i];
+
+                if ($$.isNdef(currentRow) || $$.isNdef(currentRow.cells)) {
+                    continue;
+                }
+
+                $$.forEach(currentRow.cells, function (currentCell) {
+                    currentCell.si = getNewSid(StylePool, recordMap, csid, currentCell.si);
+                }, this);
+            }
+
+            // 列样式叠加处理
+            $$.forEach(colsData, function (currentCol, col) {
+                // 该列无自定义样式，跳过
+                if ($$.isNdef(currentCol.customFormat)) {
+                    return;
+                }
+
+                var currentRow;
+
+                for (var i = startIndex; i <= endIndex; i++) {
+                    if ($$.isNdef(rowsData[i])) {
+                        rowsData[i] = {};
+                    }
+
+                    currentRow = rowsData[i];
+
+                    // 当前行有自定义格式，则不用与列叠加
+                    if ($$.isDefined(currentRow.customFormat)) {
+                        continue;
+                    }
+
+                    if ($$.isNdef(currentRow.cells)) {
+                        currentRow.cells = [];
+                    }
+
+                    var cells = currentRow.cells;
+
+                    // 独立单元格，跳过
+                    if ($$.isDefined(cells[col])) {
+                        continue;
+                    }
+
+                    // 在当前列的基础上生成该单元格的样式
+                    cells[col] = {
+                        si: getNewSid(StylePool, recordMap, csid, currentCol.si)
+                    };
+                }
+            }, this);
+
+            // 生成行样式
+            for (var i = startIndex; i <= endIndex; i++) {
+                if ($$.isNdef(rowsData[i])) {
+                    rowsData[i] = {
+                        customFormat: 1,
+                        si: getNewSid(StylePool, recordMap, csid, this.getRowSid(i))
+                    };
+                } else {
+                    rowsData[i].customFormat = 1;
+                    rowsData[i].si = getNewSid(StylePool, recordMap, csid, rowsData.si);
+                }
+            }
+        },
+
         setSid: function (sid, startIndex, endIndex) {
             if ($$.isNdef(sid)) {
                 return this.clearStyle(startIndex, endIndex);
@@ -155,4 +230,12 @@ define(function (require) {
             }
         }
     });
+
+    function getNewSid(StylePool, recordMap, csid, sid) {
+        if (recordMap[sid] === undefined) {
+            recordMap[sid] = StylePool.generateCellStyle(csid, sid);
+        }
+
+        return recordMap[sid];
+    }
 });

@@ -16,8 +16,6 @@ define(function (require) {
             var rowsData = styleData.rows;
             var colsData = styleData.cols;
 
-            var mainStyle = this.mainStyle;
-
             // 列上独立单元格样式处理
             $$.forEach(rowsData, function (currentRow) {
                 if ($$.isNdef(currentRow.cells)) {
@@ -74,6 +72,86 @@ define(function (require) {
             for (var i = startIndex; i <= endIndex; i++) {
                 //sid = this.rs('generate.style', styleName, styleValue, this.getColumnSid(i));
                 sid = this.getModule('StylePool').generateStyle(styleName, styleValue, this.getColumnSid(i));
+
+                if (sid === globalStyle) {
+                    // 新样式和全局样式一致，则删除列样式
+                    if ($$.isDefined(colsData[i])) {
+                        delete colsData[i];
+                    }
+                } else {
+                    if ($$.isNdef(colsData[i])) {
+                        colsData[i] = {
+                            si: sid,
+                            customFormat: 1
+                        };
+                    } else {
+                        colsData[i].si = sid;
+                        colsData[i].customFormat = 1;
+                    }
+                }
+            }
+        },
+
+        applyCellStyle: function (csid, startIndex, endIndex) {
+            var recordMap = {};
+            var styleData = this.getActiveSheet().style;
+            var rowsData = styleData.rows;
+            var colsData = styleData.cols;
+            var StylePool = this.getModule('StylePool');
+
+            // 列上独立单元格样式处理
+            $$.forEach(rowsData, function (currentRow) {
+                if ($$.isNdef(currentRow.cells)) {
+                    return;
+                }
+
+                var cells = currentRow.cells;
+                var currentCell;
+
+                for (var i = startIndex; i <= endIndex; i++) {
+                    currentCell = cells[i];
+
+                    if ($$.isNdef(currentCell)) {
+                        continue;
+                    }
+
+                    currentCell.si = getNewSid(StylePool, recordMap, csid, currentCell.si);
+                }
+            });
+
+            // 行样式叠加处理
+            $$.forEach(rowsData, function (currentRow) {
+                // 非自定义样式行不用处理合并
+                if ($$.isNdef(currentRow.customFormat)) {
+                    return;
+                }
+
+                if ($$.isNdef(currentRow.cells)) {
+                    currentRow.cells = [];
+                }
+
+                var cells = currentRow.cells;
+
+                // 填充所有交叉的无独立数据的单元格
+                for (var i = startIndex; i <= endIndex; i++) {
+                    // 跳过包含独立数据的单元格
+                    if ($$.isDefined(cells[i])) {
+                        continue;
+                    }
+
+                    // 基于行样式生成新单元格以覆盖重叠部分
+                    currentRow.cells[i] = {
+                        si: getNewSid(StylePool, recordMap, csid, currentRow.si)
+                    };
+                }
+            });
+
+            // 生成列样式
+            var sid;
+            var globalStyle = styleData.globalStyle;
+
+            for (var i = startIndex; i <= endIndex; i++) {
+                sid = getNewSid(StylePool, recordMap, csid, this.getColumnSid(i));
 
                 if (sid === globalStyle) {
                     // 新样式和全局样式一致，则删除列样式
@@ -240,4 +318,12 @@ define(function (require) {
             }, this);
         }
     });
+
+    function getNewSid(StylePool, recordMap, csid, sid) {
+        if (recordMap[sid] === undefined) {
+            recordMap[sid] = StylePool.generateCellStyle(csid, sid);
+        }
+
+        return recordMap[sid];
+    }
 });

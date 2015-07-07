@@ -62,6 +62,38 @@ define(function (require) {
             }, this);
         },
 
+        applyCellStyle: function (csid) {
+            var recordMap = {};
+            var styleData = this.getActiveSheet().style;
+            var StylePool = this.getModule('StylePool');
+
+            if ($$.isDefined(styleData.globalStyle)) {
+                styleData.globalStyle = StylePool.generateCellStyle(csid, styleData.globalStyle);
+            }
+
+            $$.forEach(styleData.rows, function (rowData) {
+                if (rowData.customFormat) {
+                    rowData.si = getNewSid(StylePool, recordMap, csid, rowData.si);
+                }
+
+                if ($$.isNdef(styleData.cells)) {
+                    return;
+                }
+
+                $$.forEach(styleData.cells, function (cellData) {
+                    if ($$.isDefined(cellData.si)) {
+                        cellData.si = getNewSid(StylePool, recordMap, csid, cellData.si);
+                    }
+                });
+            });
+
+            $$.forEach(styleData.cols, function (colData) {
+                if (colData.customFormat) {
+                    colData.si = getNewSid(StylePool, recordMap, csid, colData.si);
+                }
+            });
+        },
+
         setSid: function (sid) {
             var styleData = this.getActiveSheet().style;
 
@@ -85,4 +117,12 @@ define(function (require) {
             styleData.rows.length = 0;
         }
     });
+
+    function getNewSid(StylePool, recordMap, csid, sid) {
+        if (recordMap[sid] === undefined) {
+            recordMap[sid] = StylePool.generateCellStyle(csid, sid);
+        }
+
+        return recordMap[sid];
+    }
 });

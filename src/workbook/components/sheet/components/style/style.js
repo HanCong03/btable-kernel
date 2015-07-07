@@ -64,7 +64,9 @@ define(function (require) {
                 getSettedCellStyle: this.getSettedCellStyle,
                 getSettedRowStyle: this.getSettedRowStyle,
                 getSettedColumnStyle: this.getSettedColumnStyle,
-                getSettedGlobalStyle: this.getSettedGlobalStyle
+                getSettedGlobalStyle: this.getSettedGlobalStyle,
+
+                applyCellStyle: this.applyCellStyle
             });
         },
 
@@ -93,6 +95,33 @@ define(function (require) {
 
                 case 'range':
                     this.rangeStyle.setStyle(styleName, styleValue, start, end);
+                    break;
+            }
+
+            // 维度变更通知
+            if (rangeType !== 'all') {
+                this.postMessage('style.dimension.change');
+            }
+        },
+
+        applyCellStyle: function (csid, start, end) {
+            var rangeType = WorkbookUtils.getRangeType(start, end);
+
+            switch (rangeType) {
+                case 'all':
+                    this.allStyle.applyCellStyle(csid);
+                    break;
+
+                case 'col':
+                    this.colStyle.applyCellStyle(csid, start.col, end.col);
+                    break;
+
+                case 'row':
+                    this.rowStyle.applyCellStyle(csid, start.row, end.row);
+                    break;
+
+                case 'range':
+                    this.rangeStyle.applyCellStyle(csid, start, end);
                     break;
             }
 

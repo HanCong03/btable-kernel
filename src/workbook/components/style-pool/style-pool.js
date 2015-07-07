@@ -17,13 +17,16 @@ define(function (require, exports, module) {
         __classifyMap: {},
         // 样式组索引映射
         __groupMap: {},
+        // 单元格样式组索引
+        __cellStyleGroupMap: {},
 
         // 默认样式映射图
         __defaultStyleMap: {},
 
         mixin: [
             require('./map'),
-            require('./filter')
+            require('./filter'),
+            require('./cell-style')
         ],
 
         init: function () {
@@ -33,31 +36,20 @@ define(function (require, exports, module) {
         },
 
         __initService: function () {
-            //this.registerService({
-            //    'get.default.classify': this.getDefaultClassifyStyle,
-            //    'get.default.style': this.getDefaultStyle,
-            //    'generate.style': this.generateStyle,
-            //    'generate.border': this.generateBorder,
-            //    'get.classify.style.detail': this.getClassifyStyleDetailBySid,
-            //    'get.style.detail': this.getStyleBySid,
-            //    'get.cellstyle.detail': this.getClassifyCellStyleDetailBySid,
-            //    'get.full.style.detail': this.getStyleDetailBySid,
-            //    'get.effective.style.detail': this.getEffectiveStyleBySid,
-            //    'get.effective.classify.style.detail': this.getEffectiveClassifyStyleBySid
-            //});
-
             this.registerService([
-                    'getDefaultClassifyStyle',
-                    'getDefaultStyle',
-                    'generateStyle',
-                    'generateBorder',
-                    'getClassifyStyleDetailBySid',
-                    'getStyleBySid',
-                    'getClassifyCellStyleDetailBySid',
-                    'getStyleDetailBySid',
-                    'getEffectiveStyleBySid',
-                    'getEffectiveClassifyStyleBySid'
-                ]);
+                'getDefaultClassifyStyle',
+                'getDefaultStyle',
+                'generateStyle',
+                'generateBorder',
+                'getClassifyStyleDetailBySid',
+                'getStyleBySid',
+                'getClassifyCellStyleDetailBySid',
+                'getStyleDetailBySid',
+                'getEffectiveStyleBySid',
+                'getEffectiveClassifyStyleBySid',
+
+                'generateCellStyle'
+            ]);
         },
 
         __initDefaultStyleMap: function () {
@@ -111,7 +103,8 @@ define(function (require, exports, module) {
         },
 
         getDefaultClassifyStyle: function (classify) {
-            return this.getClassifyStyleDetailBySid(classify, 0);
+            var data = this.getWorkbook();
+            return data.stylePool[classify][0];
         },
 
         getDefaultStyle: function (styleName) {
@@ -224,48 +217,6 @@ define(function (require, exports, module) {
             }
         },
 
-        /**
-         * 根据样式xfid，获取指定类别的cellstyle detail
-         * @param classify
-         * @param xfid
-         * @returns {*}
-         */
-        getClassifyCellStyleDetailBySid: function (classify, xfid) {
-            var data = this.getWorkbook();
-            var cellStyleGroup = data.cellStyleGroup[xfid];
-            var pool = data.stylePool[classify];
-            var applyName = STYLE_CLASSIFY_APPLYNAME_MAP[classify];
-
-            if (cellStyleGroup[applyName]) {
-                return pool[cellStyleGroup[classify]];
-            }
-
-            return null;
-        },
-
-        /**
-         * 根据给定的xfid，获取有效的分类样式
-         * @param classify
-         * @param xfid
-         */
-        getEffectiveClassifyCellStyleDetailBySid: function (classify, xfid) {
-            var data = this.getWorkbook();
-            var cellStyleGroup = data.cellStyleGroup[xfid];
-            var pool = data.stylePool[classify];
-            var applyName = STYLE_CLASSIFY_APPLYNAME_MAP[classify];
-
-            if (cellStyleGroup[applyName]) {
-                // 默认样式
-                if (cellStyleGroup[classify] === 0) {
-                    return null;
-                }
-
-                return pool[cellStyleGroup[classify]];
-            }
-
-            return null;
-        },
-
         __generateSidByClassify: function (classify, classifyDetails, sid) {
             var data = this.getWorkbook();
             var currentGroup = data.styleGroup[sid];
@@ -320,18 +271,6 @@ define(function (require, exports, module) {
             classifyPool.push(details);
 
             return classifyId;
-        },
-
-        __isSameStyleValue: function (val1, val2) {
-            if ($$.isNdef(val1) && $$.isNdef(val2)) {
-                return true;
-            }
-
-            if (val1 === val2) {
-                return true;
-            }
-
-            return JSON.stringify(val1) === JSON.stringify(val2);
         }
     });
 });

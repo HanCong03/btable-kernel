@@ -97,7 +97,7 @@ define(function (require) {
                 details[location] = borderValue;
 
                 cells[j] = {
-                    si: this.getModule('StylePool').generateBorder(details, this.getCellSid(row, i))
+                    si: this.getModule('StylePool').generateBorder(details, this.getCellSid(row, j))
                     //si: this.rs('generate.border', details, this.getCellSid(row, j))
                 };
             }

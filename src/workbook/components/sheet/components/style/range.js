@@ -44,6 +44,39 @@ define(function (require) {
             }
         },
 
+        applyCellStyle: function (csid, start, end) {
+            var recordMap = {};
+            var StylePool = this.getModule('StylePool');
+            var styleData = this.getActiveSheet().style;
+            var rowsData = styleData.rows;
+            var currentRow;
+            var cells;
+
+            for (var i = start.row, limit = end.row; i <= limit; i++) {
+                if ($$.isNdef(rowsData[i])) {
+                    rowsData[i] = {};
+                }
+
+                currentRow = rowsData[i];
+
+                if ($$.isNdef(currentRow.cells)) {
+                    currentRow.cells = [];
+                }
+
+                cells = currentRow.cells;
+
+                for (var j = start.col, jlimit = end.col; j <= jlimit; j++) {
+                    if ($$.isNdef(cells[j])) {
+                        cells[j] = {
+                            si: getNewSid(StylePool, recordMap, csid, this.getCellSid(i, j))
+                        };
+                    } else {
+                        cells[j].si = getNewSid(StylePool, recordMap, csid, cells[j].si)
+                    }
+                }
+            }
+        },
+
         setSid: function (sid, start, end) {
             if ($$.isNdef(sid)) {
                 return this.clearStyle(start, end);
@@ -93,4 +126,12 @@ define(function (require) {
             }, this)
         }
     });
+
+    function getNewSid(StylePool, recordMap, csid, sid) {
+        if (recordMap[sid] === undefined) {
+            recordMap[sid] = StylePool.generateCellStyle(csid, sid);
+        }
+
+        return recordMap[sid];
+    }
 });
