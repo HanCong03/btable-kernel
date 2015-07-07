@@ -58,6 +58,8 @@ define(function (require) {
 
                 getBatchClassifyStyle: this.getBatchClassifyStyle,
 
+                getBatchStyle: this.getBatchStyle,
+
                 getDefaultClassifyStyle: this.getDefaultClassifyStyle,
                 getEffectiveClassifyStyle: this.getEffectiveClassifyStyle,
                 getEffectiveStyle: this.getEffectiveStyle,
@@ -154,6 +156,20 @@ define(function (require) {
             var sid = this.getSettedCellSid(row, col);
             return this.getModule('StylePool').getClassifyStyleDetailBySid(classify, sid);
             //return this.rs('get.classify.style.detail',classify,  sid);
+        },
+
+        getBatchStyle: function (cells) {
+            var result = {};
+            var StylePool = this.getModule('StylePool');
+
+            $$.forEach(cells, function (cell) {
+                var sid = this.getCellSid(cell.row, cell.col);;
+                var key = cell.row + ',' + cell.col;
+
+                result[key] = StylePool.getStyleDetailBySid(sid);
+            }, this);
+
+            return result;
         },
 
         getBatchClassifyStyle: function (classify, cells) {

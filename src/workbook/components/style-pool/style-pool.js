@@ -113,7 +113,6 @@ define(function (require, exports, module) {
 
         getStyleDetailBySid: function (sid) {
             return {
-                numfmts: this.getClassifyStyleDetailBySid('numfmts', sid),
                 fonts: this.getClassifyStyleDetailBySid('fonts', sid),
                 fills: this.getClassifyStyleDetailBySid('fills', sid),
                 borders: this.getClassifyStyleDetailBySid('borders', sid),
