@@ -68,6 +68,14 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+
+            this.postMessage('contentchange', {
+                row: row,
+                col: col
+            }, {
+                row: row,
+                col: col
+            });
         },
 
         getContent: function (row, col) {
@@ -141,6 +149,8 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+
+            this.postMessage('contentchange', start, end);
         },
 
         __clearAllContent: function () {

@@ -36,10 +36,6 @@ define(function (require) {
         },
 
         __initService: function () {
-            //this.registerService({
-            //    'set.border': this.setBorder,
-            //    'unset.border': this.unsetBorder
-            //});
             this.registerService([
                 'setBorder',
                 'unsetBorder'
@@ -110,6 +106,8 @@ define(function (require) {
             if (rangeType !== 'all') {
                 this.postMessage('style.dimension.change');
             }
+
+            this.postMessage('stylechange', start, end);
         },
 
         /**
@@ -122,7 +120,6 @@ define(function (require) {
 
             /* ---- 进行通用样式处理 ---- */
             this.getModule('Style').setStyle('border', null, start, end);
-            //this.rs('setstyle', 'border', null, start, end);
 
             /* ---- border 特殊处理 ----- */
             var rangeType = WorkbookUtils.getRangeType(start, end);
@@ -151,6 +148,8 @@ define(function (require) {
             if (rangeType !== 'all') {
                 this.postMessage('style.dimension.change');
             }
+
+            this.postMessage('stylechange', start, end);
         }
     });
 });

@@ -34,13 +34,6 @@ define(function (require) {
         },
 
         __initService: function () {
-            //this.registerService({
-            //    'setsid': this.setSid,
-            //    'setstyle': this.setStyle,
-            //    'clearstyle': this.clearStyle,
-            //    'getcellsid': this.getCellSid
-            //});
-
             this.registerService([
                 'setSid',
                 'setStyle',
@@ -104,6 +97,8 @@ define(function (require) {
             if (rangeType !== 'all') {
                 this.postMessage('style.dimension.change');
             }
+
+            this.postMessage('stylechange', start, end);
         },
 
         applyCellStyle: function (csid, start, end) {
@@ -131,6 +126,8 @@ define(function (require) {
             if (rangeType !== 'all') {
                 this.postMessage('style.dimension.change');
             }
+
+            this.postMessage('stylechange', start, end);
         },
 
         /* --- setted 接口，非常底层的接口。不建议外层大量使用 start  --- */
@@ -149,13 +146,11 @@ define(function (require) {
             }
 
             return this.getModule('StylePool').getStyleBySid(styleName, sid);
-            //return this.rs('get.style.detail', styleName, sid);
         },
 
         getClassifyStyle: function (classify, row, col) {
             var sid = this.getSettedCellSid(row, col);
             return this.getModule('StylePool').getClassifyStyleDetailBySid(classify, sid);
-            //return this.rs('get.classify.style.detail',classify,  sid);
         },
 
         getBatchStyle: function (cells) {
@@ -180,7 +175,6 @@ define(function (require) {
                 var key = cell.row + ',' + cell.col;
 
                 result[key] = this.getModule('StylePool').getClassifyStyleDetailBySid(classify, sid);
-                //result[key] = this.rs('get.classify.style.detail',classify, sid);
             }, this);
 
             return result;
@@ -188,7 +182,6 @@ define(function (require) {
 
         getDefaultClassifyStyle: function (classify) {
             return this.getModule('StylePool').getDefaultClassifyStyle(classify);
-            //return this.rs('get.default.classify', classify);
         },
 
         /**
@@ -206,7 +199,6 @@ define(function (require) {
             }
 
             return this.getModule('StylePool').getStyleBySid(styleName, sid);
-            //return this.rs('get.style.detail', styleName, sid);
         },
 
         /**
@@ -224,7 +216,6 @@ define(function (require) {
             }
 
             return this.getModule('StylePool').getStyleBySid(styleName, sid);
-            //return this.rs('get.style.detail', styleName, sid);
         },
 
         /**
@@ -242,14 +233,12 @@ define(function (require) {
             }
 
             return this.getModule('StylePool').getStyleBySid(styleName, sid);
-            //return this.rs('get.style.detail', styleName, sid);
         },
         /* --- setted 接口，非常底层的接口。不建议外层大量使用 end  --- */
 
         getStyle: function (styleName, row, col) {
             var sid = this.getCellSid(row, col);
             return this.getModule('StylePool').getStyleBySid(styleName, sid);
-            //return this.rs('get.style.detail', styleName, sid);
         },
 
         /**
@@ -262,13 +251,11 @@ define(function (require) {
         getEffectiveStyle: function (styleName, row, col) {
             var sid = this.getCellSid(row, col);
             return this.getModule('StylePool').getEffectiveStyleBySid(styleName, sid);
-            //return this.rs('get.effective.style.detail', styleName, sid);
         },
 
         getEffectiveClassifyStyle: function (classify, row, col) {
             var sid = this.getCellSid(row, col);
             return this.getModule('StylePool').getEffectiveClassifyStyleBySid(classify, sid);
-            //return this.rs('get.effective.classify.style.detail', classify, sid);
         },
 
         setSid: function (sid, start, end) {
@@ -329,6 +316,8 @@ define(function (require) {
             if (rangeType !== 'all') {
                 this.postMessage('style.dimension.change');
             }
+
+            this.postMessage('stylechange', start, end);
         },
 
         /**
@@ -360,6 +349,8 @@ define(function (require) {
             // 维度变更通知，由于clear操作影响了所有单元格，
             // 所以不需要对操作范围进行判断，必须对维度进行重新计算
             this.postMessage('style.dimension.change');
+
+            this.postMessage('stylechange', start, end);
         }
     });
 });
