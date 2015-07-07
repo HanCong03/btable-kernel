@@ -51,8 +51,6 @@ define(function (require) {
 
                 getBatchClassifyStyle: this.getBatchClassifyStyle,
 
-                getBatchStyle: this.getBatchStyle,
-
                 getDefaultClassifyStyle: this.getDefaultClassifyStyle,
                 getEffectiveClassifyStyle: this.getEffectiveClassifyStyle,
                 getEffectiveStyle: this.getEffectiveStyle,
@@ -158,7 +156,7 @@ define(function (require) {
             var StylePool = this.getModule('StylePool');
 
             $$.forEach(cells, function (cell) {
-                var sid = this.getCellSid(cell.row, cell.col);;
+                var sid = this.getCellSid(cell.row, cell.col);
                 var key = cell.row + ',' + cell.col;
 
                 result[key] = StylePool.getStyleDetailBySid(sid);
@@ -171,7 +169,7 @@ define(function (require) {
             var result = {};
 
             $$.forEach(cells, function (cell) {
-                var sid = this.getCellSid(cell.row, cell.col);;
+                var sid = this.getCellSid(cell.row, cell.col);
                 var key = cell.row + ',' + cell.col;
 
                 result[key] = this.getModule('StylePool').getClassifyStyleDetailBySid(classify, sid);

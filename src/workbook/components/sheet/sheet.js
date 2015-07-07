@@ -10,6 +10,7 @@ define(function (require) {
     var Dimension = require('./components/dimension/dimension');
     var Content = require('./components/content');
     var Style = require('./components/style/style');
+    var StyleCache = require('./components/style-cache');
     var TypeStyle = require('./components/type-style/type-style');
     var Comment = require('./components/comment');
     var View = require('./components/view');
@@ -29,6 +30,7 @@ define(function (require) {
                 dimension: this.createComponent(Dimension),
                 content: this.createComponent(Content),
                 style: this.createComponent(Style),
+                StyleCache: this.createComponent(StyleCache),
                 comment: this.createComponent(Comment),
                 view: this.createComponent(View),
                 mergeCell: this.createComponent(MergeCell),

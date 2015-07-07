@@ -37,8 +37,8 @@ define(function (require) {
          * 注：kernel组件所使用的heap是kernel heap
          * @returns {*}
          */
-        getActiveHeap: function (name) {
-            return this.__$workbook.getActiveKernelHeap(name);
+        getActiveHeap: function () {
+            return this.__$workbook.getActiveKernelHeap(this.___className);
         },
 
         registerService: function () {

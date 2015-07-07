@@ -36,7 +36,7 @@ define(function (require, exports, module) {
 
             listeners = (listeners || []).concat(allListeners || []);
 
-            var args = [].slice.call(arguments, 0);
+            var args = [].slice.call(arguments, 1);
 
             listeners.forEach(function (current) {
                 current.handler.apply(current.provider, args);
