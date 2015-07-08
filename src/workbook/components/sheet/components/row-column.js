@@ -16,7 +16,14 @@ define(function (require) {
         init: function () {
             this.registerAPI({
                 setRowHeight: this.setRowHeight,
+                setBestFitRowHeight: this.setBestFitRowHeight,
+                isBestFitRowHeight: this.isBestFitRowHeight,
+
                 setColumnWidth: this.setColumnWidth,
+                setBestFitColumnWidth: this.setBestFitColumnWidth,
+                isBestFitColumnWidth: this.isBestFitColumnWidth,
+
+
                 getRowHeight: this.getRowHeight,
                 getColumnWidth: this.getColumnWidth,
                 hideRow: this.hideRow,
@@ -38,7 +45,7 @@ define(function (require) {
          */
         setRowHeight: function (height, startIndex, endIndex) {
             // 如果即将设置的高度为0，则设置该行隐藏，不改变其高度，以便取消隐藏时可以恢复到之前的高度
-            if (height === 0) {
+            if (height <= 0) {
                 return this.hideRow(startIndex, endIndex);
             }
 
@@ -57,10 +64,43 @@ define(function (require) {
                 }
 
                 rowsData[i].height = height;
+                delete rowsData[i].bestFit;
             }
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+        },
+
+        setBestFitRowHeight: function (height, row) {
+            // 自动适应的高度不能 <= 0
+            if (height <= 0) {
+                return;
+            }
+
+            /* ---- 设置指定行的行高 ---- */
+            var cellData = this.getActiveSheet().cell;
+            var rowsData = cellData.rows;
+
+            if ($$.isNdef(rowsData[row])) {
+                rowsData[row] = {};
+            }
+
+            rowsData[row].height = height;
+            rowsData[row].bestFit = 1;
+
+            // 维度变更通知
+            this.postMessage('cell.dimension.change');
+        },
+
+        isBestFitRowHeight: function (row) {
+            var cellData = this.getActiveSheet().cell;
+            var rowsData = cellData.rows;
+
+            if ($$.isNdef(rowsData[row])) {
+                return false;
+            }
+
+            return !!rowsData[row].bestFit;
         },
 
         /**
@@ -91,10 +131,41 @@ define(function (require) {
                 }
 
                 colsData[i].width = width;
+                delete colsData[i].bestFit;
             }
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+        },
+
+        setBestFitColumnWidth: function (width, col) {
+            if (width <= 0) {
+                return;
+            }
+
+            var cellData = this.getActiveSheet().cell;
+            var colsData = cellData.cols;
+
+            if ($$.isNdef(colsData[col])) {
+                colsData[col] = {};
+            }
+
+            colsData[col].width = width;
+            colsData[col].bestFit = 1;
+
+            // 维度变更通知
+            this.postMessage('cell.dimension.change');
+        },
+
+        isBestFitColumnWidth: function (col) {
+            var cellData = this.getActiveSheet().cell;
+            var colsData = cellData.cols;
+
+            if ($$.isNdef(colsData[col])) {
+                return false;
+            }
+
+            return !!colsData[col].bestFit;
         },
 
         /**

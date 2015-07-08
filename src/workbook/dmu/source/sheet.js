@@ -37,6 +37,8 @@ define(function (require, exports, module) {
         cell: {
             //rows: [{
             //    height: -1,
+            //    // 具体值无意义，如果存在该属性，表示是自动适应的高度
+            //    bestFit: 1,
             //    hidden: false,
             //    cells: [{
             //        comment: 0,
@@ -63,6 +65,8 @@ define(function (require, exports, module) {
             //}],
             //cols: [{
             //    width: -1,
+            //    // 具体值无意义，如果存在该属性，表示是自动适应的宽度
+            //    bestFit: 1,
             //    hidden: false
             //}]
             // 行信息
