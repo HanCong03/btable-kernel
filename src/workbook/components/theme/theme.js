@@ -18,8 +18,7 @@ define(function (require, exports, module) {
             this.registerAPI({
                 getMajorFont: this.getMajorFont,
                 getMinorFont: this.getMinorFont,
-                getThemeColor: this.getThemeColor,
-                getBaseSize: this.getBaseSize
+                getThemeColor: this.getThemeColor
             });
         },
 
@@ -54,10 +53,6 @@ define(function (require, exports, module) {
             var themeData = this.getWorkbook().theme;
 
             return themeData.font.minor.ea;
-        },
-
-        getBaseSize: function () {
-            return this.getWorkbook().stylePool.fonts[0].size;
         }
     });
 });
