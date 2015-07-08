@@ -18,11 +18,12 @@ define(function (require) {
                 setRowHeight: this.setRowHeight,
                 setBestFitRowHeight: this.setBestFitRowHeight,
                 isBestFitRowHeight: this.isBestFitRowHeight,
+                removeRowHeight: this.removeRowHeight,
 
                 setColumnWidth: this.setColumnWidth,
                 setBestFitColumnWidth: this.setBestFitColumnWidth,
                 isBestFitColumnWidth: this.isBestFitColumnWidth,
-
+                removeColumnWidth: this.removeColumnWidth,
 
                 getRowHeight: this.getRowHeight,
                 getColumnWidth: this.getColumnWidth,
@@ -90,6 +91,18 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+        },
+
+        removeRowHeight: function (row) {
+            var cellData = this.getActiveSheet().cell;
+            var currentRowData = cellData.rows[row];
+
+            if ($$.isNdef(currentRowData)) {
+                return;
+            }
+
+            delete currentRowData.height;
+            delete currentRowData.bestFit;
         },
 
         isBestFitRowHeight: function (row) {
@@ -166,6 +179,18 @@ define(function (require) {
             }
 
             return !!colsData[col].bestFit;
+        },
+
+        removeColumnWidth: function (col) {
+            var cellData = this.getActiveSheet().cell;
+            var currentColData = cellData.cols[col];
+
+            if ($$.isNdef(currentColData)) {
+                return;
+            }
+
+            delete currentColData.width;
+            delete currentColData.bestFit;
         },
 
         /**
