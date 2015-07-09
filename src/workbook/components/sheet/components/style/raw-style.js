@@ -7,6 +7,31 @@ define(function (require) {
     var $$ = require('utils');
 
     return {
+        /**
+         * 获取指定单元格自身的样式。该样式不是计算后的值，而仅仅是其自有值。
+         * @param classify
+         * @param row
+         * @param col
+         */
+        getRawCellStyle: function (classify, row, col) {
+            var StylePool = this.getModule('StylePool');
+
+            var styleData = this.getActiveSheet().style;
+            var rowsData = styleData.rows;
+
+            if (!rowsData[row] || !rowsData[row].cells || !rowsData[row].cells[col]) {
+                return null;
+            }
+
+            var current = rowsData[row].cells[col];
+
+            if ($$.isNdef(current.si)) {
+                return null;
+            }
+
+            return StylePool.getClassifyStyleDetailBySid(classify, current.si);
+        },
+
         getRawStyle: function (classify, rows, cols) {
             var StylePool = this.getModule('StylePool');
 
@@ -17,15 +42,12 @@ define(function (require) {
             var globalResult = null;
             var rowResult = [];
             var colResult = [];
-            var cellResult = [];
 
             if ($$.isDefined(styleData.globalStyle)) {
                 globalResult = StylePool.getClassifyStyleDetailBySid(classify, styleData.globalStyle);
             }
 
             var current;
-            var col;
-            var sid;
 
             /* ---- 获取行样式 start ---- */
             for (var i = 0, len = rows.length; i < len; i++) {
@@ -37,36 +59,12 @@ define(function (require) {
                     rowResult.push(null);
                     continue;
                 }
-
-                /* ---- 获取独立单元格样式 start ---- */
-                current = current.cells;
-
-                if (!current) {
-                    cellResult.push(null);
-                }
-
-                current = current.cells;
-
-                for (var j = 0, jlen = cols.length; j < jlen; j++) {
-                    col = cols[j];
-
-                    sid = current[col].si;
-
-                    if ($$.isDefined(sid)) {
-                        cellResult.push({
-                            row: i,
-                            col: col,
-                            value: StylePool.getClassifyStyleDetailBySid(classify, sid)
-                        });
-                    }
-                }
-                /* ---- 获取独立单元格样式 end ---- */
             }
             /* ---- 获取行样式 end ---- */
 
             /* ---- 获取列样式 start ---- */
             for (var i = 0, len = cols.length; i < len; i++) {
-                current = colsData[i];
+                current = colsData[cols[i]];
 
                 if (current && $$.isDefined(current.customFormat)) {
                     colResult.push(StylePool.getClassifyStyleDetailBySid(classify, current.si));
@@ -79,8 +77,7 @@ define(function (require) {
             return {
                 global: globalResult,
                 rows: rowResult,
-                cols: colResult,
-                cells: cellResult
+                cols: colResult
             };
         }
     };

@@ -40,7 +40,8 @@ define(function (require) {
                 'setStyle',
                 'clearStyle',
                 'getCellSid',
-                'getRawStyle'
+                'getRawStyle',
+                'getRawCellStyle'
             ]);
         },
 

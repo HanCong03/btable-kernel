@@ -5,6 +5,7 @@
 
 define(function (require, exports, module) {
     var $$ = require('utils');
+    var WorkbookUtils = require('workbook-utils');
 
     module.exports = $$.createClass('StyleCache', {
         base: require('sheet-component'),
@@ -31,14 +32,8 @@ define(function (require, exports, module) {
         },
 
         getRenderStyle: function (rows, cols) {
-            var heap = this.getActiveHeap();
-
-            if (!heap.cache) {
-                heap.cache = [];
-            }
-
-            var cache = heap.cache;
             var StylePool = this.getModule('StylePool');
+            var Style = this.getModule('Style');
 
             var result = {};
             var row;
@@ -50,66 +45,131 @@ define(function (require, exports, module) {
                 row = rows[i];
                 for (var j = 0, jlen = cols.length; j < jlen; j++) {
                     col = cols[j];
-
-                    if (!cache[row]) {
-                        cache[row] = [];
-                    }
-
-                    if (!cache[row][col]) {
-                        sid = this.getCellSid(row, col);
-
-                        cache[row][col] = {
-                            fonts: StylePool.getClassifyStyleDetailBySid('fonts', sid),
-                            borders: StylePool.getClassifyStyleDetailBySid('borders', sid),
-                            alignments: StylePool.getClassifyStyleDetailBySid('alignments', sid)
-                        };
-                    }
-
                     key = row + ',' + col;
 
-                    result[key] = cache[row][col];
+                    sid = this.getCellSid(row, col);
+
+                    result[key] = {
+                        fonts: StylePool.getClassifyStyleDetailBySid('fonts', sid),
+                        borders: StylePool.getClassifyStyleDetailBySid('borders', sid),
+                        alignments: StylePool.getClassifyStyleDetailBySid('alignments', sid),
+
+                        // 单元格自身的填充色，不是计算之后的值
+                        fills: Style.getRawCellStyle('fills', row, col)
+                    };
                 }
             }
 
             return result;
         },
 
+        //getRenderStyle: function (rows, cols) {
+        //    var heap = this.getActiveHeap();
+        //
+        //    if (!heap.cache) {
+        //        heap.cache = [];
+        //    }
+        //
+        //    var cache = heap.cache;
+        //    var StylePool = this.getModule('StylePool');
+        //    var Style = this.getModule('Style');
+        //
+        //    var result = {};
+        //    var row;
+        //    var col;
+        //    var key;
+        //    var sid;
+        //
+        //    for (var i = 0, len = rows.length; i < len; i++) {
+        //        row = rows[i];
+        //        for (var j = 0, jlen = cols.length; j < jlen; j++) {
+        //            col = cols[j];
+        //
+        //            if (!cache[row]) {
+        //                cache[row] = [];
+        //            }
+        //
+        //            if (!cache[row][col]) {
+        //                sid = this.getCellSid(row, col);
+        //
+        //                cache[row][col] = {
+        //                    fonts: StylePool.getClassifyStyleDetailBySid('fonts', sid),
+        //                    borders: StylePool.getClassifyStyleDetailBySid('borders', sid),
+        //                    alignments: StylePool.getClassifyStyleDetailBySid('alignments', sid),
+        //
+        //                    // 单元格自身的填充色，不是计算之后的值
+        //                    fills: Style.getRawCellStyle('fills', row, col)
+        //                };
+        //            }
+        //
+        //            key = row + ',' + col;
+        //
+        //            result[key] = cache[row][col];
+        //        }
+        //    }
+        //
+        //    return result;
+        //},
+
         __cleanCache: function (start, end) {
-            var cache = this.getActiveHeap().cache;
-
-            if (!cache) {
-                return;
-            }
-
-            var rowCache;
-            var startCol = start.cl;
-            var endCol = end.col;
-            var keys;
-
-            for (var i = start.row, limit = end.row; i <= limit; i++) {
-                rowCache = cache[i];
-
-                if (!rowCache) {
-                    continue;
-                }
-
-                keys = Object.keys(rowCache);
-
-                if (rowCache.length === 0) {
-                    continue;
-                }
-
-                // 整行删除
-                if (startCol <= keys[0] && endCol >= keys[keys.length - 1]) {
-                    delete cache[i];
-                }
-
-                for (var j = startCol; j <= endCol; j++) {
-                    if (rowCache[j]) {
-                        delete rowCache[j];
-                    }
-                }
-            }
+            //var heap = this.getActiveHeap();
+            //var cache = heap.cache;
+            //
+            //if (!cache) {
+            //    return;
+            //}
+            //
+            //var rowCache;
+            //var startCol = start.cl;
+            //var endCol = end.col;
+            //var keys;
+            //
+            //var rangeType = WorkbookUtils.getRangeType(start, end);
+            //
+            //switch (rangeType) {
+            //    case 'all':
+            //        heap.cache = [];
+            //        break;
+            //
+            //    case 'col':
+            //        //this.__cleanColumnCache(start.col, end.col);
+            //        break;
+            //
+            //    case 'row':
+            //        for (var i = start.row, limit = end.row; i <= limit; i++) {
+            //            delete cache[i];
+            //        }
+            //        break;
+            //
+            //    case 'range':
+            //        this.rangeStyle.setStyle(styleName, styleValue, start, end);
+            //        break;
+            //}
+            //
+            //for (var i = start.row, limit = end.row; i <= limit; i++) {
+            //    rowCache = cache[i];
+            //
+            //    if (!rowCache) {
+            //        continue;
+            //    }
+            //
+            //    keys = Object.keys(rowCache);
+            //
+            //    if (keys.length === 0) {
+            //        continue;
+            //    }
+            //
+            //    // 整行删除
+            //    if (startCol <= keys[0] && endCol >= keys[keys.length - 1]) {
+            //        delete cache[i];
+            //    }
+            //
+            //    for (var j = startCol; j <= endCol; j++) {
+            //        if (rowCache[j]) {
+            //            delete rowCache[j];
+            //        }
+            //    }
+            //}
         }
     });
 });
