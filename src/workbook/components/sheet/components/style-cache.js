@@ -34,7 +34,7 @@ define(function (require, exports, module) {
             var heap = this.getActiveHeap();
 
             if (!heap.cache) {
-                heap.cache = {};
+                heap.cache = [];
             }
 
             var cache = heap.cache;
@@ -51,14 +51,18 @@ define(function (require, exports, module) {
                 row = col.row;
                 col = col.col;
 
-                key = row + ',' + col;
-
-                if (!cache[key]) {
-                    sid = this.getCellSid(row, col);
-                    cache[key] = StylePool.getStyleDetailBySid(sid);
+                if (!cache[row]) {
+                    cache[row] = [];
                 }
 
-                result[key] = cache[key];
+                if (!cache[row][col]) {
+                    sid = this.getCellSid(row, col);
+                    cache[row][col] = StylePool.getStyleDetailBySid(sid);
+                }
+
+                key = row + ',' + col;
+
+                result[key] = cache[row][col];
             }
 
             return result;
@@ -71,13 +75,35 @@ define(function (require, exports, module) {
                 return;
             }
 
-            $$.iterator(start, end, function (row, col) {
-                var key = row + ',' + col;
+            var rowCache;
+            var startCol = start.cl;
+            var endCol = end.col;
+            var keys;
 
-                if (cache[key]) {
-                    cache[key] = undefined;
+            for (var i = start.row, limit = end.row; i <= limit; i++) {
+                rowCache = cache[i];
+
+                if (!rowCache) {
+                    continue;
                 }
-            });
+
+                keys = Object.keys(rowCache);
+
+                if (rowCache.length === 0) {
+                    continue;
+                }
+
+                // 整行删除
+                if (startCol <= keys[0] && endCol >= keys[keys.length - 1]) {
+                    delete cache[i];
+                }
+
+                for (var j = startCol; j <= endCol; j++) {
+                    if (rowCache[j]) {
+                        delete rowCache[j];
+                    }
+                }
+            }
         }
     });
 });
