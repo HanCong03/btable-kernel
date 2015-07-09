@@ -8,25 +8,35 @@ define(function (require, exports, module) {
 
     module.exports = {
         fills: {
-            fill: '#ffffcc'
+            fill: {
+                value: '#ffffcc'
+            }
         },
         borders: {
             border: {
                 top: {
                     style: 'thin',
-                    color: '#b2b2b2'
+                    color: {
+                        value: '#b2b2b2'
+                    }
                 },
                 left: {
                     style: 'thin',
-                    color: '#b2b2b2'
+                    color: {
+                        value: '#b2b2b2'
+                    }
                 },
                 right: {
                     style: 'thin',
-                    color: '#b2b2b2'
+                    color: {
+                        value: '#b2b2b2'
+                    }
                 },
                 bottom: {
                     style: 'thin',
-                    color: '#b2b2b2'
+                    color: {
+                        value: '#b2b2b2'
+                    }
                 }
             }
         }

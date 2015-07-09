@@ -8,7 +8,9 @@ define(function (require, exports, module) {
 
     module.exports = {
         fonts: {
-            color: '#3f3f3f',
+            color: {
+                value: '#3f3f3f'
+            },
             name: {
                 type: 'minor'
             },
@@ -16,25 +18,35 @@ define(function (require, exports, module) {
             size: 11
         },
         fills: {
-            fill: '#f2f2f2'
+            fill: {
+                value: '#f2f2f2'
+            }
         },
         borders: {
             border: {
                 top: {
                     style: 'thin',
-                    color: '#3f3f3f'
+                    color: {
+                        value: '#3f3f3f'
+                    }
                 },
                 left: {
                     style: 'thin',
-                    color: '#3f3f3f'
+                    color: {
+                        value: '#3f3f3f'
+                    }
                 },
                 right: {
                     style: 'thin',
-                    color: '#3f3f3f'
+                    color: {
+                        value: '#3f3f3f'
+                    }
                 },
                 bottom: {
                     style: 'thin',
-                    color: '#3f3f3f'
+                    color: {
+                        value: '#3f3f3f'
+                    }
                 }
             }
         }

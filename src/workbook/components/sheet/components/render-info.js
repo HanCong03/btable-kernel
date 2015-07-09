@@ -16,15 +16,7 @@ define(function (require) {
         },
 
         getRenderInfo: function (rows, cols) {
-            var StyleModule = this.getModule('Style');
-            // 一般性的样式，该样式是
-            var generalityStyle = this.getModule('StyleCache').getRenderStyle(rows, cols);
-
-            return {
-                styles: generalityStyle,
-                borders: StyleModule.getRawStyle('borders', rows, cols),
-                fills: StyleModule.getRawStyle('fills', rows, cols)
-            }
+            return this.getModule('StyleCache').getRenderStyle(rows, cols);
         }
     });
 });

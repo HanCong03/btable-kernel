@@ -11,12 +11,10 @@ define(function (require, exports, module) {
             numfmt: NONE
         },
         fonts: {
-            // color: '#000000'
             color: {
                 theme: 1,
                 tint: 0
             },
-            // name: '宋体'
             name: {
                 type: 'minor'
             },

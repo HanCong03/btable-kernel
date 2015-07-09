@@ -19,25 +19,35 @@ define(function (require, exports, module) {
             size: 11
         },
         fills: {
-            fill: '#a5a5a5'
+            fill: {
+                value: '#a5a5a5'
+            }
         },
         borders: {
             border: {
                 top: {
                     style: 'double',
-                    color: '#3f3f3f'
+                    color: {
+                        value: '#3f3f3f'
+                    }
                 },
                 left: {
                     style: 'double',
-                    color: '#3f3f3f'
+                    color: {
+                        value: '#3f3f3f'
+                    }
                 },
                 right: {
                     style: 'double',
-                    color: '#3f3f3f'
+                    color: {
+                        value: '#3f3f3f'
+                    }
                 },
                 bottom: {
                     style: 'double',
-                    color: '#3f3f3f'
+                    color: {
+                        value: '#3f3f3f'
+                    }
                 }
             }
         }

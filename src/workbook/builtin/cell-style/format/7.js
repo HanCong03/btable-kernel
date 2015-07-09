@@ -8,7 +8,9 @@ define(function (require, exports, module) {
 
     module.exports = {
         fonts: {
-            color: '#ff0000',
+            color: {
+                value: '#ff0000'
+            },
             name: {
                 type: 'minor'
             },

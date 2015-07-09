@@ -81,6 +81,20 @@ define(function (require, exports, module) {
                 sid = 0;
             }
 
+            if (styleName === 'name') {
+                if (typeof styleValue === 'string') {
+                    styleValue = {
+                        value: styleValue
+                    };
+                }
+            } else if (styleName === 'color' || styleName === 'fill') {
+                if (typeof styleValue === 'string') {
+                    styleValue = {
+                        value: styleValue
+                    };
+                }
+            }
+
             var classify = STYLE_NAME_CLASSIFY_MAP[styleName];
             var classifyDetails = $$.clone(this.getClassifyStyleDetailBySid(classify, sid));
 
@@ -99,6 +113,28 @@ define(function (require, exports, module) {
         },
 
         generateBorder: function (borderOption, sid) {
+            var current;
+
+            if (borderOption) {
+                for (var key in borderOption) {
+                    if (!borderOption.hasOwnProperty(key)) {
+                        continue;
+                    }
+
+                    current = borderOption[key];
+
+                    if (!current) {
+                        continue;
+                    }
+
+                    if (typeof current.color === 'string') {
+                        current.color = {
+                            value: current.color
+                        };
+                    }
+                }
+            }
+
             return this.generateStyle('border', borderOption, sid);
         },
 

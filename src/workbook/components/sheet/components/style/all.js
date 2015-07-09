@@ -20,7 +20,6 @@ define(function (require) {
 
             // 更新全局sid
             this.getModule('StylePool').generateStyle(styleName, styleValue, styleData.globalStyle);
-            //var globalSid = this.rs('generate.style', styleName, styleValue, styleData.globalStyle);
             var globalSid = this.getModule('StylePool').generateStyle(styleName, styleValue, styleData.globalStyle);
             styleData.globalStyle = globalSid;
 
@@ -31,7 +30,6 @@ define(function (require) {
                 }
 
                 currentRow.si = this.getModule('StylePool').generateStyle(styleName, styleValue, currentRow.si);
-                //currentRow.si = this.rs('generate.style', styleName, styleValue, currentRow.si);
             }, this);
 
             // 更新列sid

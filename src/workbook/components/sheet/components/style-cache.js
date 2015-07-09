@@ -53,9 +53,7 @@ define(function (require, exports, module) {
                         fonts: StylePool.getClassifyStyleDetailBySid('fonts', sid),
                         borders: StylePool.getClassifyStyleDetailBySid('borders', sid),
                         alignments: StylePool.getClassifyStyleDetailBySid('alignments', sid),
-
-                        // 单元格自身的填充色，不是计算之后的值
-                        fills: Style.getRawCellStyle('fills', row, col)
+                        fills: StylePool.getClassifyStyleDetailBySid('fills', sid)
                     };
                 }
             }
@@ -63,53 +61,7 @@ define(function (require, exports, module) {
             return result;
         },
 
-        //getRenderStyle: function (rows, cols) {
-        //    var heap = this.getActiveHeap();
-        //
-        //    if (!heap.cache) {
-        //        heap.cache = [];
-        //    }
-        //
-        //    var cache = heap.cache;
-        //    var StylePool = this.getModule('StylePool');
-        //    var Style = this.getModule('Style');
-        //
-        //    var result = {};
-        //    var row;
-        //    var col;
-        //    var key;
-        //    var sid;
-        //
-        //    for (var i = 0, len = rows.length; i < len; i++) {
-        //        row = rows[i];
-        //        for (var j = 0, jlen = cols.length; j < jlen; j++) {
-        //            col = cols[j];
-        //
-        //            if (!cache[row]) {
-        //                cache[row] = [];
-        //            }
-        //
-        //            if (!cache[row][col]) {
-        //                sid = this.getCellSid(row, col);
-        //
-        //                cache[row][col] = {
-        //                    fonts: StylePool.getClassifyStyleDetailBySid('fonts', sid),
-        //                    borders: StylePool.getClassifyStyleDetailBySid('borders', sid),
-        //                    alignments: StylePool.getClassifyStyleDetailBySid('alignments', sid),
-        //
-        //                    // 单元格自身的填充色，不是计算之后的值
-        //                    fills: Style.getRawCellStyle('fills', row, col)
-        //                };
-        //            }
-        //
-        //            key = row + ',' + col;
-        //
-        //            result[key] = cache[row][col];
-        //        }
-        //    }
-        //
-        //    return result;
-        //},
+
 
         __cleanCache: function (start, end) {
             //var heap = this.getActiveHeap();

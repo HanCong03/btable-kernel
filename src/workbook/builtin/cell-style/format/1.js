@@ -8,14 +8,18 @@ define(function (require, exports, module) {
 
     module.exports = {
         fonts: {
-            color: '#9c0006',
+            color: {
+                value: '#9c0006'
+            },
             name: {
                 type: 'minor'
             },
             size: 11
         },
         fills: {
-            fill: '#ffc7ce'
+            fill: {
+                value: '#ffc7ce'
+            }
         }
     };
 });

@@ -8,7 +8,9 @@ define(function (require, exports, module) {
 
     module.exports = {
         fonts: {
-            color: '#fa7d00',
+            color: {
+                value: '#fa7d00'
+            },
             name: {
                 type: 'minor'
             },
@@ -16,25 +18,35 @@ define(function (require, exports, module) {
             size: 11
         },
         fills: {
-            fill: '#f2f2f2'
+            fill: {
+                value: '#f2f2f2'
+            }
         },
         borders: {
             border: {
                 top: {
                     style: 'thin',
-                    color: '#7f7f7f'
+                    color: {
+                        value: '#7f7f7f'
+                    }
                 },
                 left: {
                     style: 'thin',
-                    color: '#7f7f7f'
+                    color: {
+                        value: '#7f7f7f'
+                    }
                 },
                 right: {
                     style: 'thin',
-                    color: '#7f7f7f'
+                    color: {
+                        value: '#7f7f7f'
+                    }
                 },
                 bottom: {
                     style: 'thin',
-                    color: '#7f7f7f'
+                    color: {
+                        value: '#7f7f7f'
+                    }
                 }
             }
         }
