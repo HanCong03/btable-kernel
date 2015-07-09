@@ -15,7 +15,8 @@ define(function (require) {
     return $$.createClass('Style', {
         base: require('sheet-component'),
         mixin: [
-            require('../common/style')
+            require('../common/style'),
+            require('./raw-style')
         ],
 
         allStyle: null,
@@ -38,7 +39,8 @@ define(function (require) {
                 'setSid',
                 'setStyle',
                 'clearStyle',
-                'getCellSid'
+                'getCellSid',
+                'getRawStyle'
             ]);
         },
 

@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 
         init: function () {
             this.__initMessage();
-            this.__initAPI();
+            this.__initService();
         },
 
         __initMessage: function () {
@@ -24,13 +24,13 @@ define(function (require, exports, module) {
             });
         },
 
-        __initAPI: function () {
-            this.registerAPI({
-                getBatchStyle: this.getBatchStyle
-            });
+        __initService: function () {
+            this.registerService([
+                'getRenderStyle'
+            ]);
         },
 
-        getBatchStyle: function (cells) {
+        getRenderStyle: function (rows, cols) {
             var heap = this.getActiveHeap();
 
             if (!heap.cache) {
@@ -46,23 +46,29 @@ define(function (require, exports, module) {
             var key;
             var sid;
 
-            for (var i = 0, len = cells.length; i < len; i++) {
-                col = cells[i];
-                row = col.row;
-                col = col.col;
+            for (var i = 0, len = rows.length; i < len; i++) {
+                row = rows[i];
+                for (var j = 0, jlen = cols.length; j < jlen; j++) {
+                    col = cols[j];
 
-                if (!cache[row]) {
-                    cache[row] = [];
+                    if (!cache[row]) {
+                        cache[row] = [];
+                    }
+
+                    if (!cache[row][col]) {
+                        sid = this.getCellSid(row, col);
+
+                        cache[row][col] = {
+                            fonts: StylePool.getClassifyStyleDetailBySid('fonts', sid),
+                            borders: StylePool.getClassifyStyleDetailBySid('borders', sid),
+                            alignments: StylePool.getClassifyStyleDetailBySid('alignments', sid)
+                        };
+                    }
+
+                    key = row + ',' + col;
+
+                    result[key] = cache[row][col];
                 }
-
-                if (!cache[row][col]) {
-                    sid = this.getCellSid(row, col);
-                    cache[row][col] = StylePool.getStyleDetailBySid(sid);
-                }
-
-                key = row + ',' + col;
-
-                result[key] = cache[row][col];
             }
 
             return result;

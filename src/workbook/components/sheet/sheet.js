@@ -17,6 +17,7 @@ define(function (require) {
     var MergeCell = require('./components/merge-cell');
     var RowColumn = require('./components/row-column');
     var Border = require('./components/border/border');
+    var RenderInfo = require('./components/render-info');
 
     return $$.createClass('Sheet', {
         base: require('../../interface/i-workbook-component'),
@@ -31,6 +32,7 @@ define(function (require) {
                 content: this.createComponent(Content),
                 style: this.createComponent(Style),
                 StyleCache: this.createComponent(StyleCache),
+                RenderInfo: this.createComponent(RenderInfo),
                 comment: this.createComponent(Comment),
                 view: this.createComponent(View),
                 mergeCell: this.createComponent(MergeCell),
