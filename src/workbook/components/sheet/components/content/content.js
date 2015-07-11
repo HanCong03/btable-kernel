@@ -10,9 +10,14 @@ define(function (require) {
     return $$.createClass('Content', {
         base: require('sheet-component'),
 
+        mixin: [
+            require('./insert-cell')
+        ],
+
         init: function () {
             this.__initAPI();
             this.__initService();
+            this.__initMessage();
         },
 
         __initAPI: function () {
@@ -30,6 +35,12 @@ define(function (require) {
                 'getContentType',
                 'clearContent'
             ]);
+        },
+
+        __initMessage: function () {
+            this.onMessage({
+                'insert.cell': this.__insertCell
+            });
         },
 
         /**

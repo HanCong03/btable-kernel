@@ -1,9 +1,9 @@
 /**
- * @file 获取原始样式数据
+ * @file 内容组件，维护单元格内容
  * @author hancong03@baiud.com
  */
 
-define(function (require) {
+define(function (require, exports, module) {
     var $$ = require('utils');
 
     var WORKBOOK_CONFIG = require('../../../../config');
@@ -11,7 +11,7 @@ define(function (require) {
     var MAX_COLUMN_INDEX = WORKBOOK_CONFIG.MAX_COLUMN - 1;
     var MAX_ROW_INDEX = WORKBOOK_CONFIG.MAX_ROW - 1;
 
-    return {
+    module.exports = {
         __insertCell: function (position, row, col) {
             if (position === 'top') {
                 this.__insertTopCell(row, col);
@@ -21,13 +21,18 @@ define(function (require) {
         },
 
         __insertTopCell: function (row, col) {
-            var styleData = this.getActiveSheet().style;
-            var rowsData = styleData.rows;
+            var cellData = this.getActiveSheet().cell;
+            var rowsData = cellData.rows;
             var currentRow;
-            var prevSid;
+            var prevIndex;
 
             for (var i = rowsData.length; i >= row; i--) {
-                prevSid = this.getCellSid(i - 1, col);
+                prevIndex = i - 1;
+
+                if (!rowsData[prevIndex] || !rowsData[prevIndex].cells
+                    || !rowsData[prevIndex].cells[col]) {
+                    continue;
+                }
 
                 if (!rowsData[i]) {
                     rowsData[i] = {};
@@ -39,11 +44,7 @@ define(function (require) {
                     currentRow.cells = [];
                 }
 
-                currentRow.cells[col] = {};
-
-                if (prevSid) {
-                    currentRow.cells[col].si = prevSid;
-                }
+                currentRow.cells[col] = rowsData[prevIndex].cells[col];
             }
 
             if (!rowsData[row]) {
@@ -57,7 +58,7 @@ define(function (require) {
             rowsData[row].cells[col] = {};
 
             this.postMessage('style.dimension.change');
-            this.postMessage('stylechange', {
+            this.postMessage('contentchange', {
                 row: 0,
                 col: col
             }, {

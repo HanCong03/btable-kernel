@@ -8,7 +8,7 @@ define(function (require) {
 
     var Cell = require('./components/cell/cell');
     var Dimension = require('./components/dimension/dimension');
-    var Content = require('./components/content');
+    var Content = require('./components/content/content');
     var Style = require('./components/style/style');
     var StyleCache = require('./components/style-cache');
     var TypeStyle = require('./components/type-style/type-style');
