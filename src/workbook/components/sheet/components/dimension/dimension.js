@@ -14,12 +14,19 @@ define(function (require) {
         init: function () {
             this.__initMessage();
             this.__initAPI();
+            this.__initService();
         },
 
         __initAPI: function () {
             this.registerAPI({
                 getDimension: this.getDimension
             });
+        },
+
+        __initService: function () {
+            this.registerService([
+                'getDimension'
+            ]);
         },
 
         __initMessage: function () {
@@ -31,9 +38,7 @@ define(function (require) {
                 'all.dimension.change': this.onAllChange,
 
                 'lock': this.lock,
-                'unlock': this.unlock,
-
-                'get.dimension': this.getDimension
+                'unlock': this.unlock
             });
         },
 

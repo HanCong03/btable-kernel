@@ -5,7 +5,6 @@
 
 define(function (require, exports, module) {
     var $$ = require('utils');
-    var WorkbookUtils = require('workbook-utils');
 
     module.exports = $$.createClass('StyleCache', {
         base: require('sheet-component'),
@@ -60,8 +59,6 @@ define(function (require, exports, module) {
 
             return result;
         },
-
-
 
         __cleanCache: function (start, end) {
             //var heap = this.getActiveHeap();

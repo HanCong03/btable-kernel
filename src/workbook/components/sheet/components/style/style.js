@@ -16,7 +16,8 @@ define(function (require) {
         base: require('sheet-component'),
         mixin: [
             require('../common/style'),
-            require('./raw-style')
+            require('./raw-style'),
+            require('./insert-cell')
         ],
 
         allStyle: null,
@@ -31,7 +32,14 @@ define(function (require) {
             this.allStyle = this.createComponent(AllStyle);
 
             this.__initService();
+            this.__initMessage();
             this.__initAPI();
+        },
+
+        __initMessage: function () {
+            this.onMessage({
+                'insert.cell': this.__insertCell
+            });
         },
 
         __initService: function () {
