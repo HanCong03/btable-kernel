@@ -47,15 +47,9 @@ define(function (require, exports, module) {
                 currentRow.cells[col] = rowsData[prevIndex].cells[col];
             }
 
-            if (!rowsData[row]) {
-                rowsData[row] = {};
+            if (rowsData[row] && rowsData[row].cells && rowsData[row].cells[col]) {
+                delete rowsData[row].cells[col];
             }
-
-            if (!rowsData[row].cells) {
-                rowsData[row].cells = [];
-            }
-
-            rowsData[row].cells[col] = {};
 
             this.postMessage('style.dimension.change');
             this.postMessage('contentchange', {
@@ -67,6 +61,31 @@ define(function (require, exports, module) {
             });
         },
 
-        __insertLeftCell: function () {}
+        __insertLeftCell: function (row, col) {
+            var cellData = this.getActiveSheet().cell;
+            var currentRow = cellData.rows[row];
+
+            if (!currentRow || !currentRow.cells) {
+                return;
+            }
+
+            // 超出边界
+            if (col >= currentRow.cells.length) {
+                return;
+            }
+
+            currentRow.cells.splice(col, 0, null);
+
+            delete currentRow.cells[col];
+
+            this.postMessage('style.dimension.change');
+            this.postMessage('contentchange', {
+                row: row,
+                col: 0
+            }, {
+                row: row,
+                col: MAX_COLUMN_INDEX
+            });
+        }
     };
 });

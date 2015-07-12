@@ -66,6 +66,30 @@ define(function (require) {
             });
         },
 
-        __insertLeftCell: function () {}
+        __insertLeftCell: function (row, col) {
+            var styleData = this.getActiveSheet().style;
+            var rowsData = styleData.rows;
+            var currentRow = rowsData[row];
+
+            if (!currentRow) {
+                rowsData[row] = {};
+                currentRow = currentRow[row];
+            }
+
+            if (!currentRow.cells) {
+                currentRow.cells = [];
+            }
+
+            currentRow.cells.splice(col, 0, {});
+
+            this.postMessage('style.dimension.change');
+            this.postMessage('stylechange', {
+                row: row,
+                col: 0
+            }, {
+                row: row,
+                col: MAX_COLUMN_INDEX
+            });
+        }
     };
 });
