@@ -46,15 +46,17 @@ define(function (require) {
                 }
             }
 
-            if (!rowsData[row]) {
-                rowsData[row] = {};
-            }
+            if (rowsData[row - 1] && rowsData[row - 1].cells && rowsData[row - 1].cells[col]) {
+                if (!rowsData[row]) {
+                    rowsData[row] = {};
+                }
 
-            if (!rowsData[row].cells) {
-                rowsData[row].cells = [];
-            }
+                if (!rowsData[row].cells) {
+                    rowsData[row].cells = [];
+                }
 
-            rowsData[row].cells[col] = {};
+                rowsData[row].cells[col] = $$.clone(rowsData[row - 1].cells[col]);
+            }
 
             this.postMessage('style.dimension.change');
             this.postMessage('stylechange', {
@@ -71,16 +73,22 @@ define(function (require) {
             var rowsData = styleData.rows;
             var currentRow = rowsData[row];
 
-            if (!currentRow) {
-                rowsData[row] = {};
-                currentRow = currentRow[row];
+            if (!currentRow || !currentRow.cells) {
+                return;
             }
 
-            if (!currentRow.cells) {
-                currentRow.cells = [];
+            if (currentRow.cells.length < col) {
+                return;
             }
 
-            currentRow.cells.splice(col, 0, {});
+            var target = currentRow.cells[col - 1];
+
+            if (target) {
+                currentRow.cells.splice(col, 0, $$.clone(target));
+            } else {
+                currentRow.cells.splice(col, 0, null);
+                delete currentRow.cells[col];
+            }
 
             this.postMessage('style.dimension.change');
             this.postMessage('stylechange', {
