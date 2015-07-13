@@ -16,7 +16,10 @@ define(function (require) {
         },
 
         getRenderInfo: function (rows, cols) {
-            return this.getModule('StyleCache').getRenderStyle(rows, cols);
+            return {
+                styles: this.getModule('StyleCache').getRenderStyle(rows, cols),
+                comments: this.getModule('Comment').getComments(rows, cols)
+            };
         }
     });
 });

@@ -93,6 +93,6 @@ define(function (require, exports, module) {
         },
         mergeCells: {},
         hyperlinks: {},
-        comment: {}
+        comments: {}
     };
 });
