@@ -55,7 +55,6 @@ define(function (require) {
             var copyCellData = $$.clone(this.__getCellData(cell.row, cell.col));
             // 备份cell sid
             var sid = this.getModule('Style').getCellSid(cell.row, cell.col);
-            //var sid = this.rs('getcellsid', cell.row, cell.col);
 
             this.postMessage('lock');
 
@@ -68,12 +67,10 @@ define(function (require) {
             }
 
             // 剔除样式中的border，生成新的sid
-            //sid = this.rs('generate.border', null, sid);
             sid = this.getModule('StylePool').generateBorder(null, sid);
 
             // 统一单元格样式
             this.getModule('Style').setSid(sid, start, end);
-            //this.rs('setsid', sid, start, end);
 
             this.postMessage('unlock');
 

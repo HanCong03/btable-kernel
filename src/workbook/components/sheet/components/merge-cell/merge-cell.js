@@ -23,8 +23,7 @@ define(function (require) {
         __initService: function () {
             this.registerService([
                 'getMergeCells',
-                'unmergeCell',
-                'insertRow'
+                'unmergeCell'
             ]);
         },
 
@@ -69,7 +68,6 @@ define(function (require) {
             this.__addMergeRecord(start, end);
             // 同步样式
             this.getModule('Cell').syncCell(start, end);
-            //this.rs('synccell', start, end);
 
             var borderModule = this.getModule('Border');
 
@@ -83,6 +81,9 @@ define(function (require) {
             this.postMessage('unlock');
 
             this.postMessage('all.dimension.change');
+
+            this.postMessage('contentchange', start, end);
+            this.postMessage('stylechange', start, end);
         },
 
         unmergeCell: function (start, end) {
@@ -108,6 +109,9 @@ define(function (require) {
             }
 
             this.postMessage('all.dimension.change');
+
+            this.postMessage('contentchange', start, end);
+            this.postMessage('stylechange', start, end);
         },
 
         /**
@@ -129,6 +133,9 @@ define(function (require) {
                 start: start,
                 end: end
             };
+
+            this.postMessage('contentchange', start, end);
+            this.postMessage('stylechange', start, end);
         },
 
         toggleMergeCell: function (start, end) {
@@ -142,13 +149,15 @@ define(function (require) {
                 // 添加新的合并记录
                 this.__addMergeRecord(start, end);
                 // 同步样式
-                //this.rs('synccell', start, end);
                 this.getModule('Cell').syncCell(start, end);
 
                 this.postMessage('unlock');
             }
 
             this.postMessage('all.dimension.change');
+
+            this.postMessage('contentchange', start, end);
+            this.postMessage('stylechange', start, end);
         },
 
         __deleteMergeRecord: function (mergedKeys) {

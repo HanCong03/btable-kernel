@@ -4,12 +4,13 @@
  */
 
 define(function (require, exports, module) {
-    var WorkbookConfig = require('../../../../config.js');
+    var WorkbookConfig = require('../../../../config');
     var MAX_ROW_INDEX = WorkbookConfig.MAX_ROW - 1;
     var MAX_COLUMN_INDEX = WorkbookConfig.MAX_COLUMN - 1;
 
     module.exports = {
         insertRow: function (startIndex, endIndex) {
+            // 由于映射关系还未修改，所以此时的查询，仍然基于原有数据进行查询即可
             var mergecells = this.getMergeCells({
                 row: startIndex,
                 col: 0
@@ -18,41 +19,9 @@ define(function (require, exports, module) {
                 col: MAX_COLUMN_INDEX
             });
 
+            var count = endIndex - startIndex + 1;
+
             var mergeInfo;
-
-            for (var key in mergecells) {
-                if (!mergecells.hasOwnProperty(key)) {
-                    continue;
-                }
-
-                mergeInfo = mergecells[key];
-
-                if (mergeInfo.start.row >= startIndex) {
-                    continue;
-                }
-
-                //this.__
-            }
-        },
-
-        __insertTopCell: function (start, end) {
-            var mergecells = this.getMergeCells({
-                row: end.row + 1,
-                col: start.col
-            }, {
-                row: MAX_ROW_INDEX,
-                col: end.col
-            });
-
-            if (!mergecells) {
-                return;
-            }
-
-            var startCol = start.col;
-            var endCol = end.col;
-            var mergeInfo;
-
-            var count = end.row - start.row + 1;
             var mergeStart;
             var mergeEnd;
 
@@ -65,12 +34,8 @@ define(function (require, exports, module) {
                 mergeStart = mergeInfo.start;
                 mergeEnd = mergeInfo.end;
 
-                // 合并单元格溢出， 则撤销该单元格的合并
-                if (mergeStart.col < startCol || mergeEnd.col > endCol) {
-                    this.unmergeCell(mergeStart.row, mergeStart.col);
-
-                // 否则，更新该合并单元格的起始和结束位置
-                } else {
+                // 处于移动线以下的合并单元格，直接移动即可
+                if (mergeInfo.start.row >= startIndex) {
                     this.updateMergeCell(mergeStart.row, mergeStart.col, {
                         row: mergeStart.row + count,
                         col: mergeStart.col
@@ -78,55 +43,27 @@ define(function (require, exports, module) {
                         row: mergeEnd.row + count,
                         col: mergeEnd.col
                     });
+
+                // 否则，不移动，但是在相应位置添加行
+                } else {
+                    this.__addRow(mergeStart, mergeEnd, startIndex, count);
                 }
             }
         },
 
-        __insertLeftCell: function (start, end) {
-            var mergecells = this.getMergeCells({
-                row: start.row,
-                col: end.col + 1
-            }, {
-                row: end.row,
-                col: MAX_COLUMN_INDEX
+        /**
+         * 添加行
+         * @param start 合并单元格原始起点
+         * @param end 合并单元格原始结束点
+         * @param startIndex 新添加行的位置（行索引）
+         * @param count 添加的行的条数
+         * @private
+         */
+        __addRow: function (start, end, startIndex, count) {
+            this.updateMergeCell(start.row, start.col, start, {
+                row: end.row + count,
+                col: end.col
             });
-
-            if (!mergecells) {
-                return;
-            }
-
-            var startRow = start.row;
-            var endRow = end.row;
-            var count = end.col - start.col + 1;
-
-            var mergeInfo;
-            var mergeStart;
-            var mergeEnd;
-
-            for (var key in mergecells) {
-                if (!mergecells.hasOwnProperty(key)) {
-                    continue;
-                }
-
-                mergeInfo = mergecells[key];
-                mergeStart = mergeInfo.start;
-                mergeEnd = mergeInfo.end;
-
-                // 合并单元格溢出，则撤销合并
-                if (mergeStart.row < startRow || mergeEnd.row > endRow) {
-                    this.unmergeCell(mergeStart.row, mergeStart.col);
-
-                // 否则，更新该合并单元格的起始和结束位置
-                } else {
-                    this.updateMergeCell(mergeStart.row, mergeStart.col, {
-                        row: mergeStart.row,
-                        col: mergeStart.col + count
-                    }, {
-                        row: mergeEnd.row,
-                        col: mergeEnd.col + count
-                    });
-                }
-            }
         }
     };
 });

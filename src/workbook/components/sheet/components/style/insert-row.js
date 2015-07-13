@@ -23,8 +23,7 @@ define(function (require) {
             var rowsData = styleData.rows;
             var count = endIndex - startIndex + 1;
 
-            var sourceIndex = startIndex - 1;
-            var sourceInfo = rowsData[sourceIndex];
+            var sourceInfo = rowsData[startIndex - 1];
 
             var newRows = [];
             newRows.length = count;
@@ -47,7 +46,7 @@ define(function (require) {
                 row: startIndex,
                 col: 0
             }, {
-                row: MAX_ROW_INDEX,
+                row: rowsData.length - 1,
                 col: MAX_COLUMN_INDEX
             });
         }
