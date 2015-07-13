@@ -1,5 +1,5 @@
 /**
- * @file 获取原始样式数据
+ * @file 对插入单元格操作的样式处理
  * @author hancong03@baiud.com
  */
 

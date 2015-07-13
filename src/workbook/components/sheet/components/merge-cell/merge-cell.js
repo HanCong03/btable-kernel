@@ -10,7 +10,8 @@ define(function (require) {
         base: require('sheet-component'),
 
         mixin: [
-            require('./insert-cell')
+            require('./insert-cell'),
+            require('./insert-row')
         ],
 
         init: function () {
@@ -22,7 +23,8 @@ define(function (require) {
         __initService: function () {
             this.registerService([
                 'getMergeCells',
-                'unmergeCell'
+                'unmergeCell',
+                'insertRow'
             ]);
         },
 
@@ -37,7 +39,9 @@ define(function (require) {
 
         __initMessage: function () {
             this.onMessage({
-                'insert.cell.before': this.insertCell
+                'insert.cell.before': this.insertCell,
+                'insert.row.after': this.insertRow,
+                'insert.column.after': this.insertColumn
             });
         },
 

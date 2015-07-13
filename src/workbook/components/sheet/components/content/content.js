@@ -11,7 +11,8 @@ define(function (require) {
         base: require('sheet-component'),
 
         mixin: [
-            require('./insert-cell')
+            require('./insert-cell'),
+            require('./insert-row')
         ],
 
         init: function () {
@@ -39,7 +40,8 @@ define(function (require) {
 
         __initMessage: function () {
             this.onMessage({
-                'insert.cell': this.__insertCell
+                'insert.cell': this.__insertCell,
+                'insert.row': this.__insertRow
             });
         },
 

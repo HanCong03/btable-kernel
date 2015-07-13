@@ -17,7 +17,8 @@ define(function (require) {
         mixin: [
             require('../common/style'),
             require('./raw-style'),
-            require('./insert-cell')
+            require('./insert-cell'),
+            require('./insert-row')
         ],
 
         allStyle: null,
@@ -38,7 +39,8 @@ define(function (require) {
 
         __initMessage: function () {
             this.onMessage({
-                'insert.cell': this.__insertCell
+                'insert.cell': this.__insertCell,
+                'insert.row': this.__insertRow
             });
         },
 

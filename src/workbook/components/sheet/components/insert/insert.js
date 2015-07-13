@@ -4,7 +4,6 @@
  */
 
 define(function (require) {
-    var $$ = require('utils');
     var WorkbookUtils = require('workbook-utils');
 
     return require('utils').createClass('Comment', {
@@ -16,7 +15,9 @@ define(function (require) {
 
         __initAPI: function () {
             this.registerAPI({
-                insertCell: this.insertCell
+                insertCell: this.insertCell,
+                insertRow: this.insertRow,
+                insertColumn: this.insertColumn
             });
         },
 
@@ -29,11 +30,11 @@ define(function (require) {
                     return;
 
                 case 'col':
-                    this.insertColumn(start.col, end.col);
+                    this.insertColumn(start, end);
                     break;
 
                 case 'row':
-                    this.insertRow(start.row, end.row);
+                    this.insertRow(start, end);
                     break;
 
                 case 'range':
@@ -44,10 +45,22 @@ define(function (require) {
             }
         },
 
-        insertRow: function (position, row) {
+        insertRow: function (start, end) {
+            var startIndex = start.row;
+            var endIndex = end.row;
 
+            this.postMessage('insert.row', startIndex, endIndex);
+            // 行列插入触发的是after操作，方便MergeCell模块处理合并单元格。
+            this.postMessage('insert.row.after', startIndex, endIndex);
         },
 
-        insertColumn: function (position, col) {}
+        insertColumn: function (start, end) {
+            var startIndex = start.col;
+            var endIndex = end.col;
+
+            this.postMessage('insert.column', startIndex, endIndex);
+            // 行列插入触发的是after操作，方便MergeCell模块处理合并单元格。
+            this.postMessage('insert.column.after', startIndex, endIndex);
+        }
     });
 });

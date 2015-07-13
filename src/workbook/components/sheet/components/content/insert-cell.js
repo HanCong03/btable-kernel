@@ -106,7 +106,7 @@ define(function (require, exports, module) {
         },
 
         __notifyInsertTopCell: function (start, end) {
-            this.postMessage('style.dimension.change');
+            this.postMessage('content.dimension.change');
             this.postMessage('contentchange', {
                 row: 0,
                 col: start.col
@@ -117,7 +117,7 @@ define(function (require, exports, module) {
         },
 
         __notifyInsertLeftCell: function (start, end) {
-            this.postMessage('style.dimension.change');
+            this.postMessage('content.dimension.change');
             this.postMessage('contentchange', {
                 row: start.row,
                 col: 0
