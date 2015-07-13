@@ -82,11 +82,15 @@ define(function (require) {
         },
 
         unmergeCell: function (start, end) {
-            var mergedKeys;
+            var mergedKeys = {};
+            var key;
 
             // 撤销指定合并单元格
             if (typeof start === 'number') {
-                this.__deleteMergeRecord(WorkbookUtils.rowColToIndex(start, end));
+                key = WorkbookUtils.rowColToIndex(start, end);
+                mergedKeys[key] = true;
+
+                this.__deleteMergeRecord(mergedKeys);
 
             // 撤销指定区域的合并单元格
             } else {
