@@ -40,7 +40,7 @@ define(function (require) {
                 targetIndex = i + count;
 
                 if (!rowsData[i]) {
-                    rowsData[i] = [];
+                    rowsData[i] = {};
                 }
 
                 currentRow = rowsData[i];
@@ -56,7 +56,7 @@ define(function (require) {
                     currentRow.cells[j] = {};
 
                     if (!rowsData[targetIndex]) {
-                        rowsData[targetIndex] = [];
+                        rowsData[targetIndex] = {};
                     }
 
                     if (!rowsData[targetIndex].cells) {
@@ -92,7 +92,7 @@ define(function (require) {
                     targetIndex = startRow + j;
 
                     if (!rowsData[targetIndex]) {
-                        rowsData[targetIndex] = [];
+                        rowsData[targetIndex] = {};
                     }
 
                     if (!rowsData[targetIndex].cells) {
