@@ -12,7 +12,8 @@ define(function (require) {
 
         mixin: [
             require('./insert-cell'),
-            require('./insert-row')
+            require('./insert-row'),
+            require('./insert-column')
         ],
 
         init: function () {
@@ -41,7 +42,8 @@ define(function (require) {
         __initMessage: function () {
             this.onMessage({
                 'insert.cell': this.__insertCell,
-                'insert.row': this.__insertRow
+                'insert.row': this.__insertRow,
+                'insert.column': this.__insertColumn
             });
         },
 

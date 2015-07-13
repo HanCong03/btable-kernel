@@ -11,7 +11,8 @@ define(function (require) {
 
         mixin: [
             require('./insert-cell'),
-            require('./insert-row')
+            require('./insert-row'),
+            require('./insert-column')
         ],
 
         init: function () {

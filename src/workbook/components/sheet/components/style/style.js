@@ -18,7 +18,8 @@ define(function (require) {
             require('../common/style'),
             require('./raw-style'),
             require('./insert-cell'),
-            require('./insert-row')
+            require('./insert-row'),
+            require('./insert-column')
         ],
 
         allStyle: null,
@@ -40,7 +41,8 @@ define(function (require) {
         __initMessage: function () {
             this.onMessage({
                 'insert.cell': this.__insertCell,
-                'insert.row': this.__insertRow
+                'insert.row': this.__insertRow,
+                'insert.column': this.__insertColumn
             });
         },
 
@@ -51,7 +53,8 @@ define(function (require) {
                 'clearStyle',
                 'getCellSid',
                 'getRawStyle',
-                'getRawCellStyle'
+                'getRawCellStyle',
+                'getRangeSid'
             ]);
         },
 
@@ -162,6 +165,41 @@ define(function (require) {
         getClassifyStyle: function (classify, row, col) {
             var sid = this.getSettedCellSid(row, col);
             return this.getModule('StylePool').getClassifyStyleDetailBySid(classify, sid);
+        },
+
+        /**
+         * 获取给定区域的sid，如果给定区域的所有单元格都包含相同的sid，则返回该sid，
+         * 如果区域内某个单元格没有sid，或者含有不同sid的单元格，则返回null。
+         * @param start 区域起始点
+         * @param end 区域结束点
+         * @returns {null}
+         */
+        getRangeSid: function (start, end) {
+            var startRow = start.row;
+            var endRow = end.row;
+            var startCol = start.col;
+            var endCol = end.col;
+
+            var targetSid;
+            var sid;
+
+            for (var i = startRow; i <= endRow; i++) {
+                for (var j = startCol; j <= endCol; j++) {
+                    sid = this.getCellSid(i, j);
+
+                    if ($$.isNdef(sid)) {
+                        return null;
+                    }
+
+                    if (targetSid === undefined) {
+                        targetSid = sid;
+                    } else if (targetSid !== sid) {
+                        return null;
+                    }
+                }
+            }
+
+            return targetSid;
         },
 
         getBatchStyle: function (cells) {

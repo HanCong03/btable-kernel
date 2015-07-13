@@ -9,11 +9,11 @@ define(function (require, exports, module) {
     var MAX_COLUMN_INDEX = WorkbookConfig.MAX_COLUMN - 1;
 
     module.exports = {
-        insertRow: function (startIndex, endIndex) {
+        insertColumn: function (startIndex, endIndex) {
             // 由于映射关系还未修改，所以此时的查询，仍然基于原有数据进行查询即可
             var mergecells = this.getMergeCells({
-                row: startIndex,
-                col: 0
+                row: 0,
+                col: startIndex
             }, {
                 row: MAX_ROW_INDEX,
                 col: MAX_COLUMN_INDEX
@@ -38,21 +38,22 @@ define(function (require, exports, module) {
                 mergeStart = mergeInfo.start;
                 mergeEnd = mergeInfo.end;
 
-                // 处于移动线以下的合并单元格，直接移动即可
-                if (mergeInfo.start.row >= startIndex) {
+                // 处于移动线右侧的合并单元格，直接移动即可
+                if (mergeInfo.start.col >= startIndex) {
                     this.updateMergeCell(mergeStart.row, mergeStart.col, {
-                        row: mergeStart.row + count,
-                        col: mergeStart.col
+                        row: mergeStart.row,
+                        col: mergeStart.col + count
                     }, {
-                        row: mergeEnd.row + count,
-                        col: mergeEnd.col
+                        row: mergeEnd.row,
+                        col: mergeEnd.col + count
                     });
 
-                // 否则，不移动，扩展合并区域
+                // 否则，不移动，但是扩展合并区域
                 } else {
+                    // 扩展合并区域
                     this.updateMergeCell(mergeStart.row, mergeStart.col, mergeStart, {
-                        row: mergeEnd.row + count,
-                        col: mergeEnd.col
+                        row: mergeEnd.row,
+                        col: mergeEnd.col + count
                     });
                 }
             }
