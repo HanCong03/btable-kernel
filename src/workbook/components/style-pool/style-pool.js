@@ -26,7 +26,8 @@ define(function (require, exports, module) {
         mixin: [
             require('./map'),
             require('./filter'),
-            require('./cell-style')
+            require('./cell-style'),
+            require('./computed-details')
         ],
 
         init: function () {
@@ -290,6 +291,9 @@ define(function (require, exports, module) {
         },
 
         __generateClassifyId: function (classify, details) {
+            // 获取计算后的details
+            details = this.__getComputedDetails(details);
+
             var data = this.getWorkbook();
             var pool = data.stylePool;
             var key = JSON.stringify(details);

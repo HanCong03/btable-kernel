@@ -7,7 +7,7 @@ define(function (require, exports, module) {
     var MAX = 255;
 
     module.exports = function (theme, tint) {
-        if (tint === 0) {
+        if (!tint) {
             return '#' + theme;
         }
 
