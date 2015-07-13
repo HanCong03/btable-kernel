@@ -9,17 +9,21 @@ define(function (require) {
     return require('utils').createClass('MergeCell', {
         base: require('sheet-component'),
 
+        mixin: [
+            require('./insert-cell')
+        ],
+
         init: function () {
             this.__initService();
             this.__initAPI();
+            this.__initMessage();
         },
 
         __initService: function () {
             this.registerService([
-                'getMergeCells'
+                'getMergeCells',
+                'unmergeCell'
             ]);
-
-            //'get.mergecells': this.getMergeCells
         },
 
         __initAPI: function () {
@@ -28,6 +32,12 @@ define(function (require) {
                 unmergeCell: this.unmergeCell,
                 toggleMergeCell: this.toggleMergeCell,
                 getMergeCells: this.getMergeCells
+            });
+        },
+
+        __initMessage: function () {
+            this.onMessage({
+                'insert.cell.before': this.insertCell
             });
         },
 
@@ -72,15 +82,45 @@ define(function (require) {
         },
 
         unmergeCell: function (start, end) {
-            var mergedKeys = this.getMergeCells(start, end);
+            var mergedKeys;
 
-            if (!mergedKeys) {
+            // 撤销指定合并单元格
+            if (typeof start === 'number') {
+                this.__deleteMergeRecord(WorkbookUtils.rowColToIndex(start, end));
+
+            // 撤销指定区域的合并单元格
+            } else {
+                mergedKeys = this.getMergeCells(start, end);
+
+                if (!mergedKeys) {
+                    return;
+                }
+
+                this.__deleteMergeRecord(mergedKeys);
+            }
+
+            this.postMessage('all.dimension.change');
+        },
+
+        /**
+         * 更新指定合并单元格的范围
+         * @param row 需要更新的合并单元格的起始单元格行索引
+         * @param col 需要更新的合并单元格的起始单元格列索引
+         * @param start
+         * @param end
+         */
+        updateMergeCell: function (row, col, start, end) {
+            var mergeCells = this.getActiveSheet().mergeCells;
+            var key = WorkbookUtils.rowColToIndex(row, col);
+
+            if (!mergeCells[key]) {
                 return;
             }
 
-            this.__deleteMergeRecord(mergedKeys);
-
-            this.postMessage('all.dimension.change');
+            mergeCells[key] = {
+                start: start,
+                end: end
+            };
         },
 
         toggleMergeCell: function (start, end) {

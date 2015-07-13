@@ -14,7 +14,7 @@ define(function (require) {
     var TypeStyle = require('./components/type-style/type-style');
     var Comment = require('./components/comment');
     var View = require('./components/view');
-    var MergeCell = require('./components/merge-cell');
+    var MergeCell = require('./components/merge-cell/merge-cell');
     var RowColumn = require('./components/row-column');
     var Border = require('./components/border/border');
     var RenderInfo = require('./components/render-info');

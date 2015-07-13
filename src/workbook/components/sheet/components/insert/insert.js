@@ -20,8 +20,28 @@ define(function (require) {
             });
         },
 
-        insertCell: function (position, row, col) {
-            this.postMessage('insert.cell', position, row, col);
+        insertCell: function (position, start, end) {
+            var rangeType = WorkbookUtils.getRangeType(start, end);
+
+            switch (rangeType) {
+                case 'all':
+                    // nothing
+                    return;
+
+                case 'col':
+                    this.insertColumn(start.col, end.col);
+                    break;
+
+                case 'row':
+                    this.insertRow(start.row, end.row);
+                    break;
+
+                case 'range':
+                    // before消息保证MergeCell模块能够优先处理插入单元格。
+                    this.postMessage('insert.cell.before', 'position', start, end);
+                    this.postMessage('insert.cell', position, start, end);
+                    break;
+            }
         },
 
         insertRow: function (position, row) {

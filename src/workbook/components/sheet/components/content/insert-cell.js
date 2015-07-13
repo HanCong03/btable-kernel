@@ -14,9 +14,9 @@ define(function (require, exports, module) {
     module.exports = {
         __insertCell: function (position, row, col) {
             if (position === 'top') {
-                this.__insertTopCell(row, col);
+                //this.__insertTopCell(row, col);
             } else {
-                this.__insertLeftCell(row, col);
+                //this.__insertLeftCell(row, col);
             }
         },
 

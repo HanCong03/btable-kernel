@@ -12,90 +12,190 @@ define(function (require) {
     var MAX_ROW_INDEX = WORKBOOK_CONFIG.MAX_ROW - 1;
 
     return {
-        __insertCell: function (position, row, col) {
+        __insertCell: function (position, start, end) {
             if (position === 'top') {
-                this.__insertTopCell(row, col);
+                this.__insertTopCell(start, end);
             } else {
-                this.__insertLeftCell(row, col);
+                this.__insertLeftCell(start, end);
             }
         },
 
-        __insertTopCell: function (row, col) {
+        __insertTopCell: function (start, end) {
             var styleData = this.getActiveSheet().style;
             var rowsData = styleData.rows;
-            var currentRow;
-            var prevSid;
 
-            for (var i = rowsData.length; i >= row; i--) {
-                prevSid = this.getCellSid(i - 1, col);
+            var startRow = start.row;
+            var startCol = start.col;
+            var endRow = end.row;
+            var endCol = end.col;
+
+            var targetIndex;
+            var currentRow;
+
+            var count = endRow - startRow + 1;
+            var sid;
+
+            /* ---- 移动行 ---- */
+            for (var i = rowsData.length - 1; i >= startRow; i--) {
+                targetIndex = i + count;
 
                 if (!rowsData[i]) {
-                    rowsData[i] = {};
+                    rowsData[i] = [];
                 }
 
                 currentRow = rowsData[i];
 
-                if ($$.isNdef(currentRow.cells)) {
+                if (!currentRow.cells) {
                     currentRow.cells = [];
                 }
 
-                currentRow.cells[col] = {};
+                for (var j = startCol; j <= endCol; j++) {
+                    sid = this.getCellSid(i, j);
 
-                if (prevSid) {
-                    currentRow.cells[col].si = prevSid;
+                    // 清空源样式
+                    currentRow.cells[j] = {};
+
+                    if (!rowsData[targetIndex]) {
+                        rowsData[targetIndex] = [];
+                    }
+
+                    if (!rowsData[targetIndex].cells) {
+                        rowsData[targetIndex].cells = [];
+                    }
+
+                    if (!sid) {
+                        rowsData[targetIndex].cells[j] = {};
+                    } else {
+                        rowsData[targetIndex].cells[j] = {
+                            si: sid
+                        };
+                    }
                 }
             }
 
-            if (rowsData[row - 1] && rowsData[row - 1].cells && rowsData[row - 1].cells[col]) {
-                if (!rowsData[row]) {
-                    rowsData[row] = {};
-                }
+            /* --- 插入新行 --- */
+            // 新插入行的数据源行索引
+            var sourceIndex = startRow - 1;
 
-                if (!rowsData[row].cells) {
-                    rowsData[row].cells = [];
-                }
-
-                rowsData[row].cells[col] = $$.clone(rowsData[row - 1].cells[col]);
+            if (!rowsData[sourceIndex] || !rowsData[sourceIndex].cells) {
+                return this.__notifyInsertTopCell(start, end);
             }
 
+            for (var i = startCol; i <= endCol; i++) {
+                sid = this.getCellSid(sourceIndex, i);
+
+                if (!sid) {
+                    continue;
+                }
+
+                for (var j = 0; j < count; j++) {
+                    targetIndex = startRow + j;
+
+                    if (!rowsData[targetIndex]) {
+                        rowsData[targetIndex] = [];
+                    }
+
+                    if (!rowsData[targetIndex].cells) {
+                        rowsData[targetIndex].cells = [];
+                    }
+
+                    rowsData[targetIndex].cells[i] = {
+                        si: sid
+                    };
+                }
+            }
+
+            this.__notifyInsertTopCell(start, end);
+        },
+
+        __insertLeftCell: function (start, end) {
+            var styleData = this.getActiveSheet().style;
+            var rowsData = styleData.rows;
+
+            var startRow = start.row;
+            var startCol = start.col;
+            var endRow = end.row;
+            var endCol = end.col;
+
+            var currentRow;
+
+            var count = endCol - startCol + 1;
+            var cells;
+            var sid;
+
+            /* ---- 移动列 ---- */
+            for (var i = startRow; i <= endRow; i++) {
+                currentRow = rowsData[i];
+
+                // 当前行数据无效
+                if (!currentRow || !currentRow.cells) {
+                    continue;
+                }
+
+                cells = currentRow.cells;
+
+                for (var j = cells.length - 1; j >= startCol; j--) {
+                    sid = this.getCellSid(i, j);
+
+                    // 清空源style数据
+                    cells[j] = {};
+
+                    // 更新目标单元格style
+                    if (sid) {
+                        cells[j + count] = {
+                            si: sid
+                        }
+                    } else {
+                        cells[j + count] = {};
+                    }
+                }
+            }
+
+            /* --- 插入新列 --- */
+            // 新插入行的数据源行索引
+            var sourceIndex = startCol - 1;
+
+            for (var i = startRow; i <= endRow; i++) {
+                if (!rowsData[i] || !rowsData[i].cells) {
+                    continue;
+                }
+
+                sid = this.getCellSid(i, sourceIndex);
+
+                if (!sid) {
+                    continue;
+                }
+
+                for (var j = 0; j < count; j++) {
+                    rowsData[i].cells[startCol + j] = {
+                        si: sid
+                    };
+                }
+            }
+
+            this.__notifyInsertLeftCell(start, end);
+        },
+
+        __notifyInsertTopCell: function (start, end) {
             this.postMessage('style.dimension.change');
+
             this.postMessage('stylechange', {
                 row: 0,
-                col: col
+                col: start.col
             }, {
                 row: MAX_ROW_INDEX,
-                col: col
+                col: end.col
             });
         },
 
-        __insertLeftCell: function (row, col) {
-            var styleData = this.getActiveSheet().style;
-            var rowsData = styleData.rows;
-            var currentRow = rowsData[row];
-
-            if (!currentRow || !currentRow.cells) {
-                return;
-            }
-
-            if (currentRow.cells.length < col) {
-                return;
-            }
-
-            var target = currentRow.cells[col - 1];
-
-            if (target) {
-                currentRow.cells.splice(col, 0, $$.clone(target));
-            } else {
-                currentRow.cells.splice(col, 0, null);
-                delete currentRow.cells[col];
-            }
-
+        __notifyInsertLeftCell: function (start, end) {
             this.postMessage('style.dimension.change');
+
             this.postMessage('stylechange', {
-                row: row,
+                row: start.row,
                 col: 0
             }, {
-                row: row,
+                row: end.row,
                 col: MAX_COLUMN_INDEX
             });
         }
