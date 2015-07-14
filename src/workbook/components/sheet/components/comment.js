@@ -11,14 +11,7 @@ define(function (require) {
         base: require('sheet-component'),
 
         init: function () {
-            this.__initService();
             this.__initAPI();
-        },
-
-        __initService: function () {
-            this.registerService([
-                'getComments'
-            ]);
         },
 
         __initAPI: function () {
@@ -110,47 +103,6 @@ define(function (require) {
             return sheetData.comments[currentCell.comment];
         },
 
-        /**
-         * 通过给定指定的行集合和列集合，获取属于这些行列的单元格的comment信息。
-         * @param rows
-         * @param cols
-         */
-        getComments: function (rows, cols) {
-            var comments = {};
-            var row;
-            var col;
-            var key;
-
-            var sheetData = this.getActiveSheet();
-            var rowsData = sheetData.cell.rows;
-            var commentsData = sheetData.comments;
-
-            var current;
-
-            for (var i = 0, len = rows.length; i < len; i++) {
-                row = rows[i];
-                for (var j = 0, jlen = cols.length; j < jlen; j++) {
-                    col = cols[j];
-
-                    if (!rowsData[row] || !rowsData[row].cells || !rowsData[row].cells[col]) {
-                        continue;
-                    }
-
-                    current = rowsData[row].cells[col];
-
-                    if ($$.isNdef(current.comment)) {
-                        continue;
-                    }
-
-                    key = row + ',' + col;
-
-                    comments[key] = commentsData[current.comment];
-                }
-            }
-
-            return comments;
-        },
-
         __clearAll: function () {
             var sheetData = this.getActiveSheet();
             var cellRows = sheetData.cell.rows;
@@ -240,7 +192,7 @@ define(function (require) {
                 return 0;
             }
 
-            return (keys[keys.length] | 0) + 1;
+            return (keys[keys.length - 1] | 0) + 1;
         }
     });
 });

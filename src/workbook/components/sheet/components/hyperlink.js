@@ -11,14 +11,7 @@ define(function (require) {
         base: require('sheet-component'),
 
         init: function () {
-            this.__initService();
             this.__initAPI();
-        },
-
-        __initService: function () {
-            this.registerService([
-                'getHyperlinks'
-            ]);
         },
 
         __initAPI: function () {
@@ -56,7 +49,7 @@ define(function (require) {
             var currentCell = cellRows[row].cells[col];
             var cid;
 
-            if ($$.isDefined(currentCell.comment)) {
+            if ($$.isDefined(currentCell.hyperlink)) {
                 cid = currentCell.hyperlink;
             } else {
                 cid = this.__getHyperlinkId();
@@ -67,7 +60,6 @@ define(function (require) {
 
             // 设置超链接时，添加“超链接”单元格样式
             // “超链接”的ceid为8
-            console.log(row, col)
             this.getModule('Style').applyCellStyle(8, {
                 row: row,
                 col: col
@@ -120,47 +112,6 @@ define(function (require) {
             }
 
             return sheetData.hyperlinks[currentCell.hyperlink];
-        },
-
-        /**
-         * 通过给定指定的行集合和列集合，获取属于这些行列的单元格的hyperlink信息。
-         * @param rows
-         * @param cols
-         */
-        getHyperlinks: function (rows, cols) {
-            var hyperlinks = {};
-            var row;
-            var col;
-            var key;
-
-            var sheetData = this.getActiveSheet();
-            var rowsData = sheetData.cell.rows;
-            var hyperlinksData = sheetData.hyperlinks;
-
-            var current;
-
-            for (var i = 0, len = rows.length; i < len; i++) {
-                row = rows[i];
-                for (var j = 0, jlen = cols.length; j < jlen; j++) {
-                    col = cols[j];
-
-                    if (!rowsData[row] || !rowsData[row].cells || !rowsData[row].cells[col]) {
-                        continue;
-                    }
-
-                    current = rowsData[row].cells[col];
-
-                    if ($$.isNdef(current.hyperlink)) {
-                        continue;
-                    }
-
-                    key = row + ',' + col;
-
-                    hyperlinks[key] = hyperlinksData[current.hyperlink];
-                }
-            }
-
-            return hyperlinks;
         },
 
         __clearAll: function () {
@@ -258,7 +209,7 @@ define(function (require) {
                 return 0;
             }
 
-            return (keys[keys.length] | 0) + 1;
+            return (keys[keys.length - 1] | 0) + 1;
         }
     });
 });
