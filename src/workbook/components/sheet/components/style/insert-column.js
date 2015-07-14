@@ -7,7 +7,6 @@ define(function (require) {
     var $$ = require('utils');
 
     var WORKBOOK_CONFIG = require('../../../../config');
-
     var MAX_ROW_INDEX = WORKBOOK_CONFIG.MAX_ROW - 1;
     var MAX_COLUMN_INDEX = WORKBOOK_CONFIG.MAX_COLUMN - 1;
 
@@ -75,7 +74,7 @@ define(function (require) {
                 col: startIndex
             }, {
                 row: MAX_ROW_INDEX,
-                col: dimension.max.col
+                col: MAX_COLUMN_INDEX
             });
         }
     };

@@ -32,7 +32,7 @@ define(function (require, exports, module) {
                 row: startIndex,
                 col: 0
             }, {
-                row: rowsData.length - 1,
+                row: MAX_ROW_INDEX,
                 col: MAX_COLUMN_INDEX
             });
         }
