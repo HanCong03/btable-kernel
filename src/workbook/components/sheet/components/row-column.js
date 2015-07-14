@@ -6,7 +6,6 @@
 define(function (require) {
     var $$ = require('utils');
     var WORKBOOK_CONFIG = require('../../../config');
-
     var MAX_COLUMN_INDEX = WORKBOOK_CONFIG.MAX_COLUMN - 1;
     var MAX_ROW_INDEX = WORKBOOK_CONFIG.MAX_ROW - 1;
 
