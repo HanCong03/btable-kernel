@@ -13,6 +13,7 @@ define(function (require) {
     var StyleCache = require('./components/style-cache');
     var TypeStyle = require('./components/type-style/type-style');
     var Comment = require('./components/comment');
+    var Hyperlink = require('./components/hyperlink');
     var View = require('./components/view');
     var MergeCell = require('./components/merge-cell/merge-cell');
     var RowColumn = require('./components/row-column');
@@ -40,7 +41,8 @@ define(function (require) {
                 rowColumn: this.createComponent(RowColumn),
                 border: this.createComponent(Border),
                 typeStyle: this.createComponent(TypeStyle),
-                insert: this.createComponent(Insert)
+                insert: this.createComponent(Insert),
+                hyperlink: this.createComponent(Hyperlink)
             };
         },
 

@@ -92,7 +92,9 @@ define(function (require, exports, module) {
             globalStyle: null
         },
         mergeCells: {},
-        hyperlinks: {},
+        hyperlinks: {
+            // 1: 'http://www.baidu.com'
+        },
         comments: {}
     };
 });
