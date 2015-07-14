@@ -75,6 +75,11 @@ define(function (require, exports, module) {
         16: {
             name: '标题1',
             format: require('./format/13')
+        },
+
+        8: {
+            name: '超链接',
+            format: require('./format/1024')
         }
     };
 });

@@ -54,7 +54,8 @@ define(function (require) {
                 'getCellSid',
                 'getRawStyle',
                 'getRawCellStyle',
-                'getRangeSid'
+                'getRangeSid',
+                'applyCellStyle'
             ]);
         },
 

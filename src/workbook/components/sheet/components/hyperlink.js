@@ -65,6 +65,17 @@ define(function (require) {
             currentCell.hyperlink = cid;
             sheetData.hyperlinks[cid] = link;
 
+            // 设置超链接时，添加“超链接”单元格样式
+            // “超链接”的ceid为8
+            console.log(row, col)
+            this.getModule('Style').applyCellStyle(8, {
+                row: row,
+                col: col
+            }, {
+                row: row,
+                col: col
+            });
+
             this.postMessage('cell.dimension.change');
         },
 
