@@ -21,7 +21,8 @@ define(function (require, exports, module) {
 
             var gid;
             var applyName;
-            var cellStyleGroup = $$.clone(data.cellStyleGroup[0]);
+            // 基于原有cellStyle生成新的cellStyle
+            var cellStyleGroup = $$.clone(data.cellStyleGroup[styleGroup.xf]);
 
             for (var key in cellStyles) {
                 if (!cellStyles.hasOwnProperty(key)) {
