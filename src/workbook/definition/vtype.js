@@ -11,8 +11,9 @@ define({
     TIME: 't',
     DATETIME: 'dt',
     PERCENTAGE: 'p',
-    FRACTION: 'f',
+    FRACTION: 'frac',
     SCIENTIFIC: 'sc',
+    FORMULA: 'f',
     TEXT: 's',
     LOGICAL: 'l',
     ERROR: 'e'

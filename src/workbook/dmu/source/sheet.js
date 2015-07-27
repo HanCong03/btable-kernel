@@ -54,7 +54,7 @@ define(function (require, exports, module) {
             //         u => 'custom === > user',
             //         a => 'accountant',
             //         p => 'percent',
-            //         f => 'fraction',
+            //         frac => 'fraction',
             //         sc => 'scientific',
             //         l => 'logical',
             //         e => 'error'
