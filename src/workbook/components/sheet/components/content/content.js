@@ -28,7 +28,8 @@ define(function (require) {
                 getContent: this.getContent,
                 clearContent: this.clearContent,
                 getContentType: this.getContentType,
-                getContentInfo: this.getContentInfo
+                getContentInfo: this.getContentInfo,
+                setArrayFormula: this.setArrayFormula
             });
         },
 
@@ -58,7 +59,13 @@ define(function (require) {
             var rowsData = this.getActiveSheet().cell.rows;
 
             if (!content) {
-                this.clearContent(row, col);
+                this.clearContent({
+                    row: row,
+                    col: col
+                }, {
+                    row: row,
+                    col: col
+                });
                 return;
             }
 
@@ -80,6 +87,55 @@ define(function (require) {
 
             currentCell.value = content;
             currentCell.type = contentType;
+
+            delete currentCell.array;
+            delete currentCell.formula;
+
+            // 维度变更通知
+            this.postMessage('cell.dimension.change');
+
+            this.postMessage('contentchange', {
+                row: row,
+                col: col
+            }, {
+                row: row,
+                col: col
+            });
+        },
+
+        setArrayFormula: function (formulaText, start, end) {
+            var row = start.row;
+            var col = start.col;
+
+            var rowsData = this.getActiveSheet().cell.rows;
+
+            if ($$.isNdef(rowsData[row])) {
+                rowsData[row] = {
+                    cells: []
+                };
+            }
+
+            if ($$.isNdef(rowsData[row].cells)) {
+                rowsData[row].cells = [];
+            }
+
+            if ($$.isNdef(rowsData[row].cells[col])) {
+                rowsData[row].cells[col] = {};
+            }
+
+            var currentCell = rowsData[row].cells[col];
+
+            currentCell.array = {
+                start: {
+                    row: row,
+                    col: col
+                },
+                end: {
+                    row: end.row,
+                    col: end.col
+                },
+                formula: formulaText
+            };
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
@@ -181,6 +237,8 @@ define(function (require) {
                 currentRow.cells.forEach(function (currentCell, col) {
                     delete currentCell.value;
                     delete currentCell.type;
+                    delete currentCell.formula;
+                    delete currentCell.array;
 
                     this.cleanCell(row, col);
                 }, this);
@@ -199,6 +257,8 @@ define(function (require) {
                 rowsData[i].cells.forEach(function (currentCell, col) {
                     delete currentCell.value;
                     delete currentCell.type;
+                    delete currentCell.formula;
+                    delete currentCell.array;
 
                     this.cleanCell(i, col);
                 }, this);
@@ -223,6 +283,8 @@ define(function (require) {
 
                     delete cells[i].value;
                     delete cells[i].type;
+                    delete cells[i].formula;
+                    delete cells[i].array;
 
                     this.cleanCell(row, i);
                 }
@@ -251,6 +313,8 @@ define(function (require) {
 
                     delete cells[j].value;
                     delete cells[j].type;
+                    delete cells[j].formula;
+                    delete cells[j].array;
 
                     this.cleanCell(i, j);
                 }

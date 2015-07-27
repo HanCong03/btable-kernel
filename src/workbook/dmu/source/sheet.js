@@ -41,20 +41,25 @@ define(function (require, exports, module) {
             //    bestFit: 1,
             //    hidden: false,
             //    cells: [{
+            //        array: {
+            //            start: {row: 1, col: 1},
+            //            end: {row: 3, col: 3},
+            //            formula: '=a1+a2'
+            //        },
+            //        formula: '=a1+a2',
             //        comment: 0,
             //        hyperlink: 0,
             //        /*
             //         s => 'string',
             //         n => 'number',
             //         ns => 'number_string',
-            //         f => 'formula',
             //         t => 'time',
             //         dt = > 'datetime',
             //         c => 'currency',
             //         u => 'custom === > user',
             //         a => 'accountant',
             //         p => 'percent',
-            //         frac => 'fraction',
+            //         f => 'fraction',
             //         sc => 'scientific',
             //         l => 'logical',
             //         e => 'error'
