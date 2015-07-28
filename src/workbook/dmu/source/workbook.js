@@ -15,6 +15,25 @@ define(function (require, exports, module) {
         sheets: [],
         dir: 'ltr',
         theme: $$.clone(BUILTIN_THEMES['office']),
+        names: {
+            /*
+            name: {
+                sheet: 0,
+                scope: 0,
+                comment: 'comment',
+                ref: {
+                    start: {
+                        row: 0,
+                        col: 1
+                    },
+                    end: {
+                        row: 3,
+                        col: 4
+                    }
+                },
+            }
+             */
+        },
         stylePool: {
             numfmts: [DEFAULTS_STYLE.numfmts],
             fonts: [DEFAULTS_STYLE.fonts],

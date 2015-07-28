@@ -14,6 +14,7 @@ define(function (require) {
     var StylePool = require('./components/style-pool/style-pool');
     var Direction = require('./components/direction');
     var Sheet = require('./components/sheet/sheet');
+    var Name = require('./components/name');
     /* --- workbook components end --- */
 
     var $$ = require('utils');
@@ -35,6 +36,7 @@ define(function (require) {
         direction: null,
         stylePool: null,
         sheet: null,
+        name: null,
 
         constructor: function (config) {
             this.__initConfig(config);
@@ -42,6 +44,8 @@ define(function (require) {
             this.dmu = new DMU(this);
 
             this.__initComponents();
+
+            this.__initAPI();
 
             // 各组件都加载完毕，触发 sheetready 事件
             this.__notifySheetReady();
@@ -61,6 +65,13 @@ define(function (require) {
             this.stylePool = new StylePool(this);
             this.direction = new Direction(this);
             this.sheet = new Sheet(this);
+            this.name = new Name(this);
+        },
+
+        __initAPI: function () {
+            this.registerAPI(this, {
+                getActiveSheetIndex: this.getActiveSheetIndex
+            });
         },
 
         getConfig: function (key) {

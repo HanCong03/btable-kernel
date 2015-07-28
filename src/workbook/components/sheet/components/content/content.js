@@ -29,7 +29,9 @@ define(function (require) {
                 clearContent: this.clearContent,
                 getContentType: this.getContentType,
                 getContentInfo: this.getContentInfo,
-                setArrayFormula: this.setArrayFormula
+                setArrayFormula: this.setArrayFormula,
+                getContentInfoByRange: this.getContentInfoByRange,
+                setContentForRange: this.setContentForRange
             });
         },
 
@@ -101,6 +103,46 @@ define(function (require) {
                 row: row,
                 col: col
             });
+        },
+
+        setContentForRange: function (contents, range) {
+            var start = range.start;
+            var end = range.end;
+            var current;
+
+            var rowsData = this.getActiveSheet().cell.rows;
+
+            for (var i = 0, row = start.row, limit = end.row; row <= limit; i++, row++) {
+                for (var j = 0, col = start.col, jlimit = end.col; col <= jlimit; j++, col++) {
+                    current = contents[i][j];
+
+                    if ($$.isNdef(rowsData[row])) {
+                        rowsData[row] = {
+                            cells: []
+                        };
+                    }
+
+                    if ($$.isNdef(rowsData[row].cells)) {
+                        rowsData[row].cells = [];
+                    }
+
+                    if ($$.isNdef(rowsData[row].cells[col])) {
+                        rowsData[row].cells[col] = {};
+                    }
+
+                    var currentCell = rowsData[row].cells[col];
+
+                    currentCell.value = current.value;
+                    currentCell.type = current.type;
+
+                    delete currentCell.array;
+                    delete currentCell.formula;
+                }
+            }
+
+            // 维度变更通知
+            this.postMessage('cell.dimension.change');
+            this.postMessage('contentchange', start, end);
         },
 
         setArrayFormula: function (formulaText, start, end) {
@@ -190,6 +232,66 @@ define(function (require) {
                 type: rowsData[row].cells[col].type,
                 value: rowsData[row].cells[col].value
             };
+        },
+
+        getContentInfoByRange: function (start, end) {
+            var result = {};
+            var cellData = this.getActiveSheet().cell;
+            var rowsData = cellData.rows;
+            var rowKeys = Object.keys(rowsData);
+            var colKeys;
+            var startRow = start.row;
+            var startCol = start.col;
+            var endRow = end.row;
+            var endCol = end.col;
+
+            var row;
+            var col;
+            var cells;
+            var current;
+
+            for (var i = 0, len = rowKeys.length; i < len; i++) {
+                row = +rowKeys[i];
+
+                if (row > endRow) {
+                    break;
+                }
+
+                if (row < startRow) {
+                    continue;
+                }
+
+                cells = rowsData[i].cells;
+
+                if (!cells) {
+                    continue;
+                }
+
+                colKeys = Object.keys(cells);
+
+                for (var j = 0, jlen = colKeys.length; j < jlen; j++) {
+                    col = +colKeys[j];
+
+                    if (col > endCol) {
+                        break;
+                    }
+
+                    if (col < startCol) {
+                        continue;
+                    }
+
+                    current = cells[j];
+
+                    result[i + ',' + j] = {
+                        row: row,
+                        col: col,
+                        value: current.value,
+                        type: current.type
+                    };
+                }
+            }
+
+            return result;
         },
 
         /**
