@@ -93,6 +93,9 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+
+            // 行高变更，触发消息通知。
+            this.postMessage('rowheightchange', row, row);
         },
 
         removeRowHeight: function (row) {
@@ -173,6 +176,9 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+
+            // 列宽变更，触发消息通知。
+            this.postMessage('columnwidthchange', col, col);
         },
 
         isBestFitColumnWidth: function (col) {
