@@ -21,6 +21,7 @@ define(function (require) {
     var RenderInfo = require('./components/render-info');
     var Insert = require('./components/insert/insert');
     var FormatBrush = require('./components/format-brush/format-brush');
+    var Writable = require('./components/writable');
 
     return $$.createClass('Sheet', {
         base: require('../../interface/i-workbook-component'),
@@ -44,7 +45,8 @@ define(function (require) {
                 typeStyle: this.createComponent(TypeStyle),
                 insert: this.createComponent(Insert),
                 hyperlink: this.createComponent(Hyperlink),
-                formatBrush: this.createComponent(FormatBrush)
+                formatBrush: this.createComponent(FormatBrush),
+                writable: this.createComponent(Writable)
             };
         },
 

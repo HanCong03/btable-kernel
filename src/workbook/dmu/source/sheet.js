@@ -41,11 +41,7 @@ define(function (require, exports, module) {
             //    bestFit: 1,
             //    hidden: false,
             //    cells: [{
-            //        array: {
-            //            start: {row: 1, col: 1},
-            //            end: {row: 3, col: 3},
-            //            formula: '=a1+a2'
-            //        },
+            //        array: 0,
             //        formula: '=a1+a2',
             //        comment: 0,
             //        hyperlink: 0,
@@ -91,6 +87,13 @@ define(function (require, exports, module) {
         hyperlinks: {
             // 1: 'http://www.baidu.com'
         },
-        comments: {}
+        comments: {},
+        arrays: {
+            //0: {
+            //    start: {row: 1, col: 1},
+            //    end: {row: 3, col: 3},
+            //    formula: '=a1+a2'
+            //}
+        }
     };
 });

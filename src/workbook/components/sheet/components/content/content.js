@@ -58,7 +58,8 @@ define(function (require) {
          * @param col
          */
         setContent: function (content, contentType, row, col) {
-            var rowsData = this.getActiveSheet().cell.rows;
+            var sheetData = this.getActiveSheet();
+            var rowsData = sheetData.cell.rows;
 
             if (!content) {
                 this.clearContent({
@@ -90,7 +91,10 @@ define(function (require) {
             currentCell.value = content;
             currentCell.type = contentType;
 
-            delete currentCell.array;
+            if (currentCell.array !== undefined) {
+                delete currentCell.array;
+                delete sheetData.arrays[currentCell.array];
+            }
             delete currentCell.formula;
 
             // 维度变更通知
@@ -109,8 +113,9 @@ define(function (require) {
             var start = range.start;
             var end = range.end;
             var current;
-
-            var rowsData = this.getActiveSheet().cell.rows;
+            var sheetData = this.getActiveSheet();
+            var rowsData = sheetData.cell.rows;
+            var arrays = sheetData.arrays;
 
             for (var i = 0, row = start.row, limit = end.row; row <= limit; i++, row++) {
                 for (var j = 0, col = start.col, jlimit = end.col; col <= jlimit; j++, col++) {
@@ -135,7 +140,10 @@ define(function (require) {
                     currentCell.value = current.value;
                     currentCell.type = current.type;
 
-                    delete currentCell.array;
+                    if (currentCell.array !== undefined) {
+                        delete currentCell.array;
+                        delete arrays[currentCell.array];
+                    }
                     delete currentCell.formula;
                 }
             }
@@ -145,11 +153,10 @@ define(function (require) {
             this.postMessage('contentchange', start, end);
         },
 
-        setArrayFormula: function (formulaText, start, end) {
-            var row = start.row;
-            var col = start.col;
-
-            var rowsData = this.getActiveSheet().cell.rows;
+        setArrayFormula: function (formulaText, row, col, start, end) {
+            var sheetData = this.getActiveSheet();
+            var rowsData = sheetData.cell.rows;
+            var arrays = sheetData.arrays;
 
             if ($$.isNdef(rowsData[row])) {
                 rowsData[row] = {
@@ -166,11 +173,14 @@ define(function (require) {
             }
 
             var currentCell = rowsData[row].cells[col];
+            var index = this.__getArrayIndex();
 
-            currentCell.array = {
+            currentCell.array = index;
+
+            arrays[index] = {
                 start: {
-                    row: row,
-                    col: col
+                    row: start.row,
+                    col: start.col
                 },
                 end: {
                     row: end.row,
@@ -328,6 +338,7 @@ define(function (require) {
 
         __clearAllContent: function () {
             var sheetData = this.getActiveSheet();
+            var arrays = sheetData.arrays;
             var rowsData = sheetData.cell.rows;
 
             rowsData.forEach(function (currentRow, row) {
@@ -340,7 +351,10 @@ define(function (require) {
                     delete currentCell.value;
                     delete currentCell.type;
                     delete currentCell.formula;
-                    delete currentCell.array;
+                    if (currentCell.array !== undefined) {
+                        delete arrays[currentCell.array];
+                        delete currentCell.array;
+                    }
 
                     this.cleanCell(row, col);
                 }, this);
@@ -349,6 +363,7 @@ define(function (require) {
 
         __clearRowContent: function (startIndex, endIndex) {
             var sheetData = this.getActiveSheet();
+            var arrays = sheetData.arrays;
             var rowsData = sheetData.cell.rows;
 
             for (var i = startIndex; i <= endIndex; i++) {
@@ -360,7 +375,11 @@ define(function (require) {
                     delete currentCell.value;
                     delete currentCell.type;
                     delete currentCell.formula;
-                    delete currentCell.array;
+
+                    if (currentCell.array !== undefined) {
+                        delete arrays[currentCell.array];
+                        delete currentCell.array;
+                    }
 
                     this.cleanCell(i, col);
                 }, this);
@@ -370,6 +389,8 @@ define(function (require) {
         __clearColumnContent: function (startIndex, endIndex) {
             var sheetData = this.getActiveSheet();
             var rowsData = sheetData.cell.rows;
+            var arrays = sheetData.arrays;
+            var currentCell;
 
             $$.forEach(rowsData, function (currentRow, row) {
                 if ($$.isNdef(currentRow.cells)) {
@@ -379,14 +400,20 @@ define(function (require) {
                 var cells = currentRow.cells;
 
                 for (var i = startIndex; i <= endIndex; i++) {
-                    if ($$.isNdef(cells[i])) {
+                    currentCell = cells[i];
+
+                    if ($$.isNdef(currentCell)) {
                         continue;
                     }
 
-                    delete cells[i].value;
-                    delete cells[i].type;
-                    delete cells[i].formula;
-                    delete cells[i].array;
+                    delete currentCell.value;
+                    delete currentCell.type;
+                    delete currentCell.formula;
+
+                    if (currentCell.array !== undefined) {
+                        delete arrays[currentCell.array];
+                        delete currentCell.array;
+                    }
 
                     this.cleanCell(row, i);
                 }
@@ -396,7 +423,9 @@ define(function (require) {
         __clearRangeContent: function (start, end) {
             var sheetData = this.getActiveSheet();
             var rowsData = sheetData.cell.rows;
+            var arrays = sheetData.arrays;
             var currentRow;
+            var currentCell;
             var cells;
 
             for (var i = start.row, limit = end.row; i <= limit; i++) {
@@ -409,18 +438,47 @@ define(function (require) {
                 cells = currentRow.cells;
 
                 for (var j = start.col, jlimit = end.col; j <= jlimit; j++) {
+                    currentCell = cells[j];
                     if ($$.isNdef(cells[j])) {
                         continue;
                     }
 
-                    delete cells[j].value;
-                    delete cells[j].type;
-                    delete cells[j].formula;
-                    delete cells[j].array;
+                    delete currentCell.value;
+                    delete currentCell.type;
+                    delete currentCell.formula;
+
+                    if (currentCell.array !== undefined) {
+                        delete arrays[currentCell.array];
+                        delete currentCell.array;
+                    }
 
                     this.cleanCell(i, j);
                 }
             }
+        },
+
+        __getArrayIndex: function () {
+            var sheetData = this.getActiveSheet();
+            var arrays = sheetData.arrays;
+            var keys = Object.keys(arrays);
+
+            if (keys.length === 0) {
+                return 0;
+            }
+
+            var lastKey = +keys[keys.length - 1];
+
+            if (lastKey === keys.length - 1) {
+                return lastKey + 1;
+            }
+
+            for (var i = 0; i <= lastKey; i++) {
+                if (keys[i] !== ('' + i)) {
+                    return i;
+                }
+            }
+
+            return lastKey + 1;
         }
     });
 });
