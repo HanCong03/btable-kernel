@@ -31,7 +31,7 @@ define(function (require) {
 
         __initMessage: function () {
             this.onMessage({
-                'sheetready': this.__initRecord,
+                'sheetswitch': this.__initRecord,
 
                 'style.dimension.change': this.onStyleChange,
                 'cell.dimension.change': this.onCellChange,
@@ -84,7 +84,7 @@ define(function (require) {
             }
 
             // 重计算
-            this.__initRecord();
+            this.__recalculate();
         },
 
         __updateMianDimension: function () {
@@ -180,6 +180,16 @@ define(function (require) {
         },
 
         __initRecord: function () {
+            var heap = this.getActiveHeap();
+
+            if (heap.dimension) {
+                return;
+            }
+
+            this.__recalculate();
+        },
+
+        __recalculate: function () {
             var heap = this.getActiveHeap();
 
             // 只记录style和cell的列，行可以直接计算出

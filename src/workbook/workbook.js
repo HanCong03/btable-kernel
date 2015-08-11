@@ -42,16 +42,13 @@ define(function (require) {
             this.__initConfig(config);
 
             this.dmu = new DMU(this);
-
             this.__initComponents();
-
             this.__initAPI();
+        },
 
+        __ready: function () {
             // 各组件都加载完毕，触发 sheetready 事件
             this.__notifySheetReady();
-
-            // 所有工作已就绪，触发 workbookready 事件
-            this.postMessage('workbook.reday');
         },
 
         __initConfig: function (config) {
@@ -70,7 +67,8 @@ define(function (require) {
 
         __initAPI: function () {
             this.registerAPI(this, {
-                getActiveSheetIndex: this.getActiveSheetIndex
+                getActiveSheetIndex: this.getActiveSheetIndex,
+                addSheet: this.addSheet
             });
         },
 
@@ -83,7 +81,19 @@ define(function (require) {
         },
 
         switchSheet: function (index) {
-            return this.dmu.switchSheet(index);
+            this.dmu.switchSheet(index);
+            this.postMessage('sheetswitch');
+        },
+
+        addSheet: function (sheetName) {
+            if (!this.dmu.addSheet(sheetName)) {
+                return false;
+            }
+
+            var index = this.getSheetsCount() - 1;
+            this.switchSheet(index);
+
+            return true;
         },
 
         getSheetsCount: function () {
@@ -115,14 +125,13 @@ define(function (require) {
         },
 
         __notifySheetReady: function () {
-            var indexCopy = this.getActiveSheetIndex();
+            var index = this.getActiveSheetIndex();
 
             $$.forEach(this.dmu.checkSheet(), function (index) {
                 this.switchSheet(index);
-                this.postMessage('sheetready', index);
             }, this);
 
-            this.switchSheet(indexCopy);
+            this.dmu.switchSheet(index);
         }
 
     });

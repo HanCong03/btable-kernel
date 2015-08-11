@@ -13,7 +13,7 @@ define(function (require, exports, module) {
         data: null,
 
         constructor: function () {
-            this.createNewWorkbook();
+            this.__initWorkbook();
         },
 
         checkSheet: function () {
@@ -29,18 +29,41 @@ define(function (require, exports, module) {
             return indexes;
         },
 
-        createNewWorkbook: function () {
+        __initWorkbook: function () {
             this.data = $$.clone(WORKBOOK_SOURCE);
-            this.createNewSheet();
+            this.__initSheet();
 
             window.tt = this.data;
             window.bs = this.data.sheets[0].style;
             window.bc = this.data.sheets[0].cell;
         },
 
-        createNewSheet: function () {
+        __initSheet: function () {
             this.data.sheets.push($$.clone(SHEET_SOURCE));
             this.data.sheetNames.push(this.__getNextSheetName());
+
+            return true;
+        },
+
+        addSheet: function (sheetName) {
+            var index = this.getSheetsCount();
+
+            if (!sheetName) {
+                this.data.sheets.push($$.clone(SHEET_SOURCE));
+                this.data.sheetNames.push(this.__getNextSheetName());
+
+                this.switchSheet(index);
+                return true;
+            }
+
+            if (!this.__checkSheetName(sheetName)) {
+                return false;
+            }
+
+            this.data.sheets.push($$.clone(SHEET_SOURCE));
+            this.data.sheetNames.push(sheetName);
+
+            return true;
         },
 
         switchSheet: function (index) {
@@ -76,6 +99,10 @@ define(function (require, exports, module) {
             }
 
             return SHEET_NAME_PREFIX + (sheetNames.length + 1);
+        },
+
+        __checkSheetName: function (sheetName) {
+            return this.data.sheetNames.indexOf(sheetName) === -1;
         }
     });
 });

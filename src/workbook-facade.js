@@ -28,6 +28,10 @@ define(function (require) {
 
         on: function (provider, args) {
             return this.__$workbook.onMessage(provider, args);
+        },
+
+        ready: function () {
+            this.__$workbook.__ready();
         }
     });
 });

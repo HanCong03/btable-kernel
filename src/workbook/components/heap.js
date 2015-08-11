@@ -17,16 +17,19 @@ define(function (require) {
 
         base: require('../interface/i-workbook-component'),
 
+        // 内核级活动堆
         getActiveKernelHeap: function (name) {
             var heap = this.heap.kernel;
             return this.__getHeap(heap, name);
         },
 
+        // 应用级活动堆
         getActiveHeap: function (name) {
             var heap = this.heap.other;
             return this.__getHeap(heap, name);
         },
 
+        // 全局
         getWorkbookHeap: function (name) {
             var heap = this.heap.workbook;
 
@@ -39,17 +42,20 @@ define(function (require) {
 
         __getHeap: function (heap, name) {
             var index = this.getActiveSheetIndex();
+            var currentHeap;
 
             // 缺页
             if ($$.isNdef(heap[index])) {
                 heap[index] = {};
             }
 
-            if ($$.isNdef(heap[name])) {
-                heap[name] = {};
+            currentHeap = heap[index];
+
+            if ($$.isNdef(currentHeap[name])) {
+                currentHeap[name] = {};
             }
 
-            return heap[name];
+            return currentHeap[name];
         }
     });
 });
