@@ -94,6 +94,20 @@ define(function (require, exports, module) {
             //    end: {row: 3, col: 3},
             //    formula: '=a1+a2'
             //}
-        }
+        },
+        selections: [{
+            start: {
+                row: 0,
+                col: 0
+            },
+            end: {
+                row: 0,
+                col: 0
+            },
+            entry: {
+                row: 0,
+                col: 0
+            }
+        }]
     };
 });
