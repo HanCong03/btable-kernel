@@ -5,6 +5,7 @@
 
 define(function (require) {
     var $$ = require('utils');
+    var WorkbookUtils = require('../../../../utils');
 
     return $$.createClass('Content', {
         base: require('sheet-component'),
