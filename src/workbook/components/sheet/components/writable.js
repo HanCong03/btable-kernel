@@ -58,7 +58,7 @@ define(function (require) {
         }
 
         if (startRow > arrayEndRow || startCol > arrayEndCol
-            || endRow < arrayStartRow || endCol < arrayEndCol) {
+            || endRow < arrayStartRow || endCol < arrayStartCol) {
             return true;
         }
 
