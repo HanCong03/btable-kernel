@@ -70,6 +70,10 @@ define(function (require, exports, module) {
             this.data.active = index;
         },
 
+        getSheetNames: function () {
+            return this.data.sheetNames;
+        },
+
         getActiveSheetIndex: function () {
             return this.data.active;
         },
@@ -91,7 +95,7 @@ define(function (require, exports, module) {
             var name;
 
             for (var i = 1, limit = sheetNames.length; i <= limit; i++) {
-                name = SHEET_NAME_PREFIX + 'i';
+                name = SHEET_NAME_PREFIX + i;
 
                 if (sheetNames.indexOf(name) === -1) {
                     return name;

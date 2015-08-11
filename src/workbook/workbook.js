@@ -68,7 +68,9 @@ define(function (require) {
         __initAPI: function () {
             this.registerAPI(this, {
                 getActiveSheetIndex: this.getActiveSheetIndex,
-                addSheet: this.addSheet
+                addSheet: this.addSheet,
+                getSheetNames: this.getSheetNames,
+                switchSheet: this.switchSheet
             });
         },
 
@@ -93,11 +95,17 @@ define(function (require) {
             var index = this.getSheetsCount() - 1;
             this.switchSheet(index);
 
+            this.postMessage('sheetschange');
+
             return true;
         },
 
         getSheetsCount: function () {
             return this.dmu.getSheetsCount();
+        },
+
+        getSheetNames: function () {
+            return this.dmu.getSheetNames();
         },
 
         getActiveSheetIndex: function () {
