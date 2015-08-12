@@ -29,6 +29,9 @@ define(function (require) {
                 clearContent: this.clearContent,
                 getContentType: this.getContentType,
                 getContentInfo: this.getContentInfo,
+                getFormula: this.getFormula,
+                getFormulaType: this.getFormulaType,
+                getFormulaInfo: this.getFormulaInfo,
                 setFormula: this.setFormula,
                 getContentInfoByRange: this.getContentInfoByRange,
                 setArrayFormula: this.setArrayFormula,
@@ -146,7 +149,6 @@ define(function (require) {
         setFormula: function (formulaText, row, col) {
             var sheetData = this.getActiveSheet();
             var rowsData = sheetData.cell.rows;
-            var arrays = sheetData.arrays;
 
             if ($$.isNdef(rowsData[row])) {
                 rowsData[row] = {
@@ -271,6 +273,102 @@ define(function (require) {
             return {
                 type: rowsData[row].cells[col].type,
                 value: rowsData[row].cells[col].value
+            };
+        },
+
+        getFormula: function (row, col) {
+            var sheetData = this.getActiveSheet();
+            var rowsData = sheetData.cell.rows;
+
+            if ($$.isNdef(rowsData[row])
+                || $$.isNdef(rowsData[row].cells)
+                || $$.isNdef(rowsData[row].cells[col])) {
+                return null;
+            }
+
+            var currentCell = rowsData[row].cells[col];
+
+            if ($$.isDefined(currentCell.formula)) {
+                return currentCell.formula;
+            }
+
+            if ($$.isDefined(currentCell.array)) {
+                return sheetData.arrays[currentCell.array].formula;
+            }
+
+            var refIndex = this.__getArrayRefIndex(row, col);
+
+            if (refIndex === -1) {
+                return null;
+            }
+
+            return sheetData.arrays[refIndex].formula;
+        },
+
+        getFormulaType: function (row, col) {
+            var rowsData = this.getActiveSheet().cell.rows;
+
+            if ($$.isNdef(rowsData[row])
+                || $$.isNdef(rowsData[row].cells)
+                || $$.isNdef(rowsData[row].cells[col])) {
+                return null;
+            }
+
+            var currentCell = rowsData[row].cells[col];
+
+            if ($$.isDefined(currentCell.array)) {
+                return 'array';
+            }
+
+            if ($$.isDefined(currentCell.formula)) {
+                return 'formula';
+            }
+
+            var refIndex = this.__getArrayRefIndex(row, col);
+
+            if (refIndex === -1) {
+                return null;
+            }
+
+            return 'array';
+        },
+
+        getFormulaInfo: function (row, col) {
+            var sheetData = this.getActiveSheet();
+            var rowsData = sheetData.cell.rows;
+
+            if ($$.isNdef(rowsData[row])
+                || $$.isNdef(rowsData[row].cells)
+                || $$.isNdef(rowsData[row].cells[col])) {
+                return null;
+            }
+
+            var currentCell = rowsData[row].cells[col];
+
+            if ($$.isDefined(currentCell.formula)) {
+                return {
+                    type: 'formula',
+                    value: currentCell.formula
+                };
+            }
+
+            if ($$.isDefined(currentCell.array)) {
+                return {
+                    type: 'array',
+                    value: sheetData.arrays[currentCell.array].formula
+                };
+            }
+
+            /* --- 查找单元格对数组的引用索引 --- */
+            var refIndex = this.__getArrayRefIndex(row, col);
+
+            if (refIndex === -1) {
+                return null;
+            }
+
+            return {
+                type: 'array',
+                value: sheetData.arrays[refIndex].formula
             };
         },
 
@@ -497,6 +595,27 @@ define(function (require) {
                 delete sheetData.arrays[data.array];
                 delete data.array;
             }
+        },
+
+        __getArrayRefIndex: function (row, col) {
+            var sheetData = this.getActiveSheet();
+            var arrays = sheetData.arrays;
+            var current;
+
+            for (var key in arrays) {
+                if (!arrays.hasOwnProperty(key)) {
+                    continue;
+                }
+
+                current = arrays[key];
+
+                if (row >= current.start.row && row <= current.end.row
+                    && col >= current.start.col && col <= current.end.col) {
+                    return +key;
+                }
+            }
+
+            return -1;
         }
     });
 });
