@@ -48,7 +48,7 @@ define(function (require) {
 
         __ready: function () {
             // 各组件都加载完毕，触发 sheetready 事件
-            this.__notifySheetReady();
+            //this.__notifySheetReady();
         },
 
         __initConfig: function (config) {
@@ -67,11 +67,17 @@ define(function (require) {
 
         __initAPI: function () {
             this.registerAPI(this, {
+                load: this.load,
                 getActiveSheetIndex: this.getActiveSheetIndex,
                 addSheet: this.addSheet,
                 getSheetNames: this.getSheetNames,
                 switchSheet: this.switchSheet
             });
+        },
+
+        load: function (data) {
+            this.dmu.load(data);
+            this.__notifySheetReady();
         },
 
         getConfig: function (key) {

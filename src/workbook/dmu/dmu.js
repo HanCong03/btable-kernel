@@ -45,6 +45,14 @@ define(function (require, exports, module) {
             return true;
         },
 
+        load: function (data) {
+            if (!data) {
+                this.__initWorkbook();
+            } else {
+                debugger
+            }
+        },
+
         addSheet: function (sheetName) {
             var index = this.getSheetsCount();
 
