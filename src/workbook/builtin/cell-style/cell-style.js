@@ -114,7 +114,9 @@ define(function (require, exports, module) {
                         "type": "minor"
                     },
                     "size": 11,
-                    "color": "#FF0000",
+                    "color": {
+                        "value": "#FF0000"
+                    },
                     "bold": false,
                     "italic": false
                 }
@@ -255,7 +257,9 @@ define(function (require, exports, module) {
                         "type": "minor"
                     },
                     "size": 11,
-                    "color": "#3F3F76",
+                    "color": {
+                        "value": "#3F3F76"
+                    },
                     "bold": false,
                     "italic": false
                 },
@@ -303,7 +307,9 @@ define(function (require, exports, module) {
                         "type": "minor"
                     },
                     "size": 11,
-                    "color": "#3F3F3F",
+                    "color": {
+                        "value": "#3F3F3F"
+                    },
                     "bold": true,
                     "italic": false
                 },
@@ -351,7 +357,9 @@ define(function (require, exports, module) {
                         "type": "minor"
                     },
                     "size": 11,
-                    "color": "#FA7D00",
+                    "color": {
+                        "value": "#FA7D00"
+                    },
                     "bold": true,
                     "italic": false
                 },
@@ -450,7 +458,9 @@ define(function (require, exports, module) {
                         "type": "minor"
                     },
                     "size": 11,
-                    "color": "#FA7D00",
+                    "color": {
+                        "value": "#FA7D00"
+                    },
                     "bold": false,
                     "italic": false
                 },
@@ -514,7 +524,9 @@ define(function (require, exports, module) {
                         "type": "minor"
                     },
                     "size": 11,
-                    "color": "#006100",
+                    "color": {
+                        "value": "#006100"
+                    },
                     "bold": false,
                     "italic": false
                 },
@@ -534,7 +546,9 @@ define(function (require, exports, module) {
                         "type": "minor"
                     },
                     "size": 11,
-                    "color": "#9C0006",
+                    "color": {
+                        "value": "#9C0006"
+                    },
                     "bold": false,
                     "italic": false
                 },
@@ -554,7 +568,9 @@ define(function (require, exports, module) {
                         "type": "minor"
                     },
                     "size": 11,
-                    "color": "#9C6500",
+                    "color": {
+                        "value": "#9C6500"
+                    },
                     "bold": false,
                     "italic": false
                 },
@@ -1126,7 +1142,9 @@ define(function (require, exports, module) {
                         "type": "minor"
                     },
                     "size": 11,
-                    "color": "#7F7F7F",
+                    "color": {
+                        "value": "#7F7F7F"
+                    },
                     "bold": false,
                     "italic": true
                 }
