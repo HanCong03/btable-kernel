@@ -15,6 +15,7 @@ define(function (require) {
     var Direction = require('./components/direction');
     var Sheet = require('./components/sheet/sheet');
     var Name = require('./components/name');
+    var BuiltinManager = require('./components/builtin');
     /* --- workbook components end --- */
 
     var $$ = require('utils');
@@ -35,6 +36,7 @@ define(function (require) {
         themeManager: null,
         direction: null,
         stylePool: null,
+        builtinManager: null,
         sheet: null,
         name: null,
 
@@ -59,6 +61,7 @@ define(function (require) {
             this.heap = new Heap(this);
             this.standard = new Standard(this);
             this.themeManager = new ThemeManager(this);
+            this.builtinManager = new BuiltinManager(this);
             this.stylePool = new StylePool(this);
             this.direction = new Direction(this);
             this.sheet = new Sheet(this);
@@ -72,7 +75,8 @@ define(function (require) {
                 addSheet: this.addSheet,
                 getSheetNames: this.getSheetNames,
                 switchSheet: this.switchSheet,
-                renameSheet: this.renameSheet
+                renameSheet: this.renameSheet,
+                getBuiltinCellStyles: this.getBuiltinCellStyles
             });
         },
 
@@ -148,6 +152,10 @@ define(function (require) {
 
         getWorkbook: function () {
             return this.dmu.getWorkbook();
+        },
+
+        getBuiltinCellStyles: function () {
+            return this.builtinManager.getBuiltinCellStyles();
         },
 
         __notifySheetReady: function () {
