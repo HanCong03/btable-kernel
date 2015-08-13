@@ -54,6 +54,10 @@ define(function (require) {
          * @return
          */
         mergeCell: function (start, end) {
+            if (start.row === end.row && start.col === end.col) {
+                return false;
+            }
+
             var mergedKeys = this.getMergeCells(start, end);
 
             // 区域内存在合并单元格，则删除这些单元格的合并记录。
@@ -89,6 +93,10 @@ define(function (require) {
         },
 
         unmergeCell: function (start, end) {
+            if (start.row === end.row && start.col === end.col) {
+                return false;
+            }
+
             var mergedKeys = {};
             var key;
 
@@ -141,6 +149,10 @@ define(function (require) {
         },
 
         toggleMergeCell: function (start, end) {
+            if (start.row === end.row && start.col === end.col) {
+                return false;
+            }
+
             var mergedKeys = this.getMergeCells(start, end);
 
             if (mergedKeys) {
@@ -163,6 +175,10 @@ define(function (require) {
         },
 
         centerMergeCell: function (start, end) {
+            if (start.row === end.row && start.col === end.col) {
+                return false;
+            }
+
             var mergedKeys = this.getMergeCells(start, end);
             var styleModule = this.getModule('Style');
 
@@ -189,7 +205,7 @@ define(function (require) {
             }
 
             this.postMessage('unlock');
-            
+
             this.postMessage('all.dimension.change');
             this.postMessage('contentchange', start, end);
             this.postMessage('stylechange', start, end);
