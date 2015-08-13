@@ -124,7 +124,7 @@ define(function (require) {
 
                 currentRow = rowsData[i];
 
-                if ($$.isNdef($$.isNdef(currentRow.cells))) {
+                if ($$.isNdef(currentRow.cells)) {
                     currentRow.cells = [];
                 }
 
