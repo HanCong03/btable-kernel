@@ -78,6 +78,24 @@ define(function (require, exports, module) {
             this.data.active = index;
         },
 
+        renameSheet: function (sheetName, index) {
+            var data = this.data;
+
+            if ($$.isNdef(index)) {
+                index = data.active
+            }
+
+            var nameIndex = this.__getNameIndex(sheetName);
+
+            if (nameIndex !== -1 && nameIndex !== index) {
+                return false;
+            }
+
+            this.data.sheetNames[index] = sheetName;
+
+            return true;
+        },
+
         getSheetNames: function () {
             return this.data.sheetNames;
         },
@@ -115,6 +133,10 @@ define(function (require, exports, module) {
 
         __checkSheetName: function (sheetName) {
             return this.data.sheetNames.indexOf(sheetName) === -1;
+        },
+
+        __getNameIndex: function (sheetName) {
+            return this.data.sheetNames.indexOf(sheetName);
         }
     });
 });

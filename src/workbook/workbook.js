@@ -71,13 +71,15 @@ define(function (require) {
                 getActiveSheetIndex: this.getActiveSheetIndex,
                 addSheet: this.addSheet,
                 getSheetNames: this.getSheetNames,
-                switchSheet: this.switchSheet
+                switchSheet: this.switchSheet,
+                renameSheet: this.renameSheet
             });
         },
 
         load: function (data) {
             this.dmu.load(data);
             this.__notifySheetReady();
+            this.postMessage('loaded');
         },
 
         getConfig: function (key) {
@@ -104,6 +106,16 @@ define(function (require) {
             this.postMessage('sheetschange');
 
             return true;
+        },
+
+        renameSheet: function (sheetName, index) {
+            var result = this.dmu.renameSheet(sheetName, index);
+
+            if (result) {
+                this.postMessage('sheetschange');
+            }
+
+            return result;
         },
 
         getSheetsCount: function () {
