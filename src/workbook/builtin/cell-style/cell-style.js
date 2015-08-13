@@ -72,8 +72,7 @@ define(function (require, exports, module) {
             "format": {
                 "fills": {
                     "fill": {
-                        "theme": null,
-                        "tint": 0
+                        "value": "#FFFFCC"
                     }
                 },
                 "borders": {
@@ -265,8 +264,7 @@ define(function (require, exports, module) {
                 },
                 "fills": {
                     "fill": {
-                        "theme": null,
-                        "tint": 0
+                        "value": "#FFCC99"
                     }
                 },
                 "borders": {
@@ -315,8 +313,7 @@ define(function (require, exports, module) {
                 },
                 "fills": {
                     "fill": {
-                        "theme": null,
-                        "tint": 0
+                        "value": "#F2F2F2"
                     }
                 },
                 "borders": {
@@ -365,8 +362,7 @@ define(function (require, exports, module) {
                 },
                 "fills": {
                     "fill": {
-                        "theme": null,
-                        "tint": 0
+                        "value": "#F2F2F2"
                     }
                 },
                 "borders": {
@@ -416,8 +412,7 @@ define(function (require, exports, module) {
                 },
                 "fills": {
                     "fill": {
-                        "theme": null,
-                        "tint": 0
+                        "value": "#A5A5A5"
                     }
                 },
                 "borders": {
@@ -532,8 +527,7 @@ define(function (require, exports, module) {
                 },
                 "fills": {
                     "fill": {
-                        "theme": null,
-                        "tint": 0
+                        "value": "#C6EFCE"
                     }
                 }
             }
@@ -554,8 +548,7 @@ define(function (require, exports, module) {
                 },
                 "fills": {
                     "fill": {
-                        "theme": null,
-                        "tint": 0
+                        "value": "#FFC7CE"
                     }
                 }
             }
@@ -576,8 +569,7 @@ define(function (require, exports, module) {
                 },
                 "fills": {
                     "fill": {
-                        "theme": null,
-                        "tint": 0
+                        "value": "#FFEB9C"
                     }
                 }
             }
