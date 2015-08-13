@@ -51,6 +51,7 @@ define(function (require) {
                 'setSid',
                 'setStyle',
                 'clearStyle',
+                'unsetStyle',
                 'getCellSid',
                 'getRawStyle',
                 'getRawCellStyle',

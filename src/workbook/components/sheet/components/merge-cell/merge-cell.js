@@ -33,6 +33,7 @@ define(function (require) {
                 mergeCell: this.mergeCell,
                 unmergeCell: this.unmergeCell,
                 toggleMergeCell: this.toggleMergeCell,
+                centerMergeCell: this.centerMergeCell,
                 getMergeCells: this.getMergeCells
             });
         },
@@ -157,6 +158,39 @@ define(function (require) {
 
             this.postMessage('all.dimension.change');
 
+            this.postMessage('contentchange', start, end);
+            this.postMessage('stylechange', start, end);
+        },
+
+        centerMergeCell: function (start, end) {
+            var mergedKeys = this.getMergeCells(start, end);
+            var styleModule = this.getModule('Style');
+
+            this.postMessage('lock');
+
+            // 删除水平对齐属性
+            if (mergedKeys) {
+
+                for (var key in mergedKeys) {
+                    if (!mergedKeys.hasOwnProperty(key)) {
+                        continue;
+                    }
+
+                    styleModule.unsetStyle('horizontal', mergedKeys[key].start, mergedKeys[key].end);
+                }
+
+                this.__deleteMergeRecord(mergedKeys);
+            } else {
+                // 添加新的合并记录
+                this.__addMergeRecord(start, end);
+                styleModule.setStyle('horizontal', 'center', start, end);
+                // 同步样式
+                this.getModule('Cell').syncCell(start, end);
+            }
+
+            this.postMessage('unlock');
+            
+            this.postMessage('all.dimension.change');
             this.postMessage('contentchange', start, end);
             this.postMessage('stylechange', start, end);
         },
