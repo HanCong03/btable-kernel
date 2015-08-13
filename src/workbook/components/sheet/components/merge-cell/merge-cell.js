@@ -34,6 +34,7 @@ define(function (require) {
                 unmergeCell: this.unmergeCell,
                 toggleMergeCell: this.toggleMergeCell,
                 centerMergeCell: this.centerMergeCell,
+                horizontalMergeCell: this.horizontalMergeCell,
                 getMergeCells: this.getMergeCells
             });
         },
@@ -83,6 +84,31 @@ define(function (require) {
             borderModule.addRightBorder(borderOptions.right, start, end);
             borderModule.addBottomBorder(borderOptions.bottom, start, end);
             borderModule.addLeftBorder(borderOptions.left, start, end);
+
+            this.postMessage('unlock');
+
+            this.postMessage('all.dimension.change');
+
+            this.postMessage('contentchange', start, end);
+            this.postMessage('stylechange', start, end);
+        },
+
+        horizontalMergeCell: function (start, end) {
+            if (start.row === end.row && start.col === end.col) {
+                return false;
+            }
+
+            this.postMessage('lock');
+
+            for (var i = start.row, limit = end.row; i <= limit; i++) {
+                this.mergeCell({
+                    row: i,
+                    col: start.col
+                }, {
+                    row: i,
+                    col: end.col
+                });
+            }
 
             this.postMessage('unlock');
 
