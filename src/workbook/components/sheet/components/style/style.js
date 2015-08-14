@@ -77,7 +77,14 @@ define(function (require) {
                 getSettedColumnStyle: this.getSettedColumnStyle,
                 getSettedGlobalStyle: this.getSettedGlobalStyle,
 
-                applyCellStyle: this.applyCellStyle
+                applyCellStyle: this.applyCellStyle,
+
+                isMajor: this.isMajor,
+                isMinor: this.isMinor,
+                isThemeColor: this.isThemeColor,
+
+                getFontDetail: this.getFontDetail,
+                getColorDetail: this.getColorDetail
             });
         },
 
@@ -115,6 +122,31 @@ define(function (require) {
             }
 
             this.postMessage('stylechange', start, end);
+        },
+
+        isMajor: function (row, col) {
+            var fontDetail = this.getClassifyStyle('fonts', row, col);
+            return fontDetail.name.type === 'major';
+        },
+
+        isMinor: function (row, col) {
+            var fontDetail = this.getClassifyStyle('fonts', row, col);
+            return fontDetail.name.type === 'minor';
+        },
+
+        isThemeColor: function (row, col) {
+            var fontDetail = this.getClassifyStyle('fonts', row, col);
+            return $$.isDefined(fontDetail.color.theme);
+        },
+
+        getFontDetail: function (row, col) {
+            var fontDetail = this.getClassifyStyle('fonts', row, col);
+            return $$.clone(fontDetail.name);
+        },
+
+        getColorDetail: function (row, col) {
+            var fontDetail = this.getClassifyStyle('fonts', row, col);
+            return $$.clone(fontDetail.color);
         },
 
         applyCellStyle: function (csid, start, end) {
