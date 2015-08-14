@@ -98,6 +98,14 @@ define(function (require) {
         setStyle: function (styleName, styleValue, start, end) {
             var rangeType = WorkbookUtils.getRangeType(start, end);
 
+            if (styleName === 'color' || styleName === 'fill') {
+                if (typeof styleValue === 'string') {
+                    styleValue = {
+                        value: styleValue
+                    };
+                }
+            }
+
             switch (rangeType) {
                 case 'all':
                     this.allStyle.setStyle(styleName, styleValue);
