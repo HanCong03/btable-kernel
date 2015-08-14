@@ -32,10 +32,6 @@ define(function (require, exports, module) {
         __initWorkbook: function () {
             this.data = $$.clone(WORKBOOK_SOURCE);
             this.__initSheet();
-
-            window.tt = this.data;
-            window.bs = this.data.sheets[0].style;
-            window.bc = this.data.sheets[0].cell;
         },
 
         __initSheet: function () {
