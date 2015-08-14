@@ -73,6 +73,8 @@ define(function (require) {
                 borderOptions = $$.extend({}, BORDER_DEFAULT, borderOptions);
             }
 
+            this.__standardBorderOptions(borderOptions);
+
             this.postMessage('lock');
 
             /* ---- 进行通用样式处理 ---- */
@@ -150,6 +152,20 @@ define(function (require) {
             }
 
             this.postMessage('stylechange', start, end);
+        },
+
+        __standardBorderOptions: function (borderOptions) {
+            for (var key in borderOptions) {
+                if (!borderOptions.hasOwnProperty(key)) {
+                    continue;
+                }
+
+                if (typeof borderOptions[key].color === 'string') {
+                    borderOptions[key].color = {
+                        value: borderOptions[key].color
+                    };
+                }
+            }
         }
     });
 });

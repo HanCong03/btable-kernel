@@ -142,6 +142,12 @@ define(function (require) {
                 return this.removeBorder(location, start, end);
             }
 
+            if (typeof borderValue.color === 'string') {
+                borderValue.color = {
+                    value: borderValue.color
+                };
+            }
+
             var rangeType = WorkbookUtils.getRangeType(start, end);
 
             switch (rangeType) {
