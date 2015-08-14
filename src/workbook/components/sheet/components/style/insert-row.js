@@ -27,8 +27,14 @@ define(function (require) {
             var newRows = [];
             newRows.length = count;
 
-            // 插入占位行
-            rowsData.splice.apply(rowsData, [startIndex, 0].concat(newRows));
+            if (rowsData.length > startIndex) {
+                // 插入占位行
+                rowsData.splice.apply(rowsData, [startIndex, 0].concat(newRows));
+
+                for (var i = startIndex, len = startIndex + count; i < len; i++) {
+                    delete rowsData[i];
+                }
+            }
 
             // 更新占位行
             for (var i = startIndex; i <= endIndex; i++) {
