@@ -12,10 +12,6 @@ define(function (require, exports, module) {
     module.exports = $$.createClass('DMU', {
         data: null,
 
-        constructor: function () {
-            this.__initWorkbook();
-        },
-
         checkSheet: function () {
             var indexes = [];
 
@@ -32,6 +28,8 @@ define(function (require, exports, module) {
         __initWorkbook: function () {
             this.data = $$.clone(WORKBOOK_SOURCE);
             this.__initSheet();
+
+            window.tt = this.data;
         },
 
         __initSheet: function () {
@@ -110,6 +108,39 @@ define(function (require, exports, module) {
 
         getWorkbook: function () {
             return this.data;
+        },
+
+        // 当前活动的内核级堆
+        getActiveKernelHeap: function (name) {
+            var heap = this.data.sheets[this.data.active].heap.kernel;
+
+            if (!heap[name]) {
+                heap[name] = {};
+            }
+
+            return heap[name];
+        },
+
+        // 当前活动的应用级堆
+        getActiveHeap: function (name) {
+            var heap = this.data.sheets[this.data.active].heap.other;
+
+            if (!heap[name]) {
+                heap[name] = {};
+            }
+
+            return heap[name];
+        },
+
+        // 全局
+        getWorkbookHeap: function (name) {
+            var heap = this.data.heap;
+
+            if (!heap[name]) {
+                heap[name] = {};
+            }
+
+            return heap[name];
         },
 
         __getNextSheetName: function () {

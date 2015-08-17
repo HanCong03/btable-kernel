@@ -31,9 +31,16 @@ define(function (require, exports, module) {
         ],
 
         init: function () {
-            this.__initMap();
+            //this.__initMap();
+            this.__initEvent();
             this.__initService();
             this.__initDefaultStyleMap();
+        },
+
+        __initEvent: function () {
+            this.registerService({
+                'dataready': this.__initMap
+            });
         },
 
         __initService: function () {

@@ -73,6 +73,8 @@ define(function (require, exports, module) {
             xfId: 0,
             //custom: 1,
             builtinId: 0
-        }]
+        }],
+
+        heap: {}
     };
 });

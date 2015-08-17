@@ -108,6 +108,11 @@ define(function (require, exports, module) {
                 row: 0,
                 col: 0
             }
-        }]
+        }],
+
+        heap: {
+            kernel: {},
+            other: {},
+        }
     };
 });

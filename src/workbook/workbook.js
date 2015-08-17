@@ -8,7 +8,6 @@ define(function (require) {
     var DMU = require('./dmu/dmu');
 
     /* --- workbook components start --- */
-    var Heap = require('./components/heap');
     var Standard = require('./components/standard');
     var ThemeManager = require('./components/theme/theme');
     var StylePool = require('./components/style-pool/style-pool');
@@ -31,7 +30,6 @@ define(function (require) {
         dmu: null,
 
         // components
-        heap: null,
         standard: null,
         themeManager: null,
         direction: null,
@@ -58,7 +56,6 @@ define(function (require) {
         },
 
         __initComponents: function () {
-            this.heap = new Heap(this);
             this.standard = new Standard(this);
             this.themeManager = new ThemeManager(this);
             this.builtinManager = new BuiltinManager(this);
@@ -84,6 +81,8 @@ define(function (require) {
             this.dmu.load(data);
             this.__notifySheetReady();
             this.postMessage('loaded');
+            this.postMessage('beforedataready');
+            this.postMessage('dataready');
         },
 
         getConfig: function (key) {
@@ -139,15 +138,15 @@ define(function (require) {
         },
 
         getActiveKernelHeap: function (name) {
-            return this.heap.getActiveKernelHeap(name);
+            return this.dmu.getActiveKernelHeap(name);
         },
 
         getActiveHeap: function (name) {
-            return this.heap.getActiveHeap(name);
+            return this.dmu.getActiveHeap(name);
         },
 
         getWorkbookHeap: function (name) {
-            return this.heap.getWorkbookHeap(name);
+            return this.dmu.getWorkbookHeap(name);
         },
 
         getWorkbook: function () {
