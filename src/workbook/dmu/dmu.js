@@ -68,6 +68,21 @@ define(function (require, exports, module) {
             return true;
         },
 
+        insertSheet: function (sheetName) {
+            if (!sheetName) {
+                sheetName = this.__getNextSheetName();
+            } else if (!this.__checkSheetName(sheetName)) {
+                return false;
+            }
+
+            var index = this.data.active;
+
+            this.data.sheets.splice(index, 0, $$.clone(SHEET_SOURCE));
+            this.data.sheetNames.splice(index, 0, sheetName);
+
+            return true;
+        },
+
         switchSheet: function (index) {
             this.data.active = index;
         },

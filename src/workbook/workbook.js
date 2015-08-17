@@ -70,6 +70,7 @@ define(function (require) {
                 load: this.load,
                 getActiveSheetIndex: this.getActiveSheetIndex,
                 addSheet: this.addSheet,
+                insertSheet: this.insertSheet,
                 getSheetNames: this.getSheetNames,
                 switchSheet: this.switchSheet,
                 renameSheet: this.renameSheet,
@@ -105,6 +106,16 @@ define(function (require) {
 
             var index = this.getSheetsCount() - 1;
             this.switchSheet(index);
+
+            this.postMessage('sheetschange');
+
+            return true;
+        },
+
+        insertSheet: function (sheetName) {
+            if (!this.dmu.insertSheet(sheetName)) {
+                return false;
+            }
 
             this.postMessage('sheetschange');
 
