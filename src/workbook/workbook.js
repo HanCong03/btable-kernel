@@ -107,7 +107,6 @@ define(function (require) {
             var index = this.getSheetsCount() - 1;
             this.switchSheet(index);
 
-            this.postMessage('sheetswitch');
             this.postMessage('sheetschange');
 
             return true;
@@ -118,6 +117,7 @@ define(function (require) {
                 return false;
             }
 
+            this.postMessage('sheetswitch');
             this.postMessage('sheetschange');
 
             return true;
