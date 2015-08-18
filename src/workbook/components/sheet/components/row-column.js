@@ -393,10 +393,11 @@ define(function (require) {
 
             // 设置默认行高
             this.getModule('View').setDefaultRowHeight(height);
-            //this.rs('set.default.rowheight', height);
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+            // 行高变更，触发消息通知。
+            this.postMessage('rowheightchange', 0, MAX_ROW_INDEX);
         },
 
         __setAllColWidth: function (width) {
@@ -412,11 +413,13 @@ define(function (require) {
             }, this);
 
             // 设置默认列宽
-            //this.rs('set.default.colwidth', width);
             this.getModule('View').setDefaultColumnWidth(width);
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+
+            // 列宽变更，触发消息通知。
+            this.postMessage('columnwidthchange', 0, MAX_COLUMN_INDEX);
         },
 
         __hideAllRow: function () {
