@@ -37,7 +37,7 @@ define(function (require) {
         },
 
         getStandardFontSize: function () {
-            return this.getWorkbook().stylePool.fonts[0].name.size;
+            return this.getWorkbook().stylePool.fonts[0].size;
         },
 
         getStandardFont: function () {
