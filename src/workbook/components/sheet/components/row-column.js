@@ -27,9 +27,9 @@ define(function (require) {
                 getRowHeight: this.getRowHeight,
                 getColumnWidth: this.getColumnWidth,
                 hideRow: this.hideRow,
-                hideCol: this.hideCol,
+                hideColumn: this.hideColumn,
                 showRow: this.showRow,
-                showCol: this.showCol,
+                showColumn: this.showColumn,
 
                 isHiddenRow: this.isHiddenRow,
                 isHiddenColumn: this.isHiddenColumn
@@ -324,7 +324,7 @@ define(function (require) {
          * @param startIndex
          * @param endIndex
          */
-        showCol: function (startIndex, endIndex) {
+        showColumn: function (startIndex, endIndex) {
             if (this.getModule('View').isHideAllColumn()) {
                 //this.rs('cancel.hide.all.col');
                 this.getModule('View').cancelHideAllColumn();

@@ -27,6 +27,7 @@ define(function (require) {
             });
 
             this.__initService();
+            this.__initAPI();
         },
 
         __initService: function () {
@@ -43,20 +44,15 @@ define(function (require) {
                 'isHideAllRow',
                 'isHideAllColumn'
             ]);
-            //this.registerService({
-                //'set.default.rowheight': this.setDefaultRowHeight,
-                //'set.default.colwidth': this.setDefaultColWidth,
-                //'get.default.rowheight': this.getDefaultRowHeight,
-                //'get.default.colwidth': this.getDefaultColWidth,
-                //
-                //'hide.all.row': this.hideAllRow,
-                //'hide.all.col': this.hideAllColumn,
-                //'cancel.hide.all.row': this.cancelHideAllRow,
-                //'cancel.hide.all.col': this.cancelHideAllColumn,
-                //
-                //'is.hideallrow': this.isHideAllRow,
-                //'is.hideallcol': this.isHideAllColumn
-            //});
+        },
+
+        __initAPI: function () {
+            this.registerAPI({
+                setDefaultColumnWidth: this.setDefaultColumnWidth,
+                setDefaultColumnWidth: this.setDefaultColumnWidth,
+                getDefaultRowHeight: this.getDefaultRowHeight,
+                getDefaultColumnWidth: this.getDefaultColumnWidth
+            });
         },
 
         setGridLine: function (status) {
