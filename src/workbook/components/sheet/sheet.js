@@ -6,6 +6,7 @@
 define(function (require) {
     var $$ = require('utils');
 
+    var Standard = require('./components/standard');
     var Cell = require('./components/cell/cell');
     var Dimension = require('./components/dimension/dimension');
     var Content = require('./components/content/content');
@@ -32,6 +33,7 @@ define(function (require) {
 
         init: function () {
             this.components = {
+                standard: this.createComponent(Standard),
                 cell: this.createComponent(Cell),
                 dimension: this.createComponent(Dimension),
                 content: this.createComponent(Content),

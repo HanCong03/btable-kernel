@@ -144,6 +144,7 @@ define(function (require) {
          */
         setDefaultRowHeight: function (height) {
             this.getActiveSheet().view.rowHeight = height;
+            this.postMessage('defaultrowheightchange');
         },
 
         /**
@@ -152,6 +153,7 @@ define(function (require) {
          */
         setDefaultColumnWidth: function (width) {
             this.getActiveSheet().view.colWidth = width;
+            this.postMessage('defaultcolumnwidthchange');
         },
 
         hideAllRow: function () {

@@ -8,7 +8,6 @@ define(function (require) {
     var DMU = require('./dmu/dmu');
 
     /* --- workbook components start --- */
-    var Standard = require('./components/standard');
     var ThemeManager = require('./components/theme/theme');
     var StylePool = require('./components/style-pool/style-pool');
     var Direction = require('./components/direction');
@@ -30,7 +29,6 @@ define(function (require) {
         dmu: null,
 
         // components
-        standard: null,
         themeManager: null,
         direction: null,
         stylePool: null,
@@ -56,7 +54,6 @@ define(function (require) {
         },
 
         __initComponents: function () {
-            this.standard = new Standard(this);
             this.themeManager = new ThemeManager(this);
             this.builtinManager = new BuiltinManager(this);
             this.stylePool = new StylePool(this);
