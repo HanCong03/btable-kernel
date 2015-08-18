@@ -15,8 +15,8 @@ define(function (require) {
                 setGridLine: this.setGridLine,
                 getGridLine: this.getGridLine,
 
-                setRowColHeader: this.setRowColHeader,
-                getRowColHeader: this.getRowColHeader,
+                setRowColumnHeader: this.setRowColumnHeader,
+                getRowColumnHeader: this.getRowColumnHeader,
 
                 setPane: this.setPane,
                 getPane: this.getPane,
