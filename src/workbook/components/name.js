@@ -15,16 +15,23 @@ define(function (require) {
 
         __initAPI: function () {
             this.registerAPI({
+                getAllNameDefine: this.getAllNameDefine,
                 defineName: this.defineName,
                 getNameDefine: this.getNameDefine,
                 getName: this.getName
             });
         },
 
-        defineName: function (name, ref, refSheet, scope, comment) {
-            var sheetData = this.getActiveSheet();
+        getAllNameDefine: function () {
+            var namesData = this.getWorkbook().names;
 
-            if (sheetData[name]) {
+            return $$.clone(namesData);
+        },
+
+        defineName: function (name, ref, refSheet, scope, comment) {
+            var namesData = this.getWorkbook().names;
+
+            if (namesData[name]) {
                 return false;
             }
 
@@ -32,22 +39,26 @@ define(function (require) {
                 return false;
             }
 
-            sheetData[name] = {
+            namesData[name] = {
                 ref: ref,
                 sheet: refSheet,
                 scope: scope,
                 comment: comment
             };
+
+            this.postMessage('namedefinechange');
         },
 
         getNameDefine: function (name) {
-            var sheetData = this.getActiveSheet();
-            return sheetData[name] || null;
+            var namesData = this.getWorkbook().names;
+
+            return namesData[name] || null;
         },
 
         getName: function (name, scope) {
-            var sheetData = this.getActiveSheet();
-            var nameDefine = sheetData[name];
+            var namesData = this.getWorkbook().names;
+
+            var nameDefine = namesData[name];
 
             if (!nameDefine) {
                 return false;
