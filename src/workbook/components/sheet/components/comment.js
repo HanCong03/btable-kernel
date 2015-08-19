@@ -181,7 +181,7 @@ define(function (require) {
             delete currentCell.comment;
             delete sheetData.comments[cid];
 
-            CellClean.checkCell(sheetData, row, col);
+            this.cleanCell(row, col);
         },
 
         __getCommentId: function () {
