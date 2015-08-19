@@ -67,6 +67,24 @@ define(function (require, exports, module) {
                 }
             }
         },
+        "8": {
+            "name": "超链接",
+            "format": {
+                "fonts": {
+                    "name": {
+                        "type": "minor"
+                    },
+                    "size": 11,
+                    "color": {
+                        "theme": 10,
+                        "tint": 0
+                    },
+                    "bold": false,
+                    "italic": false,
+                    "underline": "single"
+                }
+            }
+        },
         "10": {
             "name": "注释",
             "format": {
