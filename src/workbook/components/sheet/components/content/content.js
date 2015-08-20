@@ -25,6 +25,7 @@ define(function (require) {
         __initAPI: function () {
             this.registerAPI({
                 setContent: this.setContent,
+                resetContent: this.resetContent,
                 getContent: this.getContent,
                 clearContent: this.clearContent,
                 getContentType: this.getContentType,
@@ -95,6 +96,48 @@ define(function (require) {
             currentCell.value = content;
             currentCell.type = contentType;
             this.__removeFormula(currentCell);
+
+            // 维度变更通知
+            this.postMessage('cell.dimension.change');
+
+            this.postMessage('contentchange', {
+                row: row,
+                col: col
+            }, {
+                row: row,
+                col: col
+            });
+        },
+
+        /**
+         * 设置值和类型，但是不清除单元格的附加数据
+         * @param content
+         * @param contentType
+         * @param row
+         * @param col
+         */
+        resetContent: function (content, contentType, row, col) {
+            var sheetData = this.getActiveSheet();
+            var rowsData = sheetData.cell.rows;
+
+            if ($$.isNdef(rowsData[row])) {
+                rowsData[row] = {
+                    cells: []
+                };
+            }
+
+            if ($$.isNdef(rowsData[row].cells)) {
+                rowsData[row].cells = [];
+            }
+
+            if ($$.isNdef(rowsData[row].cells[col])) {
+                rowsData[row].cells[col] = {};
+            }
+
+            var currentCell = rowsData[row].cells[col];
+
+            currentCell.value = content;
+            currentCell.type = contentType;
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
@@ -399,7 +442,7 @@ define(function (require) {
                     continue;
                 }
 
-                cells = rowsData[i].cells;
+                cells = rowsData[row].cells;
 
                 if (!cells) {
                     continue;
@@ -418,9 +461,9 @@ define(function (require) {
                         continue;
                     }
 
-                    current = cells[j];
+                    current = cells[col];
 
-                    result[i + ',' + j] = {
+                    result[row + ',' + col] = {
                         row: row,
                         col: col,
                         value: current.value,

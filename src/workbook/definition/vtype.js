@@ -7,6 +7,5 @@ define({
     NUMBER: 'n',
     TEXT: 's',
     LOGICAL: 'b',
-    ERROR: 'e',
-    FORMULA: 'f'
+    ERROR: 'e'
 });
