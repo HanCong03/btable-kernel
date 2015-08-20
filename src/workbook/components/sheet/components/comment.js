@@ -18,7 +18,8 @@ define(function (require) {
             this.registerAPI({
                 setComment: this.setComment,
                 clearComment: this.clearComment,
-                getComment: this.getComment
+                getComment: this.getComment,
+                hasComment: this.hasComment
             });
         },
 
@@ -103,6 +104,57 @@ define(function (require) {
             return sheetData.comments[currentCell.comment];
         },
 
+        /**
+         * 查询给定区域是否有comment
+         * @param start
+         * @param end
+         * @returns {boolean}
+         */
+        hasComment: function (start, end) {
+            var startRow = start.row;
+            var endRow = end.row;
+            var startCol = start.col;
+            var endCol = end.col;
+
+            var rowsData = this.getActiveSheet().cell.rows;
+            var result = false;
+
+            $$.forEach(rowsData, function (currentRow, row) {
+                if (row < startRow) {
+                    return;
+                }
+
+                if (row > endRow) {
+                    return false;
+                }
+
+                if (!currentRow.cells) {
+                    return;
+                }
+
+                $$.forEach(currentRow.cells, function (currentCell, col) {
+                    if (col < startCol) {
+                        return;
+                    }
+
+                    if (col > endCol) {
+                        return false;
+                    }
+
+                    if ($$.isDefined(currentCell.comment)) {
+                        result = true;
+                        return false;
+                    }
+                });
+
+                if (result) {
+                    return false;
+                }
+            });
+
+            return result;
+        },
+
         __clearAll: function () {
             var sheetData = this.getActiveSheet();
             var cellRows = sheetData.cell.rows;
@@ -114,9 +166,9 @@ define(function (require) {
 
                 currentRow.cells.forEach(function (currentCell, colIndex) {
                     delete currentCell.comment;
-                    CellClean.checkCell(sheetData, rowIndex, colIndex);
-                });
-            });
+                    this.cleanCell(rowIndex, colIndex);
+                }, this);
+            }, this);
 
             // 清空批注
             sheetData.comment = {};

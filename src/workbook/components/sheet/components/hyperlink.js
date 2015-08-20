@@ -18,7 +18,8 @@ define(function (require) {
             this.registerAPI({
                 setHyperlink: this.setHyperlink,
                 clearHyperlink: this.clearHyperlink,
-                getHyperlink: this.getHyperlink
+                getHyperlink: this.getHyperlink,
+                hasHyperlink: this.hasHyperlink
             });
         },
 
@@ -69,6 +70,51 @@ define(function (require) {
             });
 
             this.postMessage('cell.dimension.change');
+        },
+
+        hasHyperlink: function (start, end) {
+            var startRow = start.row;
+            var endRow = end.row;
+            var startCol = start.col;
+            var endCol = end.col;
+
+            var rowsData = this.getActiveSheet().cell.rows;
+            var result = false;
+
+            $$.forEach(rowsData, function (currentRow, row) {
+                if (row < startRow) {
+                    return;
+                }
+
+                if (row > endRow) {
+                    return false;
+                }
+
+                if (!currentRow.cells) {
+                    return;
+                }
+
+                $$.forEach(currentRow.cells, function (currentCell, col) {
+                    if (col < startCol) {
+                        return;
+                    }
+
+                    if (col > endCol) {
+                        return false;
+                    }
+
+                    if ($$.isDefined(currentCell.hyperlink)) {
+                        result = true;
+                        return false;
+                    }
+                });
+
+                if (result) {
+                    return false;
+                }
+            });
+
+            return result;
         },
 
         clearHyperlink: function (start, end) {
@@ -124,11 +170,12 @@ define(function (require) {
                 }
 
                 currentRow.cells.forEach(function (currentCell, colIndex) {
+                    delete sheetData.hyperlinks[currentCell.hyperlink];
                     delete currentCell.hyperlink;
 
                     this.cleanCell(rowIndex, colIndex);
-                });
-            });
+                }, this);
+            }, this);
 
             // 清空批注
             sheetData.hyperlinks = {};
@@ -144,6 +191,7 @@ define(function (require) {
                 }
 
                 rowsData[i].cells.forEach(function (currentCell, col) {
+                    delete sheetData.hyperlinks[currentCell.hyperlink];
                     delete currentCell.hyperlink;
 
                     this.cleanCell(i, col);
@@ -167,6 +215,7 @@ define(function (require) {
                         continue;
                     }
 
+                    delete sheetData.hyperlinks[cells[i].hyperlink];
                     delete cells[i].hyperlink;
 
                     this.cleanCell(row, i);
@@ -177,6 +226,7 @@ define(function (require) {
         __clearRange: function (start, end) {
             var sheetData = this.getActiveSheet();
             var rowsData = sheetData.cell.rows;
+            var StyleModule = this.getModule('Style');
             var currentRow;
             var cells;
 
@@ -194,7 +244,16 @@ define(function (require) {
                         continue;
                     }
 
+                    delete sheetData.hyperlinks[cells[j].hyperlink];
                     delete cells[j].hyperlink;
+
+                    StyleModule.applyCellStyle(0, {
+                        row: i,
+                        col: j
+                    }, {
+                        row: i,
+                        col: j
+                    });
 
                     this.cleanCell(i, j);
                 }
