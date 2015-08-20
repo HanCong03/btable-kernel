@@ -24,6 +24,22 @@ define(function (require, exports, module) {
                 },
                 "numfmts": {
                     "numfmt": "General"
+                },
+                "fills": {
+                    "numfmt": NONE
+                },
+                "borders": {
+                    "border": {
+                        top: NONE,
+                        left: NONE,
+                        right: NONE,
+                        bottom: NONE
+                    }
+                },
+                "alignments": {
+                    "wraptext": false,
+                    "horizontal": NONE,
+                    "vertical": NONE
                 }
             }
         },
