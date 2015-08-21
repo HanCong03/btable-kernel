@@ -17,10 +17,6 @@ define(function (require) {
         },
 
         __initService: function () {
-            //this.registerService({
-            //    'clearall': this.clearAll,
-            //    'synccell': this.syncCell
-            //});
             this.registerService([
                 'clearAll',
                 'syncCell'

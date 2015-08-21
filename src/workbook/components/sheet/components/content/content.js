@@ -276,7 +276,7 @@ define(function (require) {
                 col: col
             });
 
-            this.postMessage('formulaadded', row, col);
+            this.postMessage('arrayformulaadded', row, col);
         },
 
         getContent: function (row, col) {
@@ -643,7 +643,7 @@ define(function (require) {
                 delete sheetData.arrays[data.array];
                 delete data.array;
 
-                this.postMessage('formularemoved', row, col);
+                this.postMessage('arrayformularemoved', row, col);
             }
         },
 
