@@ -95,7 +95,7 @@ define(function (require) {
 
             currentCell.value = content;
             currentCell.type = contentType;
-            this.__removeFormula(currentCell);
+            this.__removeFormula(currentCell, row, col);
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
@@ -180,7 +180,7 @@ define(function (require) {
 
                     currentCell.value = current.value;
                     currentCell.type = current.type;
-                    this.__removeFormula(currentCell);
+                    this.__removeFormula(currentCell, row, col);
                 }
             }
 
@@ -208,9 +208,8 @@ define(function (require) {
             }
 
             var currentCell = rowsData[row].cells[col];
-            var index = this.__getArrayIndex();
 
-            this.__removeFormula(currentCell);
+            this.__removeFormula(currentCell, row, col);
 
             currentCell.formula = formulaText;
 
@@ -224,6 +223,8 @@ define(function (require) {
                 row: row,
                 col: col
             });
+
+            this.postMessage('formulaadded', row, col);
         },
 
         setArrayFormula: function (formulaText, row, col, start, end) {
@@ -248,7 +249,7 @@ define(function (require) {
             var currentCell = rowsData[row].cells[col];
             var index = this.__getArrayIndex();
 
-            this.__removeFormula(currentCell);
+            this.__removeFormula(currentCell, row, col);
 
             currentCell.array = index;
 
@@ -274,6 +275,8 @@ define(function (require) {
                 row: row,
                 col: col
             });
+
+            this.postMessage('formulaadded', row, col);
         },
 
         getContent: function (row, col) {
@@ -520,7 +523,7 @@ define(function (require) {
                 currentRow.cells.forEach(function (currentCell, col) {
                     delete currentCell.value;
                     delete currentCell.type;
-                    this.__removeFormula(currentCell);
+                    this.__removeFormula(currentCell, row, col);
 
                     this.cleanCell(row, col);
                 }, this);
@@ -539,7 +542,7 @@ define(function (require) {
                 rowsData[i].cells.forEach(function (currentCell, col) {
                     delete currentCell.value;
                     delete currentCell.type;
-                    this.__removeFormula(currentCell);
+                    this.__removeFormula(currentCell, i, col);
 
                     this.cleanCell(i, col);
                 }, this);
@@ -567,7 +570,7 @@ define(function (require) {
 
                     delete currentCell.value;
                     delete currentCell.type;
-                    this.__removeFormula(currentCell);
+                    this.__removeFormula(currentCell, row, i);
 
                     this.cleanCell(row, i);
                 }
@@ -598,7 +601,7 @@ define(function (require) {
 
                     delete currentCell.value;
                     delete currentCell.type;
-                    this.__removeFormula(currentCell);
+                    this.__removeFormula(currentCell, i, j);
 
                     this.cleanCell(i, j);
                 }
@@ -629,14 +632,18 @@ define(function (require) {
             return lastKey + 1;
         },
 
-        __removeFormula: function (data) {
+        __removeFormula: function (data, row, col) {
             var sheetData = this.getActiveSheet();
 
-            delete data.formula;
+            if ($$.isDefined(data.formula)) {
+                delete data.formula;
 
-            if (data.array !== undefined) {
+                this.postMessage('formularemoved', row, col);
+            } else if (data.array !== undefined) {
                 delete sheetData.arrays[data.array];
                 delete data.array;
+
+                this.postMessage('formularemoved', row, col);
             }
         },
 
