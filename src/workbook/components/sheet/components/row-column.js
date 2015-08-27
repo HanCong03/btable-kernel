@@ -72,6 +72,7 @@ define(function (require) {
 
             // 行高变更，触发消息通知。
             this.postMessage('rowheightchange', startIndex, endIndex);
+            this.postMessage('kerneldatachange');
         },
 
         setBestFitRowHeight: function (height, row) {
@@ -96,6 +97,7 @@ define(function (require) {
 
             // 行高变更，触发消息通知。
             this.postMessage('rowheightchange', row, row);
+            this.postMessage('kerneldatachange');
         },
 
         removeRowHeight: function (row) {
@@ -108,6 +110,8 @@ define(function (require) {
 
             delete currentRowData.height;
             delete currentRowData.bestFit;
+
+            this.postMessage('kerneldatachange');
         },
 
         isBestFitRowHeight: function (row) {
@@ -157,6 +161,7 @@ define(function (require) {
 
             // 列宽变更，触发消息通知。
             this.postMessage('columnwidthchange', startIndex, endIndex);
+            this.postMessage('kerneldatachange');
         },
 
         setBestFitColumnWidth: function (width, col) {
@@ -179,6 +184,7 @@ define(function (require) {
 
             // 列宽变更，触发消息通知。
             this.postMessage('columnwidthchange', col, col);
+            this.postMessage('kerneldatachange');
         },
 
         isBestFitColumnWidth: function (col) {
@@ -202,6 +208,8 @@ define(function (require) {
 
             delete currentColData.width;
             delete currentColData.bestFit;
+
+            this.postMessage('kerneldatachange');
         },
 
         /**
@@ -258,6 +266,7 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+            this.postMessage('kerneldatachange');
         },
 
         hideColumn: function (startIndex, endIndex) {
@@ -286,6 +295,7 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+            this.postMessage('kerneldatachange');
         },
 
         /**
@@ -316,6 +326,7 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+            this.postMessage('kerneldatachange');
         },
 
         /**
@@ -345,6 +356,7 @@ define(function (require) {
 
             // 维度变更通知
             this.postMessage('cell.dimension.change');
+            this.postMessage('kerneldatachange');
         },
 
         /**

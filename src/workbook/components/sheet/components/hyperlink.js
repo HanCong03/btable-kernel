@@ -70,6 +70,7 @@ define(function (require) {
             });
 
             this.postMessage('cell.dimension.change');
+            this.postMessage('kerneldatachange');
         },
 
         hasHyperlink: function (start, end) {
@@ -139,6 +140,7 @@ define(function (require) {
             }
 
             this.postMessage('cell.dimension.change');
+            this.postMessage('kerneldatachange');
         },
 
         getHyperlink: function (row, col) {

@@ -43,7 +43,8 @@ define(function (require) {
         __initService: function () {
             this.registerService([
                 'getContentType',
-                'clearContent'
+                'clearContent',
+                'isSafeRange'
             ]);
         },
 
@@ -277,6 +278,27 @@ define(function (require) {
             });
 
             this.postMessage('arrayformulaadded', row, col);
+        },
+
+        /**
+         * 判断给定range是否可以安全写入
+         * @param rage
+         */
+        isSafeRange: function (range) {
+            var sheetData = this.getActiveSheet();
+            var arrays = sheetData.arrays;
+
+            for (var key in arrays) {
+                if (!arrays.hasOwnProperty(key)) {
+                    continue;
+                }
+
+                if (this.__isUnsafe(range, arrays[key])) {
+                    return false;
+                }
+            }
+
+            return true;
         },
 
         getContent: function (row, col) {
@@ -666,6 +688,32 @@ define(function (require) {
             }
 
             return -1;
+        },
+
+        __isUnsafe: function (sourceRange, targetRange) {
+            if (!WorkbookUtils.isIntersection(sourceRange, targetRange)) {
+                return false;
+            }
+
+            var row1 = sourceRange.start.row;
+            var row2 = sourceRange.end.row;
+            var row3 = targetRange.start.row;
+            var row4 = targetRange.end.row;
+
+            if (!(row3 >= row1 && row4 <= row2)) {
+                return true;
+            }
+
+            var col1 = sourceRange.start.col;
+            var col2 = sourceRange.end.col;
+            var col3 = targetRange.start.col;
+            var col4 = targetRange.end.col;
+
+            if (!(col3 >= col1 && col4 <= col2)) {
+                return true;
+            }
+
+            return false;
         }
     });
 });

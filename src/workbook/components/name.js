@@ -47,6 +47,7 @@ define(function (require) {
             };
 
             this.postMessage('namedefinechange');
+            this.postMessage('kerneldatachange');
         },
 
         getNameDefine: function (name) {

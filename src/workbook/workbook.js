@@ -71,6 +71,7 @@ define(function (require) {
                 getSheetNames: this.getSheetNames,
                 switchSheet: this.switchSheet,
                 renameSheet: this.renameSheet,
+                export: this.export,
                 getBuiltinCellStyles: this.getBuiltinCellStyles
             });
         },
@@ -81,6 +82,10 @@ define(function (require) {
             this.postMessage('loaded');
             this.postMessage('beforedataready');
             this.postMessage('dataready');
+        },
+
+        export: function () {
+            return this.dmu.export();
         },
 
         getConfig: function (key) {

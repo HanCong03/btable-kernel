@@ -60,7 +60,7 @@ define(function (require) {
             currentCell.comment = cid;
             sheetData.comments[cid] = content;
 
-            this.postMessage('inc.range', row, col);
+            this.postMessage('kerneldatachange');
         },
 
         clearComment: function (start, end) {
@@ -83,6 +83,8 @@ define(function (require) {
                     this.__clearRange(start, end);
                     break;
             }
+
+            this.postMessage('kerneldatachange');
         },
 
         getComment: function (row, col) {

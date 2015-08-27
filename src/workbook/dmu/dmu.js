@@ -12,6 +12,11 @@ define(function (require, exports, module) {
     module.exports = $$.createClass('DMU', {
         data: null,
 
+        mixin: [
+            require('./export'),
+            require('./import')
+        ],
+
         checkSheet: function () {
             var indexes = [];
 
@@ -28,8 +33,6 @@ define(function (require, exports, module) {
         __initWorkbook: function () {
             this.data = $$.clone(WORKBOOK_SOURCE);
             this.__initSheet();
-
-            window.tt = this.data;
         },
 
         __initSheet: function () {
@@ -43,7 +46,7 @@ define(function (require, exports, module) {
             if (!data) {
                 this.__initWorkbook();
             } else {
-                debugger
+                this.import(data);
             }
         },
 

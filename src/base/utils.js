@@ -4,7 +4,6 @@
  */
 
 define(function (require, exports, module) {
-
     var clazz = require('./clazz');
 
     var Utils = {
